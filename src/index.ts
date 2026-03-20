@@ -59,5 +59,27 @@ export type { PopoverProps, PopoverTriggerProps, PopoverPortalProps, PopoverPosi
 export { AlertBanner } from './components/AlertBanner';
 export type { AlertBannerProps, AlertBannerVariant, AlertBannerAction } from './components/AlertBanner';
 
+export {
+  ProductCard,
+  ProductCardImage,
+  ProductCardBadges,
+  ProductCardContent,
+  ProductCardBrand,
+  ProductCardTitle,
+  ProductCardPrice,
+  ProductCardActions,
+} from './components/ProductCard';
+export type {
+  ProductCardProps,
+  ProductCardSize,
+  ProductCardImageProps,
+  ProductCardBadgesProps,
+  ProductCardContentProps,
+  ProductCardBrandProps,
+  ProductCardTitleProps,
+  ProductCardPriceProps,
+  ProductCardActionsProps,
+} from './components/ProductCard';
+
 // Tokens
 export * from './tokens';
