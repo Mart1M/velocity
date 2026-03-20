@@ -1,0 +1,296 @@
+import * as React from 'react';
+import { Select as BaseSelect } from '@base-ui-components/react/select';
+
+// ── Types ──────────────────────────────────────────────────────────────────
+
+export type SelectSize = 'sm' | 'md' | 'lg';
+
+export interface SelectProps {
+  /** Visual size of the select trigger */
+  size?: SelectSize;
+  /** Whether the select is disabled */
+  disabled?: boolean;
+  /** Shows error border and error-styled helper text */
+  error?: boolean;
+  /** Placeholder text shown when no value is selected */
+  placeholder?: string;
+  /** Accessible label rendered above the select */
+  label?: string;
+  /** Helper text shown below the select */
+  helperText?: string;
+  /** The controlled value */
+  value?: string;
+  /** The default value (uncontrolled) */
+  defaultValue?: string;
+  /** Callback fired when the selected value changes */
+  onValueChange?: (value: string) => void;
+  /** Whether the field is required */
+  required?: boolean;
+  /** Identifies the field when a form is submitted */
+  name?: string;
+  /** SelectOption and SelectGroup children */
+  children?: React.ReactNode;
+  /** Additional CSS classes applied to the trigger button */
+  className?: string;
+}
+
+export interface SelectOptionProps {
+  /** Unique value that identifies this option */
+  value: string;
+  /** Whether this option is disabled */
+  disabled?: boolean;
+  /** Option display text */
+  children: React.ReactNode;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+export interface SelectGroupProps {
+  /** Accessible label for the option group */
+  label: string;
+  /** SelectOption children */
+  children: React.ReactNode;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+// ── Style maps ─────────────────────────────────────────────────────────────
+
+const triggerSizeClasses: Record<
+  SelectSize,
+  { trigger: string; textSize: string; label: string; icon: string }
+> = {
+  sm: {
+    trigger: 'h-8 px-2.5',
+    textSize: 'text-sm',
+    label: 'text-xs',
+    icon: 'size-3.5',
+  },
+  md: {
+    trigger: 'h-10 px-3',
+    textSize: 'text-sm',
+    label: 'text-sm',
+    icon: 'size-4',
+  },
+  lg: {
+    trigger: 'h-12 px-4',
+    textSize: 'text-base',
+    label: 'text-sm',
+    icon: 'size-5',
+  },
+};
+
+// ── Icons ──────────────────────────────────────────────────────────────────
+
+function ChevronDownIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+    >
+      <path
+        d="M4 6l4 4 4-4"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 12 12" fill="none" className="size-full" aria-hidden="true">
+      <path
+        d="M2 6l3 3 5-5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// ── Select ─────────────────────────────────────────────────────────────────
+
+export function Select({
+  size = 'md',
+  disabled,
+  error = false,
+  placeholder,
+  label,
+  helperText,
+  value,
+  defaultValue,
+  onValueChange,
+  required,
+  name,
+  children,
+  className,
+}: SelectProps) {
+  const generatedId = React.useId();
+  const [internalValue, setInternalValue] = React.useState<string | undefined>(
+    defaultValue,
+  );
+  const currentValue = value !== undefined ? value : internalValue;
+  const showPlaceholder = currentValue === undefined;
+  const sc = triggerSizeClasses[size];
+
+  const handleValueChange = React.useCallback(
+    (newValue: string | null) => {
+      if (newValue !== null) {
+        setInternalValue(newValue);
+        onValueChange?.(newValue);
+      }
+    },
+    [onValueChange],
+  );
+
+  const triggerClasses = [
+    'flex items-center w-full',
+    'bg-surface-primary',
+    'border',
+    error ? 'border-state-error' : 'border-border-default',
+    'rounded-xl',
+    'cursor-pointer',
+    'transition-[border-color,box-shadow] duration-[200ms]',
+    'focus-visible:outline-none',
+    error
+      ? 'focus-visible:ring-2 focus-visible:ring-state-error/40 focus-visible:border-state-error'
+      : 'focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:border-border-brand',
+    !error &&
+      'data-[popup-open]:border-border-brand data-[popup-open]:ring-2 data-[popup-open]:ring-border-focus',
+    error &&
+      'data-[popup-open]:ring-2 data-[popup-open]:ring-state-error/40',
+    'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
+    sc.trigger,
+    sc.textSize,
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const popupClasses = [
+    'bg-surface-primary border border-border-default rounded-xl shadow-lg',
+    'p-1',
+    'overflow-y-auto',
+    'outline-none',
+    'origin-[var(--transform-origin)]',
+    'transition-[scale,opacity] duration-[200ms]',
+    'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
+    'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
+  ].join(' ');
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      {label && (
+        <label
+          htmlFor={generatedId}
+          className={['font-medium text-content-primary', sc.label].join(' ')}
+        >
+          {label}
+        </label>
+      )}
+      <BaseSelect.Root
+        value={value}
+        defaultValue={defaultValue}
+        onValueChange={handleValueChange}
+        disabled={disabled}
+        required={required}
+        name={name}
+        modal={false}
+      >
+        <BaseSelect.Trigger id={generatedId} className={triggerClasses}>
+          {showPlaceholder ? (
+            <span className="flex-1 text-left truncate text-content-tertiary">
+              {placeholder}
+            </span>
+          ) : (
+            <BaseSelect.Value className="flex-1 text-left truncate text-content-primary" />
+          )}
+          <BaseSelect.Icon className="ml-2 text-content-tertiary shrink-0">
+            <ChevronDownIcon className={sc.icon} />
+          </BaseSelect.Icon>
+        </BaseSelect.Trigger>
+        <BaseSelect.Portal>
+          <BaseSelect.Positioner sideOffset={4} alignItemWithTrigger={false}>
+            <BaseSelect.Popup className={popupClasses}>
+              {children}
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
+      </BaseSelect.Root>
+      {helperText && (
+        <p
+          className={[
+            'text-xs',
+            error ? 'text-feedback-negative' : 'text-content-tertiary',
+          ].join(' ')}
+        >
+          {helperText}
+        </p>
+      )}
+    </div>
+  );
+}
+
+Select.displayName = 'Select';
+
+// ── SelectOption ───────────────────────────────────────────────────────────
+
+export function SelectOption({
+  value,
+  disabled,
+  children,
+  className,
+}: SelectOptionProps) {
+  return (
+    <BaseSelect.Item
+      value={value}
+      disabled={disabled}
+      className={[
+        'flex items-center gap-2 rounded-lg py-2 px-2 text-sm',
+        'cursor-pointer outline-none select-none',
+        'text-content-primary',
+        'transition-colors duration-[200ms]',
+        'data-[highlighted]:bg-surface-hover',
+        'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      <span className="flex items-center justify-center size-4 shrink-0 text-content-brand">
+        <BaseSelect.ItemIndicator>
+          <CheckIcon />
+        </BaseSelect.ItemIndicator>
+      </span>
+      <BaseSelect.ItemText>{children}</BaseSelect.ItemText>
+    </BaseSelect.Item>
+  );
+}
+
+SelectOption.displayName = 'SelectOption';
+
+// ── SelectGroup ────────────────────────────────────────────────────────────
+
+export function SelectGroup({
+  label,
+  children,
+  className,
+}: SelectGroupProps) {
+  return (
+    <BaseSelect.Group className={className}>
+      <BaseSelect.GroupLabel className="px-2 py-1.5 text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+        {label}
+      </BaseSelect.GroupLabel>
+      {children}
+    </BaseSelect.Group>
+  );
+}
+
+SelectGroup.displayName = 'SelectGroup';
