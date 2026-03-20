@@ -20,8 +20,8 @@ E-commerce design system built on [Base UI](https://base-ui.com) + Tailwind CSS 
 | Component | Base UI | E-commerce use |
 |---|---|---|
 | ~~`Checkbox`~~ ✅ | `@base-ui-components/react/checkbox` | Product filters, T&C acceptance, delivery options |
-| `Switch` | `@base-ui-components/react/switch` | Account preferences, notifications, dark mode |
-| `Input` | — (native) | Text field — quantity, promo code, search |
+| ~~`Switch`~~ ✅ | `@base-ui-components/react/switch` | Account preferences, notifications, dark mode |
+| ~~`Input`~~ ✅ | — (native) | Text field — quantity, promo code, search |
 | `Textarea` | — (native) | Customer reviews, order message |
 | `Select` | `@base-ui-components/react/select` | Size, color, country selection |
 | `Label` | — (native) | Accessible label for all form fields |

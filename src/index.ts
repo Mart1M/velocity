@@ -2,6 +2,9 @@
 export { Button } from './components/Button';
 export type { ButtonProps, ButtonVariant, ButtonSize, ButtonColorScheme } from './components/Button';
 
+export { Input } from './components/Input';
+export type { InputProps, InputSize } from './components/Input';
+
 export { Checkbox } from './components/Checkbox';
 export type { CheckboxProps, CheckboxSize } from './components/Checkbox';
 
