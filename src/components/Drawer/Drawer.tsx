@@ -65,14 +65,12 @@ const DrawerContext = React.createContext<DrawerSide>("right");
 const sideClasses: Record<DrawerSide, string> = {
   left: [
     "left-0 top-0 bottom-0 border-r",
-    "-translate-x-full",
-    "data-[open]:translate-x-0",
+    "data-[starting-style]:-translate-x-full",
     "data-[ending-style]:-translate-x-full",
   ].join(" "),
   right: [
     "right-0 top-0 bottom-0 border-l",
-    "translate-x-full",
-    "data-[open]:translate-x-0",
+    "data-[starting-style]:translate-x-full",
     "data-[ending-style]:translate-x-full",
   ].join(" "),
 };
@@ -156,8 +154,7 @@ export function DrawerBackdrop({ className }: DrawerBackdropProps) {
       className={[
         "fixed inset-0 bg-surface-overlay",
         "transition-opacity duration-[300ms]",
-        "opacity-0",
-        "data-[open]:opacity-100",
+        "data-[starting-style]:opacity-0",
         "data-[ending-style]:opacity-0",
         className,
       ]
