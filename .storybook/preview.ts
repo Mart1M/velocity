@@ -1,18 +1,32 @@
 import type { Preview } from '@storybook/react';
-import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import './preview.css';
 
 const preview: Preview = {
-  decorators: [
-    withThemeByDataAttribute({
-      themes: {
-        light: 'light',
-        dark: 'dark',
+  globalTypes: {
+    theme: {
+      description: 'Global theme for all stories',
+      toolbar: {
+        title: 'Theme',
+        icon: 'mirror',
+        items: [
+          { value: 'light', title: 'Light' },
+          { value: 'dark', title: 'Dark' },
+        ],
+        dynamicTitle: true,
       },
-      defaultTheme: 'light',
-      attributeName: 'data-theme',
-      parentSelector: 'html',
-    }),
+    },
+  },
+  initialGlobals: {
+    theme: 'light',
+  },
+  decorators: [
+    (Story, context) => {
+      document.documentElement.setAttribute(
+        'data-theme',
+        String(context.globals.theme ?? 'light')
+      );
+      return Story();
+    },
   ],
   parameters: {
     controls: {
