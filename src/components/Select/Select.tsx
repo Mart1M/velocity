@@ -115,6 +115,25 @@ function CheckIcon() {
   );
 }
 
+// ── Helpers ────────────────────────────────────────────────────────────────
+
+function collectItems(
+  node: React.ReactNode,
+): Record<string, React.ReactNode> {
+  const map: Record<string, React.ReactNode> = {};
+  React.Children.forEach(node, (child) => {
+    if (!React.isValidElement(child)) return;
+    if (child.type === SelectOption) {
+      const props = child.props as SelectOptionProps;
+      map[props.value] = props.children;
+    } else if (child.type === SelectGroup) {
+      const props = child.props as SelectGroupProps;
+      Object.assign(map, collectItems(props.children));
+    }
+  });
+  return map;
+}
+
 // ── Select ─────────────────────────────────────────────────────────────────
 
 export function Select({
@@ -139,6 +158,7 @@ export function Select({
   const currentValue = value !== undefined ? value : internalValue;
   const showPlaceholder = currentValue === undefined;
   const sc = triggerSizeClasses[size];
+  const items = React.useMemo(() => collectItems(children), [children]);
 
   const handleValueChange = React.useCallback(
     (newValue: string | null) => {
@@ -202,6 +222,7 @@ export function Select({
         disabled={disabled}
         required={required}
         name={name}
+        items={items}
         modal={false}
       >
         <BaseSelect.Trigger id={generatedId} className={triggerClasses}>
