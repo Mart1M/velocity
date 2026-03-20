@@ -14,5 +14,8 @@ export type { RadioGroupProps, RadioItemProps, RadioSize } from './components/Ra
 export { Switch } from './components/Switch';
 export type { SwitchProps, SwitchSize } from './components/Switch';
 
+export { Textarea } from './components/Textarea';
+export type { TextareaProps, TextareaSize, TextareaResize } from './components/Textarea';
+
 // Tokens
 export * from './tokens';
