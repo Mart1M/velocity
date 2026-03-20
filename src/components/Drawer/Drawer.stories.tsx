@@ -40,10 +40,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: (args) => (
     <Drawer {...args}>
-      <DrawerTrigger>
-        <Button variant="outline" colorScheme="neutral">
-          Open Drawer
-        </Button>
+      <DrawerTrigger render={<Button variant="outline" colorScheme="neutral" />}>
+        Open Drawer
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerBackdrop />
@@ -68,10 +66,8 @@ export const LeftSide: Story = {
   args: { side: "left" },
   render: (args) => (
     <Drawer {...args}>
-      <DrawerTrigger>
-        <Button variant="outline" colorScheme="neutral">
-          Open Left Drawer
-        </Button>
+      <DrawerTrigger render={<Button variant="outline" colorScheme="neutral" />}>
+        Open Left Drawer
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerBackdrop />
@@ -109,10 +105,8 @@ const cartItems = [
 export const SideCart: Story = {
   render: () => (
     <Drawer side="right">
-      <DrawerTrigger>
-        <Button variant="solid" colorScheme="primary">
-          Cart (3)
-        </Button>
+      <DrawerTrigger render={<Button variant="solid" colorScheme="primary" />}>
+        Cart (3)
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerBackdrop />
@@ -169,10 +163,8 @@ export const SideCart: Story = {
 export const MobileFilters: Story = {
   render: () => (
     <Drawer side="left">
-      <DrawerTrigger>
-        <Button variant="outline" colorScheme="neutral">
-          Filters
-        </Button>
+      <DrawerTrigger render={<Button variant="outline" colorScheme="neutral" />}>
+        Filters
       </DrawerTrigger>
       <DrawerPortal>
         <DrawerBackdrop />
@@ -245,10 +237,8 @@ export const Overview: Story = {
       </p>
       <div className="flex gap-4">
         <Drawer side="left">
-          <DrawerTrigger>
-            <Button variant="outline" colorScheme="neutral" size="sm">
-              Left
-            </Button>
+          <DrawerTrigger render={<Button variant="outline" colorScheme="neutral" size="sm" />}>
+            Left
           </DrawerTrigger>
           <DrawerPortal>
             <DrawerBackdrop />
@@ -263,10 +253,8 @@ export const Overview: Story = {
         </Drawer>
 
         <Drawer side="right">
-          <DrawerTrigger>
-            <Button variant="outline" colorScheme="neutral" size="sm">
-              Right
-            </Button>
+          <DrawerTrigger render={<Button variant="outline" colorScheme="neutral" size="sm" />}>
+            Right
           </DrawerTrigger>
           <DrawerPortal>
             <DrawerBackdrop />

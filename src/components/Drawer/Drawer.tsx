@@ -22,6 +22,13 @@ export interface DrawerProps {
 export interface DrawerTriggerProps {
   children?: React.ReactNode;
   className?: string;
+  /**
+   * Render as a custom element to avoid nested `<button>` when composing
+   * with other button components like `<Button />`.
+   */
+  render?:
+    | React.ReactElement<Record<string, unknown>>
+    | ((props: React.ComponentProps<"button">) => React.ReactElement);
 }
 
 export interface DrawerPortalProps {
@@ -124,10 +131,11 @@ Drawer.displayName = "Drawer";
 
 // ── DrawerTrigger ──────────────────────────────────────────────────────────
 
-export function DrawerTrigger({ children, className }: DrawerTriggerProps) {
+export function DrawerTrigger({ children, className, render }: DrawerTriggerProps) {
   return (
     <BaseDialog.Trigger
       className={["cursor-pointer", className].filter(Boolean).join(" ")}
+      render={render}
     >
       {children}
     </BaseDialog.Trigger>
