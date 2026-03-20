@@ -69,7 +69,7 @@ const variantColorClasses: Record<
   primary: {
     solid: [
       solidGlassEffect,
-      "bg-accent-primary text-content-primary shadow-button-primary",
+      "bg-accent-primary text-white shadow-sm",
       "hover:bg-primary-600 active:bg-primary-700",
     ].join(" "),
     outline:
@@ -81,7 +81,7 @@ const variantColorClasses: Record<
   success: {
     solid: [
       solidGlassEffect,
-      "bg-state-success text-content-primary shadow-button-success",
+      "bg-state-success text-white shadow-sm",
       "hover:bg-green-600 active:bg-green-700",
     ].join(" "),
     outline:
@@ -93,7 +93,7 @@ const variantColorClasses: Record<
   warning: {
     solid: [
       solidGlassEffect,
-      "bg-state-warning text-content-primary shadow-button-warning",
+      "bg-state-warning text-white shadow-sm",
       "hover:bg-orange-600 active:bg-orange-700",
     ].join(" "),
     outline:
@@ -105,7 +105,7 @@ const variantColorClasses: Record<
   danger: {
     solid: [
       solidGlassEffect,
-      "bg-state-error text-content-primary shadow-button-danger",
+      "bg-state-error text-white shadow-sm",
       "hover:bg-red-600 active:bg-red-700",
     ].join(" "),
     outline:
@@ -117,7 +117,7 @@ const variantColorClasses: Record<
   neutral: {
     solid: [
       solidGlassEffect,
-      "bg-surface-secondary text-content-primary shadow-button-neutral border border-border-default",
+      "bg-surface-secondary text-content-primary shadow-sm border border-border-default",
       "hover:bg-surface-tertiary active:bg-surface-active",
     ].join(" "),
     outline:

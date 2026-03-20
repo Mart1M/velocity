@@ -86,10 +86,25 @@ function usePaginationContext() {
 
 // ── Style maps ─────────────────────────────────────────────────────────────
 
-const sizeClasses: Record<PaginationSize, { item: string; gap: string; icon: string }> = {
-  sm: { item: "h-8 min-w-8 px-2 text-xs rounded-lg", gap: "gap-1", icon: "h-3.5 w-3.5" },
-  md: { item: "h-9 min-w-9 px-3 text-sm rounded-xl", gap: "gap-1.5", icon: "h-4 w-4" },
-  lg: { item: "h-11 min-w-11 px-4 text-base rounded-xl", gap: "gap-2", icon: "h-5 w-5" },
+const sizeClasses: Record<
+  PaginationSize,
+  { item: string; gap: string; icon: string }
+> = {
+  sm: {
+    item: "h-8 min-w-8 px-2 text-xs rounded-lg",
+    gap: "gap-1",
+    icon: "h-3.5 w-3.5",
+  },
+  md: {
+    item: "h-9 min-w-9 px-3 text-sm rounded-xl",
+    gap: "gap-1.5",
+    icon: "h-4 w-4",
+  },
+  lg: {
+    item: "h-11 min-w-11 px-4 text-base rounded-xl",
+    gap: "gap-2",
+    icon: "h-5 w-5",
+  },
 };
 
 const focusClasses = [
@@ -183,7 +198,10 @@ function ChevronRight({ className }: { className?: string }) {
 
 // ── PaginationContent ──────────────────────────────────────────────────────
 
-export function PaginationContent({ children, className }: PaginationContentProps) {
+export function PaginationContent({
+  children,
+  className,
+}: PaginationContentProps) {
   const { size } = usePaginationContext();
 
   return (
@@ -228,7 +246,7 @@ export function PaginationItem({
           focusClasses,
           sizeClasses[size].item,
           isActive
-            ? "bg-accent-primary text-content-primary"
+            ? "bg-accent-primary text-white"
             : "text-content-secondary hover:bg-surface-hover hover:text-content-primary",
           disabled ? "opacity-50 cursor-not-allowed" : "",
           className,

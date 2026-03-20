@@ -63,10 +63,7 @@ export function Tabs({
       defaultValue={defaultValue}
       onValueChange={onValueChange}
       orientation={orientation}
-      className={[
-        orientation === "vertical" ? "flex" : "",
-        className,
-      ]
+      className={[orientation === "vertical" ? "flex" : "", className]
         .filter(Boolean)
         .join(" ")}
     >
@@ -119,19 +116,19 @@ export function TabsTab({
       value={value}
       disabled={disabled}
       className={[
-        "relative px-4 py-2.5 text-sm font-medium",
+        "relative px-3 py-1.5 text-sm font-medium mb-1 rounded-xl cursor-pointer",
+        "data-[orientation=vertical]:mb-0 data-[orientation=vertical]:mr-1",
         "cursor-pointer select-none",
         "text-content-secondary",
-        "transition-colors duration-[200ms]",
+        "transition-all duration-[200ms]",
         // hover
         "hover:text-content-primary hover:bg-surface-hover",
         // selected
-        "data-[selected]:text-content-brand",
+        "data-active:text-content-primary data-active:bg-surface-secondary",
         // focus
         "focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-border-focus focus-visible:ring-offset-2",
         "focus-visible:ring-offset-background-primary",
-        "focus-visible:rounded-sm",
         // disabled
         "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
         "data-[disabled]:hover:bg-transparent data-[disabled]:hover:text-content-secondary",
@@ -153,10 +150,13 @@ export function TabsIndicator({ className }: TabsIndicatorProps) {
   return (
     <BaseTabs.Indicator
       className={[
-        "absolute bottom-0 h-0.5 bg-border-brand",
-        "transition-all duration-[200ms]",
-        "data-[orientation=vertical]:bottom-auto data-[orientation=vertical]:right-0",
-        "data-[orientation=vertical]:h-auto data-[orientation=vertical]:w-0.5",
+        "absolute -bottom-0.25 h-[3px] bg-accent-primary",
+        "left-[var(--active-tab-left)] w-[var(--active-tab-width)]",
+        "[transition:left_250ms_cubic-bezier(0.4,0,0.2,1),width_250ms_cubic-bezier(0.4,0,0.2,1),top_250ms_cubic-bezier(0.4,0,0.2,1),height_250ms_cubic-bezier(0.4,0,0.2,1)]",
+        "data-[orientation=vertical]:top-[var(--active-tab-top)] data-[orientation=vertical]:h-[var(--active-tab-height)]",
+        "data-[orientation=vertical]:left-auto data-[orientation=vertical]:right-0 data-[orientation=vertical]:w-[3px]",
+        "data-[orientation=vertical]:rounded-tl-sm data-[orientation=vertical]:rounded-bl-sm",
+        "data-[orientation=horizontal]:rounded-t-sm ",
         className,
       ]
         .filter(Boolean)
@@ -180,7 +180,7 @@ export function TabsPanel({
       value={value}
       keepMounted={keepMounted}
       className={[
-        "pt-4 text-sm text-content-primary",
+        "pt-3 text-sm text-content-primary",
         "focus-visible:outline-none",
         className,
       ]

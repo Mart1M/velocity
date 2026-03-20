@@ -2,7 +2,12 @@ import * as React from "react";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-export type AlertBannerVariant = "info" | "success" | "warning" | "error" | "brand";
+export type AlertBannerVariant =
+  | "info"
+  | "success"
+  | "warning"
+  | "error"
+  | "brand";
 
 export interface AlertBannerAction {
   /** Label text for the action button */
@@ -140,14 +145,6 @@ function CloseIcon({ className }: { className?: string }) {
 
 // ── Style maps ─────────────────────────────────────────────────────────────
 
-const variantBorderClasses: Record<AlertBannerVariant, string> = {
-  info: "border-l-state-info",
-  success: "border-l-state-success",
-  warning: "border-l-state-warning",
-  error: "border-l-state-error",
-  brand: "border-l-accent-primary",
-};
-
 const variantBgClasses: Record<AlertBannerVariant, string> = {
   info: "bg-blue-500/10",
   success: "bg-green-500/10",
@@ -162,6 +159,18 @@ const variantIconClasses: Record<AlertBannerVariant, string> = {
   warning: "text-feedback-caution",
   error: "text-feedback-negative",
   brand: "text-content-brand",
+};
+
+const variantActionClasses: Record<AlertBannerVariant, string> = {
+  info: "bg-state-info/15 text-content-primary hover:bg-state-info/25 active:bg-state-info/30",
+  success:
+    "bg-state-success/15 text-content-primary hover:bg-state-success/25 active:bg-state-success/30",
+  warning:
+    "bg-state-warning/15 text-content-primary hover:bg-state-warning/25 active:bg-state-warning/30",
+  error:
+    "bg-state-error/15 text-content-primary hover:bg-state-error/25 active:bg-state-error/30",
+  brand:
+    "bg-accent-primary/20 text-content-primary hover:bg-accent-primary/30 active:bg-accent-primary/35",
 };
 
 const defaultIcons: Record<
@@ -200,7 +209,9 @@ export function AlertBanner({
   const DefaultIcon = defaultIcons[variant];
   const iconElement =
     icon !== undefined ? (
-      <span className={["h-5 w-5 shrink-0", variantIconClasses[variant]].join(" ")}>
+      <span
+        className={["h-5 w-5 shrink-0", variantIconClasses[variant]].join(" ")}
+      >
         {icon}
       </span>
     ) : (
@@ -213,10 +224,9 @@ export function AlertBanner({
     <div
       role="alert"
       className={[
-        "w-full border-l-4 px-4 py-3",
+        "w-full px-4 py-3 rounded-xl",
         "flex items-start gap-3",
         "transition-colors duration-[200ms]",
-        variantBorderClasses[variant],
         variantBgClasses[variant],
         className,
       ]
@@ -231,10 +241,7 @@ export function AlertBanner({
         )}
         {description && (
           <p
-            className={[
-              "text-sm text-content-secondary",
-              title ? "mt-1" : "",
-            ]
+            className={["text-sm text-content-secondary", title ? "mt-1" : ""]
               .filter(Boolean)
               .join(" ")}
           >
@@ -249,10 +256,9 @@ export function AlertBanner({
           type="button"
           onClick={action.onClick}
           className={[
-            "shrink-0 text-sm font-medium px-3 py-1 rounded-xl",
+            "shrink-0 text-sm font-medium px-3 py-1 rounded-lg",
             "cursor-pointer transition-colors duration-[200ms]",
-            "bg-surface-secondary text-content-primary",
-            "hover:bg-surface-hover active:bg-surface-active",
+            variantActionClasses[variant],
             "focus-visible:outline-none focus-visible:ring-2",
             "focus-visible:ring-border-focus focus-visible:ring-offset-2",
             "focus-visible:ring-offset-background-primary",
@@ -271,7 +277,7 @@ export function AlertBanner({
             "shrink-0 p-1 rounded-lg",
             "cursor-pointer transition-colors duration-[200ms]",
             "text-content-secondary hover:text-content-primary",
-            "hover:bg-surface-hover active:bg-surface-active",
+            "hover:bg-black/5 active:bg-black/10",
             "focus-visible:outline-none focus-visible:ring-2",
             "focus-visible:ring-border-focus focus-visible:ring-offset-2",
             "focus-visible:ring-offset-background-primary",

@@ -31,16 +31,36 @@ const sizeClasses: Record<
   CheckboxSize,
   { root: string; indicator: string; label: string; gap: string }
 > = {
-  sm: { root: "size-4 rounded", indicator: "size-3", label: "text-sm", gap: "gap-2" },
-  md: { root: "size-5 rounded-md", indicator: "size-3.5", label: "text-sm", gap: "gap-2.5" },
-  lg: { root: "size-6 rounded-md", indicator: "size-4", label: "text-base", gap: "gap-3" },
+  sm: {
+    root: "size-4 rounded",
+    indicator: "size-3",
+    label: "text-sm",
+    gap: "gap-2",
+  },
+  md: {
+    root: "size-5 rounded-md",
+    indicator: "size-3.5",
+    label: "text-sm",
+    gap: "gap-2.5",
+  },
+  lg: {
+    root: "size-6 rounded-md",
+    indicator: "size-4",
+    label: "text-base",
+    gap: "gap-3",
+  },
 };
 
 // ── Icons ──────────────────────────────────────────────────────────────────
 
 function CheckIcon() {
   return (
-    <svg viewBox="0 0 12 12" fill="none" className="size-full" aria-hidden="true">
+    <svg
+      viewBox="0 0 12 12"
+      fill="none"
+      className="size-full"
+      aria-hidden="true"
+    >
       <path
         d="M2 6l3 3 5-5"
         stroke="currentColor"
@@ -54,7 +74,12 @@ function CheckIcon() {
 
 function IndeterminateIcon() {
   return (
-    <svg viewBox="0 0 12 12" fill="none" className="size-full" aria-hidden="true">
+    <svg
+      viewBox="0 0 12 12"
+      fill="none"
+      className="size-full"
+      aria-hidden="true"
+    >
       <path
         d="M2.5 6h7"
         stroke="currentColor"
@@ -132,7 +157,7 @@ export function Checkbox({
           keepMounted
           className={[
             "flex items-center justify-center",
-            "text-content-primary",
+            "text-white",
             "transition-[transform,opacity] duration-200",
             "data-unchecked:opacity-0 data-unchecked:scale-0",
             "data-starting-style:scale-0 data-ending-style:scale-0",

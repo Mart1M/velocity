@@ -167,8 +167,8 @@ export function DialogBackdrop({ className }: DialogBackdropProps) {
   return (
     <BaseDialog.Backdrop
       className={[
-        'fixed inset-0 bg-surface-overlay backdrop-blur-sm',
-        'transition-[opacity,backdrop-filter] duration-[200ms]',
+        'fixed inset-0 bg-surface-overlay',
+        'will-change-opacity transition-opacity duration-[200ms]',
         'data-[starting-style]:opacity-0',
         'data-[ending-style]:opacity-0',
         className,
@@ -195,9 +195,9 @@ export function DialogPopup({
         'bg-surface-primary border border-border-default shadow-lg',
         'rounded-2xl p-6',
         'outline-none',
-        'transition-[transform,opacity] duration-[200ms]',
-        'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
-        'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
+        'will-change-opacity transition-opacity duration-[200ms]',
+        'data-[starting-style]:opacity-0',
+        'data-[ending-style]:opacity-0',
         popupSizeClasses[size],
         className,
       ]

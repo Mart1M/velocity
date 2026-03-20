@@ -32,22 +32,18 @@ export interface BadgeProps {
 const filledVariantClasses: Record<BadgeVariant, string> = {
   default: "bg-surface-secondary text-content-secondary",
   success: "bg-state-success text-content-primary",
-  warning: "bg-state-warning text-content-primary",
-  error: "bg-state-error text-content-primary",
-  info: "bg-state-info text-content-primary",
-  brand: "bg-accent-primary text-content-primary",
+  warning: "bg-state-warning text-white",
+  error: "bg-state-error text-white",
+  info: "bg-state-info text-white",
+  brand: "bg-accent-primary text-white",
 };
 
 const outlineVariantClasses: Record<BadgeVariant, string> = {
-  default:
-    "bg-transparent text-content-secondary border border-border-strong",
-  success:
-    "bg-transparent text-feedback-positive border border-state-success",
-  warning:
-    "bg-transparent text-feedback-caution border border-state-warning",
-  error:
-    "bg-transparent text-feedback-negative border border-state-error",
-  info: "bg-transparent text-feedback-neutral border border-state-info",
+  default: "bg-transparent text-content-secondary border border-border-strong",
+  success: "bg-transparent text-state-success border border-state-success",
+  warning: "bg-transparent text-state-warning border border-state-warning",
+  error: "bg-transparent text-state-error border border-state-error",
+  info: "bg-transparent text-state-info border border-state-info",
   brand: "bg-transparent text-content-brand border border-border-brand",
 };
 
@@ -70,11 +66,13 @@ export function Badge({
   return (
     <span
       className={[
-        "inline-flex items-center font-medium leading-none whitespace-nowrap",
+        "inline-flex items-center font-medium leading-none whitespace-nowrap py-1 px-0.5 font-semibold",
         "transition-colors duration-[200ms]",
         rounded ? "rounded-full" : "rounded-md",
         sizeClasses[size],
-        outline ? outlineVariantClasses[variant] : filledVariantClasses[variant],
+        outline
+          ? outlineVariantClasses[variant]
+          : filledVariantClasses[variant],
         className,
       ]
         .filter(Boolean)

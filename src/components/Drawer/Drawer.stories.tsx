@@ -10,6 +10,7 @@ import {
   DrawerClose,
 } from "./Drawer";
 import { Button } from "../Button";
+import { Checkbox } from "../Checkbox";
 
 const meta = {
   title: "Components/Drawer",
@@ -179,16 +180,9 @@ export const MobileFilters: Story = {
                 Category
               </legend>
               {["Shoes", "Apparel", "Accessories", "Equipment"].map((cat) => (
-                <label
-                  key={cat}
-                  className="flex items-center gap-2 text-sm text-content-secondary cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    className="accent-accent-primary"
-                  />
+                <Checkbox key={cat} size="sm">
                   {cat}
-                </label>
+                </Checkbox>
               ))}
             </fieldset>
 
@@ -198,16 +192,9 @@ export const MobileFilters: Story = {
               </legend>
               {["Under $50", "$50 – $100", "$100 – $200", "Over $200"].map(
                 (range) => (
-                  <label
-                    key={range}
-                    className="flex items-center gap-2 text-sm text-content-secondary cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      className="accent-accent-primary"
-                    />
+                  <Checkbox key={range} size="sm">
                     {range}
-                  </label>
+                  </Checkbox>
                 ),
               )}
             </fieldset>
