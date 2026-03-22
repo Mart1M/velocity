@@ -1,5 +1,12 @@
 import * as React from "react";
 import { Toast as BaseToast } from "@base-ui-components/react/toast";
+import {
+  RiAlertLine,
+  RiCheckboxCircleLine,
+  RiCloseCircleLine,
+  RiCloseLine,
+  RiInformationLine,
+} from "react-icons/ri";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -44,122 +51,15 @@ const variantIconColors: Record<ToastVariant, string> = {
   info: "text-feedback-neutral",
 };
 
-// ── Icons (inline SVGs) ────────────────────────────────────────────────────
-
-function CheckCircleIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <polyline points="22 4 12 14.01 9 11.01" />
-    </svg>
-  );
-}
-
-function AlertTriangleIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-      <line x1="12" y1="9" x2="12" y2="13" />
-      <line x1="12" y1="17" x2="12.01" y2="17" />
-    </svg>
-  );
-}
-
-function XCircleIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="15" y1="9" x2="9" y2="15" />
-      <line x1="9" y1="9" x2="15" y2="15" />
-    </svg>
-  );
-}
-
-function InfoIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <line x1="12" y1="16" x2="12" y2="12" />
-      <line x1="12" y1="8" x2="12.01" y2="8" />
-    </svg>
-  );
-}
-
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <line x1="18" y1="6" x2="6" y2="18" />
-      <line x1="6" y1="6" x2="18" y2="18" />
-    </svg>
-  );
-}
-
-const variantIcons: Record<ToastVariant, React.FC<{ className?: string }> | null> = {
+const variantIcons: Record<
+  ToastVariant,
+  React.ComponentType<{ className?: string }> | null
+> = {
   default: null,
-  success: CheckCircleIcon,
-  warning: AlertTriangleIcon,
-  error: XCircleIcon,
-  info: InfoIcon,
+  success: RiCheckboxCircleLine,
+  warning: RiAlertLine,
+  error: RiCloseCircleLine,
+  info: RiInformationLine,
 };
 
 // ── Toast Provider ─────────────────────────────────────────────────────────
@@ -224,15 +124,26 @@ export function ToastViewport({ className, renderToast }: ToastViewportProps) {
           .filter(Boolean)
           .join(" ")}
       >
-        {toasts.map((toast) =>
-          renderToast ? (
-            <React.Fragment key={toast.id}>
-              {renderToast(toast)}
-            </React.Fragment>
-          ) : (
-            <Toast key={toast.id} toast={toast} />
-          ),
-        )}
+        {toasts.map((toast, index) => {
+          const stackDepth = Math.min(Math.max(toasts.length - index - 1, 0), 2);
+          const stackStyle: React.CSSProperties =
+            stackDepth > 0
+              ? {
+                  transform: `translateY(${stackDepth * 6}px) scale(${1 - stackDepth * 0.02})`,
+                  opacity: 1 - stackDepth * 0.08,
+                }
+              : {};
+
+          return (
+            <div
+              key={toast.id}
+              className="transition-[transform,opacity] duration-[250ms] ease-out"
+              style={stackStyle}
+            >
+              {renderToast ? renderToast(toast) : <Toast toast={toast} />}
+            </div>
+          );
+        })}
       </BaseToast.Viewport>
     </BaseToast.Portal>
   );
@@ -289,7 +200,7 @@ export function Toast({ toast, className, children }: ToastProps) {
             variantIconColors[variant],
           ].join(" ")}
         >
-          <Icon />
+          <Icon className="h-5 w-5" />
         </span>
       )}
 
@@ -395,7 +306,7 @@ export function ToastClose({ className }: ToastCloseProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      <XIcon />
+      <RiCloseLine className="size-4" aria-hidden />
     </BaseToast.Close>
   );
 }

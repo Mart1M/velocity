@@ -1,0 +1,132 @@
+diff --git a/node_modules/@base-ui-components/react/esm/popover/trigger/PopoverTrigger.js b/node_modules/@base-ui-components/react/esm/popover/trigger/PopoverTrigger.js
+index 0368f1a..76f0278 100644
+--- a/node_modules/@base-ui-components/react/esm/popover/trigger/PopoverTrigger.js
++++ b/node_modules/@base-ui-components/react/esm/popover/trigger/PopoverTrigger.js
+@@ -61,13 +61,16 @@ export const PopoverTrigger = /*#__PURE__*/React.forwardRef(function PopoverTrig
+   const openReason = store.useState('openChangeReason');
+   const stickIfOpen = store.useState('stickIfOpen');
+   const openMethod = store.useState('openMethod');
++  // Velocity: Base UI used restMs:delay with delay:{close} only; mouseenter then exits early
++  // until pointer moves (move:false). Use open delay on delay.open and restMs:0 instead.
+   const hoverProps = useHoverReferenceInteraction(floatingContext, {
+     enabled: floatingContext != null && openOnHover && (openMethod !== 'touch' || openReason !== REASONS.triggerPress),
+     mouseOnly: true,
+     move: false,
+     handleClose: safePolygon(),
+-    restMs: delay,
++    restMs: 0,
+     delay: {
++      open: delay,
+       close: closeDelay
+     },
+     triggerElementRef,
+diff --git a/node_modules/@base-ui-components/react/esm/tooltip/trigger/TooltipTrigger.js b/node_modules/@base-ui-components/react/esm/tooltip/trigger/TooltipTrigger.js
+index e918651..53508f9 100644
+--- a/node_modules/@base-ui-components/react/esm/tooltip/trigger/TooltipTrigger.js
++++ b/node_modules/@base-ui-components/react/esm/tooltip/trigger/TooltipTrigger.js
+@@ -61,31 +61,32 @@ export const TooltipTrigger = /*#__PURE__*/React.forwardRef(function TooltipTrig
+   const disabled = disabledProp ?? rootDisabled;
+   const trackCursorAxis = store.useState('trackCursorAxis');
+   const disableHoverablePopup = store.useState('disableHoverablePopup');
++  // Velocity: same as Popover — restMs for “open” without delay.open caused mouseenter to bail
++  // until the pointer moved (move:false). Use restMs:0 and put open delay on delay.open.
+   const hoverProps = useHoverReferenceInteraction(floatingRootContext, {
+     enabled: !disabled,
+     mouseOnly: true,
+     move: false,
+     handleClose: !disableHoverablePopup && trackCursorAxis !== 'both' ? safePolygon() : null,
+-    restMs() {
++    restMs: 0,
++    delay() {
+       const providerDelay = providerContext?.delay;
+       const groupOpenValue = typeof delayRef.current === 'object' ? delayRef.current.open : undefined;
+-      let computedRestMs = delayWithDefault;
++      let computedOpenDelay = delayWithDefault;
+       if (hasProvider) {
+         if (groupOpenValue !== 0) {
+-          computedRestMs = delay ?? providerDelay ?? delayWithDefault;
++          computedOpenDelay = delay ?? providerDelay ?? delayWithDefault;
+         } else {
+-          computedRestMs = 0;
++          computedOpenDelay = 0;
+         }
+       }
+-      return computedRestMs;
+-    },
+-    delay() {
+       const closeValue = typeof delayRef.current === 'object' ? delayRef.current.close : undefined;
+       let computedCloseDelay = closeDelayWithDefault;
+       if (closeDelay == null && hasProvider) {
+         computedCloseDelay = closeValue;
+       }
+       return {
++        open: computedOpenDelay,
+         close: computedCloseDelay
+       };
+     },
+diff --git a/node_modules/@base-ui-components/react/popover/trigger/PopoverTrigger.js b/node_modules/@base-ui-components/react/popover/trigger/PopoverTrigger.js
+index 906b21a..af7a3e0 100644
+--- a/node_modules/@base-ui-components/react/popover/trigger/PopoverTrigger.js
++++ b/node_modules/@base-ui-components/react/popover/trigger/PopoverTrigger.js
+@@ -67,13 +67,16 @@ const PopoverTrigger = exports.PopoverTrigger = /*#__PURE__*/React.forwardRef(fu
+   const openReason = store.useState('openChangeReason');
+   const stickIfOpen = store.useState('stickIfOpen');
+   const openMethod = store.useState('openMethod');
++  // Velocity: Base UI used restMs:delay with delay:{close} only; mouseenter then exits early
++  // until pointer moves (move:false). Use open delay on delay.open and restMs:0 instead.
+   const hoverProps = (0, _floatingUiReact.useHoverReferenceInteraction)(floatingContext, {
+     enabled: floatingContext != null && openOnHover && (openMethod !== 'touch' || openReason !== _reasons.REASONS.triggerPress),
+     mouseOnly: true,
+     move: false,
+     handleClose: (0, _floatingUiReact.safePolygon)(),
+-    restMs: delay,
++    restMs: 0,
+     delay: {
++      open: delay,
+       close: closeDelay
+     },
+     triggerElementRef,
+diff --git a/node_modules/@base-ui-components/react/tooltip/trigger/TooltipTrigger.js b/node_modules/@base-ui-components/react/tooltip/trigger/TooltipTrigger.js
+index 55ec6f9..86f9723 100644
+--- a/node_modules/@base-ui-components/react/tooltip/trigger/TooltipTrigger.js
++++ b/node_modules/@base-ui-components/react/tooltip/trigger/TooltipTrigger.js
+@@ -67,31 +67,32 @@ const TooltipTrigger = exports.TooltipTrigger = /*#__PURE__*/React.forwardRef(fu
+   const disabled = disabledProp ?? rootDisabled;
+   const trackCursorAxis = store.useState('trackCursorAxis');
+   const disableHoverablePopup = store.useState('disableHoverablePopup');
++  // Velocity: same as Popover — restMs for “open” without delay.open caused mouseenter to bail
++  // until the pointer moved (move:false). Use restMs:0 and put open delay on delay.open.
+   const hoverProps = (0, _floatingUiReact.useHoverReferenceInteraction)(floatingRootContext, {
+     enabled: !disabled,
+     mouseOnly: true,
+     move: false,
+     handleClose: !disableHoverablePopup && trackCursorAxis !== 'both' ? (0, _floatingUiReact.safePolygon)() : null,
+-    restMs() {
++    restMs: 0,
++    delay() {
+       const providerDelay = providerContext?.delay;
+       const groupOpenValue = typeof delayRef.current === 'object' ? delayRef.current.open : undefined;
+-      let computedRestMs = delayWithDefault;
++      let computedOpenDelay = delayWithDefault;
+       if (hasProvider) {
+         if (groupOpenValue !== 0) {
+-          computedRestMs = delay ?? providerDelay ?? delayWithDefault;
++          computedOpenDelay = delay ?? providerDelay ?? delayWithDefault;
+         } else {
+-          computedRestMs = 0;
++          computedOpenDelay = 0;
+         }
+       }
+-      return computedRestMs;
+-    },
+-    delay() {
+       const closeValue = typeof delayRef.current === 'object' ? delayRef.current.close : undefined;
+       let computedCloseDelay = closeDelayWithDefault;
+       if (closeDelay == null && hasProvider) {
+         computedCloseDelay = closeValue;
+       }
+       return {
++        open: computedOpenDelay,
+         close: computedCloseDelay
+       };
+     },

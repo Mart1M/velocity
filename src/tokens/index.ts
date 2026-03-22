@@ -2,4 +2,4 @@
 // (e.g. Style Dictionary transforms, documentation generators)
 export { default as coreColors } from './core/color.json';
 export { default as coreTypography } from './core/typography.json';
-export { default as semanticTokens } from './semantic/semantic.json';
+export { default as semanticTypography } from './semantic/semantic-typography.json';

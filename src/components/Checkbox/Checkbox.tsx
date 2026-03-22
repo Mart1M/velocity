@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
+import { RiCheckLine, RiSubtractLine } from "react-icons/ri";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -50,45 +51,6 @@ const sizeClasses: Record<
     gap: "gap-3",
   },
 };
-
-// ── Icons ──────────────────────────────────────────────────────────────────
-
-function CheckIcon() {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      fill="none"
-      className="size-full"
-      aria-hidden="true"
-    >
-      <path
-        d="M2 6l3 3 5-5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function IndeterminateIcon() {
-  return (
-    <svg
-      viewBox="0 0 12 12"
-      fill="none"
-      className="size-full"
-      aria-hidden="true"
-    >
-      <path
-        d="M2.5 6h7"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 // ── Component ──────────────────────────────────────────────────────────────
 
@@ -166,7 +128,11 @@ export function Checkbox({
             .filter(Boolean)
             .join(" ")}
         >
-          {indeterminate ? <IndeterminateIcon /> : <CheckIcon />}
+          {indeterminate ? (
+            <RiSubtractLine className="size-full" aria-hidden />
+          ) : (
+            <RiCheckLine className="size-full" aria-hidden />
+          )}
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
 

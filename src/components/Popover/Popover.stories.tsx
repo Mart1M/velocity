@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from '../Button/Button';
 import {
   Popover,
@@ -6,7 +6,6 @@ import {
   PopoverPortal,
   PopoverPositioner,
   PopoverPopup,
-  PopoverArrow,
   PopoverTitle,
   PopoverDescription,
   PopoverClose,
@@ -20,7 +19,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A floating panel anchored to a trigger, ideal for quick product previews, color/size pickers, and contextual actions. Built on Base UI Popover with fade + scale animation.',
+          'A floating panel anchored to a trigger, ideal for quick product previews, color/size pickers, and contextual actions. Built on Base UI Popover with a fade animation.',
       },
     },
   },
@@ -47,12 +46,10 @@ export const Default: Story = {
       <PopoverPortal>
         <PopoverPositioner>
           <PopoverPopup>
-            <PopoverArrow />
             <PopoverClose />
             <PopoverTitle>Quick Preview</PopoverTitle>
             <PopoverDescription>
-              This is a basic popover with a title, description, arrow, and
-              close button.
+              This is a basic popover with a title, description, and close button.
             </PopoverDescription>
           </PopoverPopup>
         </PopoverPositioner>
@@ -75,7 +72,6 @@ export const Placement: Story = {
           <PopoverPortal>
             <PopoverPositioner side="top" sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverTitle>Top</PopoverTitle>
                 <PopoverDescription>
                   Positioned above the trigger.
@@ -95,7 +91,6 @@ export const Placement: Story = {
           <PopoverPortal>
             <PopoverPositioner side="left" sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverTitle>Left</PopoverTitle>
                 <PopoverDescription>
                   Positioned to the left.
@@ -115,7 +110,6 @@ export const Placement: Story = {
           <PopoverPortal>
             <PopoverPositioner side="right" sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverTitle>Right</PopoverTitle>
                 <PopoverDescription>
                   Positioned to the right.
@@ -135,7 +129,6 @@ export const Placement: Story = {
           <PopoverPortal>
             <PopoverPositioner side="bottom" sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverTitle>Bottom</PopoverTitle>
                 <PopoverDescription>
                   Positioned below the trigger.
@@ -161,7 +154,6 @@ export const ProductPreview: Story = {
       <PopoverPortal>
         <PopoverPositioner sideOffset={8}>
           <PopoverPopup className="w-72">
-            <PopoverArrow />
             <PopoverClose />
             <div className="flex gap-3">
               <div className="size-16 shrink-0 rounded-lg bg-surface-secondary flex items-center justify-center">
@@ -207,7 +199,6 @@ export const ColorPicker: Story = {
       <PopoverPortal>
         <PopoverPositioner sideOffset={8}>
           <PopoverPopup className="w-56">
-            <PopoverArrow />
             <PopoverTitle>Select Color</PopoverTitle>
             <div className="mt-3 grid grid-cols-3 gap-2">
               {swatches.map((s) => (
@@ -246,33 +237,9 @@ export const HoverTrigger: Story = {
       <PopoverPortal>
         <PopoverPositioner side="top" sideOffset={8}>
           <PopoverPopup>
-            <PopoverArrow />
             <PopoverTitle>Quick Info</PopoverTitle>
             <PopoverDescription>
               This popover opens on hover with a short delay.
-            </PopoverDescription>
-          </PopoverPopup>
-        </PopoverPositioner>
-      </PopoverPortal>
-    </Popover>
-  ),
-};
-
-// ─── Without Arrow ─────────────────────────────────────────────────────────────
-
-export const WithoutArrow: Story = {
-  render: () => (
-    <Popover>
-      <PopoverTrigger render={<Button variant="outline" colorScheme="neutral" />}>
-        No Arrow
-      </PopoverTrigger>
-      <PopoverPortal>
-        <PopoverPositioner sideOffset={4}>
-          <PopoverPopup>
-            <PopoverClose />
-            <PopoverTitle>Clean Look</PopoverTitle>
-            <PopoverDescription>
-              Popover without an arrow indicator.
             </PopoverDescription>
           </PopoverPopup>
         </PopoverPositioner>
@@ -298,7 +265,6 @@ export const Overview: Story = {
           <PopoverPortal>
             <PopoverPositioner sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverTitle>Basic Popover</PopoverTitle>
                 <PopoverDescription>
                   Simple popover with title and description.
@@ -316,7 +282,6 @@ export const Overview: Story = {
           <PopoverPortal>
             <PopoverPositioner sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverClose />
                 <PopoverTitle>Closable</PopoverTitle>
                 <PopoverDescription>
@@ -340,7 +305,6 @@ export const Overview: Story = {
           <PopoverPortal>
             <PopoverPositioner side="top" sideOffset={8}>
               <PopoverPopup>
-                <PopoverArrow />
                 <PopoverDescription>
                   Opens on hover.
                 </PopoverDescription>

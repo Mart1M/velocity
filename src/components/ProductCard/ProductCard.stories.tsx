@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   ProductCard,
   ProductCardImage,
   ProductCardBadges,
+  ProductCardFavorite,
   ProductCardContent,
   ProductCardBrand,
   ProductCardTitle,
@@ -11,6 +12,8 @@ import {
 } from "./ProductCard";
 import { Badge } from "../Badge";
 import { Button } from "../Button";
+import { IconButton } from "../IconButton";
+import { RiHeartLine } from "react-icons/ri";
 
 const meta = {
   title: "Components/ProductCard",
@@ -20,7 +23,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Carte produit pour un e-commerce de matériel de running. Composant composable avec image, badges, marque, titre, prix et actions.",
+          'Product card for running-gear e-commerce. Composable slots: image, **ProductCardBadges** (top-left), **ProductCardFavorite** (top-right overlay for icon-only actions e.g. favorites), brand, title, price, and optional **ProductCardActions**. Use `layout="vertical"` (default) for grid tiles, or `layout="horizontal"` for dense rows. Use `href` to render the whole card as a link, or omit it for a non-clickable `<article>`. Set `disabled` for out-of-stock listings.',
       },
     },
   },
@@ -29,42 +32,79 @@ const meta = {
     size: {
       control: "select",
       options: ["sm", "md", "lg"],
-      description: "Taille de la carte",
+      description:
+        "Card size (image area and title typography scale with size)",
     },
     disabled: {
       control: "boolean",
-      description: "Produit indisponible (épuisé)",
+      description:
+        "Unavailable product (out of stock)—dims the card and disables link behavior when using href",
     },
     href: {
       control: "text",
-      description: "Lien vers la page produit",
+      description:
+        "Optional product page URL; when set, the root renders as `<a>`",
+    },
+    layout: {
+      control: "select",
+      options: ["vertical", "horizontal"],
+      description:
+        "`vertical` = image on top; `horizontal` = square thumbnail left, details right",
     },
   },
   args: {
     size: "md",
     disabled: false,
+    layout: "vertical",
   },
 } satisfies Meta<typeof ProductCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// Placeholder image for running shoes
 const RUNNING_SHOE_IMG =
   "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop";
+
+/** Favorite control — used on all vertical layout stories. */
+function CardFavoriteButton() {
+  return (
+    <ProductCardFavorite>
+      <IconButton
+        label="Add to favorites"
+        size="sm"
+        variant="outline"
+        colorScheme="neutral"
+      >
+        <RiHeartLine className="h-4 w-4" aria-hidden />
+      </IconButton>
+    </ProductCardFavorite>
+  );
+}
 
 // ── Default ────────────────────────────────────────────────────────────────
 
 export const Default: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Default layout with a promo badge, brand, two-line title area, and sale pricing (current + strikethrough).",
+      },
+    },
+  },
   render: (args) => (
     <div className="w-72">
       <ProductCard {...args} href="#">
-        <ProductCardImage src={RUNNING_SHOE_IMG} alt="Chaussure de running Nike Pegasus">
+        <ProductCardImage
+          src={RUNNING_SHOE_IMG}
+          alt="Nike Pegasus running shoe"
+        >
           <ProductCardBadges>
             <Badge variant="brand" size="sm">
               Promo
             </Badge>
           </ProductCardBadges>
+          <CardFavoriteButton />
         </ProductCardImage>
         <ProductCardContent>
           <ProductCardBrand>Nike</ProductCardBrand>
@@ -76,16 +116,26 @@ export const Default: Story = {
   ),
 };
 
-// ── Sans promo ─────────────────────────────────────────────────────────────
+// ── Without promo ───────────────────────────────────────────────────────────
 
-export const SansPromo: Story = {
+export const WithoutPromo: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "No badge overlay; single price line. Use this for catalog rows without campaigns.",
+      },
+    },
+  },
   render: (args) => (
     <div className="w-72">
       <ProductCard {...args} href="#">
         <ProductCardImage
           src={RUNNING_SHOE_IMG}
-          alt="Chaussure de running Asics Gel-Kayano"
-        />
+          alt="Asics Gel-Kayano running shoe"
+        >
+          <CardFavoriteButton />
+        </ProductCardImage>
         <ProductCardContent>
           <ProductCardBrand>Asics</ProductCardBrand>
           <ProductCardTitle>Gel-Kayano 30</ProductCardTitle>
@@ -96,24 +146,33 @@ export const SansPromo: Story = {
   ),
 };
 
-// ── Avec badges multiples ───────────────────────────────────────────────────
+// ── Multiple badges ───────────────────────────────────────────────────────────
 
-export const AvecBadgesMultiples: Story = {
+export const MultipleBadges: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "**ProductCardBadges** stacks multiple `Badge` components in the top-left of the image.",
+      },
+    },
+  },
   render: (args) => (
     <div className="w-72">
       <ProductCard {...args} href="#">
         <ProductCardImage
           src={RUNNING_SHOE_IMG}
-          alt="Chaussure de running Saucony Endorphin"
+          alt="Saucony Endorphin running shoe"
         >
           <ProductCardBadges>
             <Badge variant="success" size="sm">
-              Nouveau
+              New
             </Badge>
             <Badge variant="brand" size="sm">
-              Best-seller
+              Best seller
             </Badge>
           </ProductCardBadges>
+          <CardFavoriteButton />
         </ProductCardImage>
         <ProductCardContent>
           <ProductCardBrand>Saucony</ProductCardBrand>
@@ -125,21 +184,30 @@ export const AvecBadgesMultiples: Story = {
   ),
 };
 
-// ── Épuisé ─────────────────────────────────────────────────────────────────
+// ── Out of stock ─────────────────────────────────────────────────────────────
 
-export const Epuise: Story = {
+export const OutOfStock: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "`disabled` applies reduced opacity and `pointer-events: none` on the card. Pair with an error badge in the image slot.",
+      },
+    },
+  },
   render: (args) => (
     <div className="w-72">
       <ProductCard {...args} href="#" disabled>
         <ProductCardImage
           src={RUNNING_SHOE_IMG}
-          alt="Chaussure de running Hoka Clifton"
+          alt="Hoka Clifton running shoe"
         >
           <ProductCardBadges>
             <Badge variant="error" size="sm">
-              Épuisé
+              Out of stock
             </Badge>
           </ProductCardBadges>
+          <CardFavoriteButton />
         </ProductCardImage>
         <ProductCardContent>
           <ProductCardBrand>Hoka</ProductCardBrand>
@@ -151,23 +219,33 @@ export const Epuise: Story = {
   ),
 };
 
-// ── Avec actions (hover) ────────────────────────────────────────────────────
+// ── With actions ─────────────────────────────────────────────────────────────
 
-export const AvecActions: Story = {
+export const WithActions: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "**ProductCardFavorite** pins an **IconButton** (e.g. heart) to the **top-right of the image**. **ProductCardActions** holds the primary CTA (Add to cart) below the price.",
+      },
+    },
+  },
   render: (args) => (
     <div className="w-72">
       <ProductCard {...args} href="#">
         <ProductCardImage
           src={RUNNING_SHOE_IMG}
-          alt="Chaussure de running Brooks Ghost"
-        />
+          alt="Brooks Ghost running shoe"
+        >
+          <CardFavoriteButton />
+        </ProductCardImage>
         <ProductCardContent>
           <ProductCardBrand>Brooks</ProductCardBrand>
           <ProductCardTitle>Ghost 16</ProductCardTitle>
           <ProductCardPrice price="139,99 €" />
           <ProductCardActions>
             <Button size="sm" fullWidth colorScheme="primary">
-              Ajouter au panier
+              Add to cart
             </Button>
           </ProductCardActions>
         </ProductCardContent>
@@ -176,17 +254,104 @@ export const AvecActions: Story = {
   ),
 };
 
-// ── Tailles ────────────────────────────────────────────────────────────────
+// ── Horizontal ──────────────────────────────────────────────────────────────
 
-export const Tailles: Story = {
+export const Horizontal: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`layout="horizontal"` — fixed-width image column on the left (**full height** of the card, `object-cover`), text on the right. Good for lists and cart rows.',
+      },
+    },
+  },
+  args: {
+    layout: "horizontal",
+  },
+  render: (args) => (
+    <div className="w-full max-w-xl">
+      <ProductCard {...args} href="#">
+        <ProductCardImage
+          src={RUNNING_SHOE_IMG}
+          alt="Brooks Ghost running shoe"
+        >
+          <ProductCardBadges>
+            <Badge variant="brand" size="sm">
+              Sale
+            </Badge>
+          </ProductCardBadges>
+        </ProductCardImage>
+        <ProductCardContent>
+          <ProductCardBrand>Brooks</ProductCardBrand>
+          <ProductCardTitle>
+            Ghost 16 — Men&apos;s cushioning daily trainer
+          </ProductCardTitle>
+          <ProductCardPrice price="139,99 €" originalPrice="159,99 €" />
+        </ProductCardContent>
+      </ProductCard>
+    </div>
+  ),
+};
+
+export const HorizontalWithActions: Story = {
+  parameters: {
+    layout: "padded",
+    docs: {
+      description: {
+        story:
+          "Horizontal card: **ProductCardFavorite** on the **top-right of the image**; **ProductCardActions** uses `mt-auto` for **Add to cart** at the bottom of the text column.",
+      },
+    },
+  },
+  args: {
+    layout: "horizontal",
+  },
+  render: (args) => (
+    <div className="w-full max-w-md">
+      <ProductCard {...args} href="#">
+        <ProductCardImage
+          src={RUNNING_SHOE_IMG}
+          alt="Nike Pegasus running shoe"
+        >
+          <CardFavoriteButton />
+        </ProductCardImage>
+        <ProductCardContent>
+          <ProductCardBrand>Nike</ProductCardBrand>
+          <ProductCardTitle>Pegasus 41</ProductCardTitle>
+          <ProductCardPrice price="129,99 €" />
+          <ProductCardActions>
+            <Button size="sm" colorScheme="primary" fullWidth>
+              Add to cart
+            </Button>
+          </ProductCardActions>
+        </ProductCardContent>
+      </ProductCard>
+    </div>
+  ),
+};
+
+//  ── Sizes ────────────────────────────────────────────────────────────────────
+
+export const Sizes: Story = {
+  parameters: {
+    layout: "padded",
+    docs: {
+      description: {
+        story:
+          "Compare `sm`, `md`, and `lg`: corner radius and title size follow the `size` prop on **ProductCard**.",
+      },
+    },
+  },
   render: () => (
     <div className="flex gap-6 flex-wrap">
       <div className="w-56">
         <ProductCard size="sm" href="#">
           <ProductCardImage
             src={RUNNING_SHOE_IMG}
-            alt="Chaussure running - petit"
-          />
+            alt="Running shoe — small card"
+          >
+            <CardFavoriteButton />
+          </ProductCardImage>
           <ProductCardContent>
             <ProductCardBrand>Nike</ProductCardBrand>
             <ProductCardTitle>Pegasus 41</ProductCardTitle>
@@ -198,8 +363,10 @@ export const Tailles: Story = {
         <ProductCard size="md" href="#">
           <ProductCardImage
             src={RUNNING_SHOE_IMG}
-            alt="Chaussure running - moyen"
-          />
+            alt="Running shoe — medium card"
+          >
+            <CardFavoriteButton />
+          </ProductCardImage>
           <ProductCardContent>
             <ProductCardBrand>Asics</ProductCardBrand>
             <ProductCardTitle>Gel-Kayano 30</ProductCardTitle>
@@ -211,8 +378,10 @@ export const Tailles: Story = {
         <ProductCard size="lg" href="#">
           <ProductCardImage
             src={RUNNING_SHOE_IMG}
-            alt="Chaussure running - grand"
-          />
+            alt="Running shoe — large card"
+          >
+            <CardFavoriteButton />
+          </ProductCardImage>
           <ProductCardContent>
             <ProductCardBrand>Saucony</ProductCardBrand>
             <ProductCardTitle>Endorphin Speed 4</ProductCardTitle>
@@ -222,12 +391,20 @@ export const Tailles: Story = {
       </div>
     </div>
   ),
-  parameters: { layout: "padded" },
 };
 
-// ── Grille catalogue running ────────────────────────────────────────────────
+// ── Catalog grid ──────────────────────────────────────────────────────────────
 
-export const GrilleCatalogue: Story = {
+export const CatalogGrid: Story = {
+  parameters: {
+    layout: "padded",
+    docs: {
+      description: {
+        story:
+          "Responsive grid of cards mixing promo, new, in-stock, and no-badge examples—typical PLP (product listing page) preview.",
+      },
+    },
+  },
   render: () => {
     const products = [
       {
@@ -242,14 +419,14 @@ export const GrilleCatalogue: Story = {
         brand: "Asics",
         title: "Gel-Kayano 30",
         price: "179,99 €",
-        badge: "Nouveau" as const,
+        badge: "New" as const,
         variant: "success" as const,
       },
       {
         brand: "Saucony",
         title: "Endorphin Speed 4",
         price: "169,99 €",
-        badge: "Best-seller" as const,
+        badge: "Best seller" as const,
         variant: "brand" as const,
       },
       {
@@ -263,7 +440,7 @@ export const GrilleCatalogue: Story = {
         brand: "Brooks",
         title: "Ghost 16",
         price: "139,99 €",
-        badge: "En stock" as const,
+        badge: "In stock" as const,
         variant: "info" as const,
       },
       {
@@ -291,6 +468,7 @@ export const GrilleCatalogue: Story = {
                   </Badge>
                 </ProductCardBadges>
               )}
+              <CardFavoriteButton />
             </ProductCardImage>
             <ProductCardContent>
               <ProductCardBrand>{p.brand}</ProductCardBrand>
@@ -305,30 +483,39 @@ export const GrilleCatalogue: Story = {
       </div>
     );
   },
-  parameters: { layout: "padded" },
 };
 
 // ── Overview ────────────────────────────────────────────────────────────────
 
 export const Overview: Story = {
+  parameters: {
+    layout: "padded",
+    docs: {
+      description: {
+        story:
+          "Quick comparison: promo vs standard vs disabled card in a single padded canvas.",
+      },
+    },
+  },
   render: () => (
     <div className="flex flex-col gap-8 p-8 rounded-2xl bg-surface-primary max-w-4xl">
       <div>
         <h3 className="text-sm font-medium text-content-tertiary uppercase tracking-widest mb-4">
-          Variantes
+          Variants
         </h3>
         <div className="flex gap-6 flex-wrap">
           <div className="w-64">
             <ProductCard href="#">
               <ProductCardImage
                 src={RUNNING_SHOE_IMG}
-                alt="Produit avec promo"
+                alt="Product with promo badge"
               >
                 <ProductCardBadges>
                   <Badge variant="brand" size="sm">
                     Promo
                   </Badge>
                 </ProductCardBadges>
+                <CardFavoriteButton />
               </ProductCardImage>
               <ProductCardContent>
                 <ProductCardBrand>Nike</ProductCardBrand>
@@ -339,7 +526,9 @@ export const Overview: Story = {
           </div>
           <div className="w-64">
             <ProductCard href="#">
-              <ProductCardImage src={RUNNING_SHOE_IMG} alt="Produit standard" />
+              <ProductCardImage src={RUNNING_SHOE_IMG} alt="Standard product">
+                <CardFavoriteButton />
+              </ProductCardImage>
               <ProductCardContent>
                 <ProductCardBrand>Asics</ProductCardBrand>
                 <ProductCardTitle>Gel-Kayano 30</ProductCardTitle>
@@ -349,12 +538,16 @@ export const Overview: Story = {
           </div>
           <div className="w-64">
             <ProductCard disabled>
-              <ProductCardImage src={RUNNING_SHOE_IMG} alt="Produit épuisé">
+              <ProductCardImage
+                src={RUNNING_SHOE_IMG}
+                alt="Out of stock product"
+              >
                 <ProductCardBadges>
                   <Badge variant="error" size="sm">
-                    Épuisé
+                    Out of stock
                   </Badge>
                 </ProductCardBadges>
+                <CardFavoriteButton />
               </ProductCardImage>
               <ProductCardContent>
                 <ProductCardBrand>Hoka</ProductCardBrand>
@@ -367,5 +560,4 @@ export const Overview: Story = {
       </div>
     </div>
   ),
-  parameters: { layout: "padded" },
 };

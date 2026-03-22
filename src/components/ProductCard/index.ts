@@ -2,6 +2,7 @@ export {
   ProductCard,
   ProductCardImage,
   ProductCardBadges,
+  ProductCardFavorite,
   ProductCardContent,
   ProductCardBrand,
   ProductCardTitle,
@@ -10,9 +11,11 @@ export {
 } from "./ProductCard";
 export type {
   ProductCardProps,
+  ProductCardLayout,
   ProductCardSize,
   ProductCardImageProps,
   ProductCardBadgesProps,
+  ProductCardFavoriteProps,
   ProductCardContentProps,
   ProductCardBrandProps,
   ProductCardTitleProps,

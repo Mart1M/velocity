@@ -31,7 +31,7 @@ export interface BadgeProps {
 
 const filledVariantClasses: Record<BadgeVariant, string> = {
   default: "bg-surface-secondary text-content-secondary",
-  success: "bg-state-success text-content-primary",
+  success: "bg-state-success text-white",
   warning: "bg-state-warning text-white",
   error: "bg-state-error text-white",
   info: "bg-state-info text-white",

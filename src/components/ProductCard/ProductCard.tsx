@@ -4,14 +4,23 @@ import * as React from "react";
 
 export type ProductCardSize = "sm" | "md" | "lg";
 
+/** `vertical` = image on top (default). `horizontal` = thumbnail left, details right — for cart rows, search results, etc. */
+export type ProductCardLayout = "vertical" | "horizontal";
+
 export interface ProductCardProps {
   /** When provided, the card renders as a link to the product page */
   href?: string;
-  /** Size of the card (affects image ratio and typography) */
+  /** Size of the card (affects image footprint and typography) */
   size?: ProductCardSize;
+  /**
+   * Layout direction.
+   * - `vertical`: stacked image + content (catalog tiles).
+   * - `horizontal`: image and content side by side (dense lists).
+   */
+  layout?: ProductCardLayout;
   /** Whether the product is out of stock (adds visual treatment) */
   disabled?: boolean;
-  /** Card content */
+  /** Card content — order: `ProductCardImage` then `ProductCardContent` */
   children?: React.ReactNode;
   /** Additional CSS classes */
   className?: string;
@@ -30,6 +39,16 @@ export interface ProductCardImageProps {
 
 export interface ProductCardBadgesProps {
   /** Badges to display (e.g. Promo, Nouveau, En stock) */
+  children?: React.ReactNode;
+  /** Additional CSS classes */
+  className?: string;
+}
+
+/**
+ * Top-right overlay on **ProductCardImage** (e.g. icon-only favorite). Renders `null` without children.
+ * Children that are (or contain) a `button` get a **semi-opaque surface** + blur for contrast on photos.
+ */
+export interface ProductCardFavoriteProps {
   children?: React.ReactNode;
   /** Additional CSS classes */
   className?: string;
@@ -70,11 +89,13 @@ export interface ProductCardActionsProps {
 interface ProductCardContextValue {
   size: ProductCardSize;
   disabled: boolean;
+  layout: ProductCardLayout;
 }
 
 const ProductCardContext = React.createContext<ProductCardContextValue>({
   size: "md",
   disabled: false,
+  layout: "vertical",
 });
 
 function useProductCard() {
@@ -89,10 +110,17 @@ const sizeClasses: Record<ProductCardSize, string> = {
   lg: "rounded-2xl",
 };
 
-const imageAspectClasses: Record<ProductCardSize, string> = {
+const imageAspectVerticalClasses: Record<ProductCardSize, string> = {
   sm: "aspect-[4/3]",
   md: "aspect-[4/3]",
   lg: "aspect-[4/3]",
+};
+
+/** Horizontal layout: fixed width, stretches to full card height; image is cover-filled */
+const imageHorizontalClasses: Record<ProductCardSize, string> = {
+  sm: "w-32 shrink-0 self-stretch min-h-0 rounded-l-xl",
+  md: "w-40 shrink-0 self-stretch min-h-0 rounded-l-xl",
+  lg: "w-48 shrink-0 self-stretch min-h-0 rounded-l-2xl",
 };
 
 // ── ProductCard (root) ────────────────────────────────────────────────────
@@ -100,17 +128,19 @@ const imageAspectClasses: Record<ProductCardSize, string> = {
 export function ProductCard({
   href,
   size = "md",
+  layout = "vertical",
   disabled = false,
   children,
   className,
 }: ProductCardProps) {
   const ctx = React.useMemo<ProductCardContextValue>(
-    () => ({ size, disabled }),
-    [size, disabled],
+    () => ({ size, disabled, layout }),
+    [size, disabled, layout],
   );
 
   const baseClasses = [
     "group block w-full",
+    layout === "horizontal" && "flex flex-row items-stretch",
     "bg-surface-primary border border-border-default",
     "overflow-hidden transition-all duration-[200ms]",
     "hover:border-border-strong hover:shadow-md",
@@ -151,13 +181,14 @@ export function ProductCardImage({
   children,
   className,
 }: ProductCardImageProps) {
-  const { size } = useProductCard();
+  const { size, layout } = useProductCard();
 
   return (
     <div
       className={[
         "relative overflow-hidden bg-surface-secondary",
-        imageAspectClasses[size],
+        layout === "vertical" && imageAspectVerticalClasses[size],
+        layout === "horizontal" && imageHorizontalClasses[size],
         className,
       ]
         .filter(Boolean)
@@ -166,7 +197,12 @@ export function ProductCardImage({
       <img
         src={src}
         alt={alt}
-        className="h-full w-full object-cover transition-transform duration-[200ms] group-hover:scale-105"
+        className={[
+          "object-cover transition-transform duration-[200ms] group-hover:scale-105",
+          layout === "horizontal"
+            ? "absolute inset-0 h-full w-full"
+            : "h-full w-full",
+        ].join(" ")}
       />
       {children}
     </div>
@@ -199,6 +235,33 @@ export function ProductCardBadges({
 
 ProductCardBadges.displayName = "ProductCardBadges";
 
+// ── ProductCardFavorite ───────────────────────────────────────────────────
+
+export function ProductCardFavorite({
+  children,
+  className,
+}: ProductCardFavoriteProps) {
+  if (!children) return null;
+
+  return (
+    <div
+      className={[
+        "absolute top-2 right-2 z-20 flex items-center justify-end",
+        // Frosted pill + light border; icon uses currentColor → force white
+        "[&_button]:bg-white/40! [&_button]:hover:bg-white/50! [&_button]:backdrop-blur-md [&_button]:shadow-sm",
+        "[&_button]:border-white/45! [&_button]:text-white! [&_button]:hover:text-white! [&_button]:active:text-white!",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {children}
+    </div>
+  );
+}
+
+ProductCardFavorite.displayName = "ProductCardFavorite";
+
 // ── ProductCardContent ────────────────────────────────────────────────────
 
 export interface ProductCardContentProps {
@@ -210,10 +273,14 @@ export function ProductCardContent({
   children,
   className,
 }: ProductCardContentProps) {
+  const { layout } = useProductCard();
+
   return (
     <div
       className={[
         "flex flex-col gap-1.5 p-4",
+        layout === "horizontal" &&
+          "min-w-0 flex-1 flex flex-col justify-start py-3 sm:py-4",
         className,
       ]
         .filter(Boolean)
@@ -288,10 +355,7 @@ export function ProductCardPrice({
 }: ProductCardPriceProps) {
   return (
     <div
-      className={[
-        "flex items-baseline gap-2 flex-wrap",
-        className,
-      ]
+      className={["flex items-baseline gap-2 flex-wrap", className]
         .filter(Boolean)
         .join(" ")}
     >
@@ -315,11 +379,13 @@ export function ProductCardActions({
 }: ProductCardActionsProps) {
   if (!children) return null;
 
+  const { layout } = useProductCard();
+
   return (
     <div
       className={[
         "mt-2 pt-2 border-t border-border-subtle",
-        "opacity-0 group-hover:opacity-100 transition-opacity duration-[200ms]",
+        layout === "horizontal" && "mt-auto pt-3",
         className,
       ]
         .filter(Boolean)

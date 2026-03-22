@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { RiGiftLine } from "react-icons/ri";
 import { AlertBanner } from "./AlertBanner";
 
 const meta = {
@@ -140,16 +141,7 @@ export const WithCustomIcon: Story = {
     variant: "brand",
     title: "Exclusive member deal",
     description: "Sign in to unlock your personalised discount.",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        className="h-5 w-5"
-      >
-        <path d="M10.75 10.818v2.614A3.13 3.13 0 0011.888 13a3.13 3.13 0 002.862-1.857l.743.186a.75.75 0 00.18-1.485l-.744-.187a3.13 3.13 0 00-1.37-1.487l.373-.65a.75.75 0 10-1.299-.749l-.374.65a3.13 3.13 0 00-2.015.283V6.75a.75.75 0 00-1.5 0v.932a3.13 3.13 0 00-2.015-.283l-.374-.65a.75.75 0 00-1.3.75l.374.649a3.13 3.13 0 00-1.37 1.487l-.745-.187a.75.75 0 10-.18 1.485l.744.186A3.13 3.13 0 005.862 13a3.13 3.13 0 001.138-.432v-2.614a.75.75 0 001.5 0z" />
-      </svg>
-    ),
+    icon: <RiGiftLine className="h-5 w-5" aria-hidden />,
   },
 };
 

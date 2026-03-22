@@ -1,0 +1,69 @@
+{
+  "velocity": {
+    "typography": {
+      "heading-1": {
+        "fontFamily": { "$value": "{font.family.heading}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.4xl}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.tight}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.bold}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.tight}", "$type": "letterSpacing" }
+      },
+      "heading-2": {
+        "fontFamily": { "$value": "{font.family.heading}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.3xl}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.tight}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.bold}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.tight}", "$type": "letterSpacing" }
+      },
+      "heading-3": {
+        "fontFamily": { "$value": "{font.family.heading}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.2xl}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.snug}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "letterSpacing" }
+      },
+      "heading-4": {
+        "fontFamily": { "$value": "{font.family.heading}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.xl}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.snug}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "letterSpacing" }
+      },
+      "body-lg": {
+        "fontFamily": { "$value": "{font.family.sans}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.lg}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.relaxed}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.normal}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "letterSpacing" }
+      },
+      "body": {
+        "fontFamily": { "$value": "{font.family.sans}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.base}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.normal}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.normal}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "letterSpacing" }
+      },
+      "body-sm": {
+        "fontFamily": { "$value": "{font.family.sans}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.sm}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.normal}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.normal}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "letterSpacing" }
+      },
+      "caption": {
+        "fontFamily": { "$value": "{font.family.sans}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.xs}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.normal}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.medium}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.normal}", "$type": "letterSpacing" }
+      },
+      "overline": {
+        "fontFamily": { "$value": "{font.family.sans}", "$type": "fontFamily" },
+        "fontSize": { "$value": "{font.size.xs}", "$type": "fontSize" },
+        "lineHeight": { "$value": "{font.lineHeight.tight}", "$type": "lineHeight" },
+        "fontWeight": { "$value": "{font.weight.semibold}", "$type": "fontWeight" },
+        "letterSpacing": { "$value": "{font.letterSpacing.wide}", "$type": "letterSpacing" }
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { RiCloseLine } from 'react-icons/ri';
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -92,27 +93,6 @@ const popupSizeClasses: Record<DialogSize, string> = {
   md: 'w-[500px]',
   lg: 'w-[640px]',
 };
-
-// ── Icons ──────────────────────────────────────────────────────────────────
-
-function CloseIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      className="size-4"
-      aria-hidden="true"
-    >
-      <path
-        d="M4 4l8 8M12 4l-8 8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 // ── Dialog (Root) ──────────────────────────────────────────────────────────
 
@@ -273,7 +253,7 @@ export function DialogClose({ className, children }: DialogCloseProps) {
         .filter(Boolean)
         .join(' ')}
     >
-      {children ?? <CloseIcon />}
+      {children ?? <RiCloseLine className="size-4" aria-hidden />}
     </BaseDialog.Close>
   );
 }

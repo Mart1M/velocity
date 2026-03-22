@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { RiAddLine, RiArrowRightSLine } from 'react-icons/ri';
 import { Button } from './Button';
 
 const meta = {
@@ -92,22 +93,14 @@ export const FullWidth: Story = {
 // With icons
 export const WithStartIcon: Story = {
   args: {
-    startIcon: (
-      <svg viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-      </svg>
-    ),
+    startIcon: <RiAddLine className="h-4 w-4" aria-hidden />,
     children: 'Add item',
   },
 };
 
 export const WithEndIcon: Story = {
   args: {
-    endIcon: (
-      <svg viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-      </svg>
-    ),
+    endIcon: <RiArrowRightSLine className="h-4 w-4" aria-hidden />,
     children: 'Next',
   },
 };

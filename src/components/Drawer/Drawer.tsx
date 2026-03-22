@@ -1,4 +1,5 @@
 import * as React from "react";
+import { RiCloseLine } from "react-icons/ri";
 import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -81,27 +82,6 @@ const sideClasses: Record<DrawerSide, string> = {
     "data-[ending-style]:translate-x-full",
   ].join(" "),
 };
-
-// ── CloseIcon ──────────────────────────────────────────────────────────────
-
-function CloseIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M18 6 6 18" />
-      <path d="m6 6 12 12" />
-    </svg>
-  );
-}
 
 // ── Drawer (Root) ──────────────────────────────────────────────────────────
 
@@ -268,7 +248,7 @@ export function DrawerClose({ children, className }: DrawerCloseProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      {children ?? <CloseIcon className="h-4 w-4" />}
+      {children ?? <RiCloseLine className="h-4 w-4" aria-hidden />}
     </BaseDialog.Close>
   );
 }

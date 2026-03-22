@@ -65,7 +65,35 @@
 
   /* Core — Font families */
   --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Sora", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Core — Font sizes */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+
+  /* Core — Line heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Core — Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Core — Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
 
   /* Semantic — Background */
   --color-background-primary: var(--color-white);
@@ -132,12 +160,131 @@
   /* Semantic — Easing */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
 
+  /* Semantic — Typography (primitives for text-* utilities) */
+  --typography-body-font-family: var(--font-sans);
+  --typography-body-font-size: var(--font-size-base);
+  --typography-body-line-height: var(--leading-normal);
+  --typography-body-font-weight: var(--font-weight-normal);
+  --typography-body-letter-spacing: var(--tracking-normal);
+  --typography-body-lg-font-family: var(--font-sans);
+  --typography-body-lg-font-size: var(--font-size-lg);
+  --typography-body-lg-line-height: var(--leading-relaxed);
+  --typography-body-lg-font-weight: var(--font-weight-normal);
+  --typography-body-lg-letter-spacing: var(--tracking-normal);
+  --typography-body-sm-font-family: var(--font-sans);
+  --typography-body-sm-font-size: var(--font-size-sm);
+  --typography-body-sm-line-height: var(--leading-normal);
+  --typography-body-sm-font-weight: var(--font-weight-normal);
+  --typography-body-sm-letter-spacing: var(--tracking-normal);
+  --typography-caption-font-family: var(--font-sans);
+  --typography-caption-font-size: var(--font-size-xs);
+  --typography-caption-line-height: var(--leading-normal);
+  --typography-caption-font-weight: var(--font-weight-medium);
+  --typography-caption-letter-spacing: var(--tracking-normal);
+  --typography-heading-1-font-family: var(--font-heading);
+  --typography-heading-1-font-size: var(--font-size-4xl);
+  --typography-heading-1-line-height: var(--leading-tight);
+  --typography-heading-1-font-weight: var(--font-weight-bold);
+  --typography-heading-1-letter-spacing: var(--tracking-tight);
+  --typography-heading-2-font-family: var(--font-heading);
+  --typography-heading-2-font-size: var(--font-size-3xl);
+  --typography-heading-2-line-height: var(--leading-tight);
+  --typography-heading-2-font-weight: var(--font-weight-bold);
+  --typography-heading-2-letter-spacing: var(--tracking-tight);
+  --typography-heading-3-font-family: var(--font-heading);
+  --typography-heading-3-font-size: var(--font-size-2xl);
+  --typography-heading-3-line-height: var(--leading-snug);
+  --typography-heading-3-font-weight: var(--font-weight-semibold);
+  --typography-heading-3-letter-spacing: var(--tracking-normal);
+  --typography-heading-4-font-family: var(--font-heading);
+  --typography-heading-4-font-size: var(--font-size-xl);
+  --typography-heading-4-line-height: var(--leading-snug);
+  --typography-heading-4-font-weight: var(--font-weight-semibold);
+  --typography-heading-4-letter-spacing: var(--tracking-normal);
+  --typography-overline-font-family: var(--font-sans);
+  --typography-overline-font-size: var(--font-size-xs);
+  --typography-overline-line-height: var(--leading-tight);
+  --typography-overline-font-weight: var(--font-weight-semibold);
+  --typography-overline-letter-spacing: var(--tracking-wide);
+
   /* Component — Button shadows */
   --shadow-button-primary: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
   --shadow-button-success:  0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
   --shadow-button-warning:  0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
   --shadow-button-danger:   0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
   --shadow-button-neutral:  0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
+}
+
+@utility text-body {
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-font-size);
+  line-height: var(--typography-body-line-height);
+  font-weight: var(--typography-body-font-weight);
+  letter-spacing: var(--typography-body-letter-spacing);
+}
+
+@utility text-body-lg {
+  font-family: var(--typography-body-lg-font-family);
+  font-size: var(--typography-body-lg-font-size);
+  line-height: var(--typography-body-lg-line-height);
+  font-weight: var(--typography-body-lg-font-weight);
+  letter-spacing: var(--typography-body-lg-letter-spacing);
+}
+
+@utility text-body-sm {
+  font-family: var(--typography-body-sm-font-family);
+  font-size: var(--typography-body-sm-font-size);
+  line-height: var(--typography-body-sm-line-height);
+  font-weight: var(--typography-body-sm-font-weight);
+  letter-spacing: var(--typography-body-sm-letter-spacing);
+}
+
+@utility text-caption {
+  font-family: var(--typography-caption-font-family);
+  font-size: var(--typography-caption-font-size);
+  line-height: var(--typography-caption-line-height);
+  font-weight: var(--typography-caption-font-weight);
+  letter-spacing: var(--typography-caption-letter-spacing);
+}
+
+@utility text-heading-1 {
+  font-family: var(--typography-heading-1-font-family);
+  font-size: var(--typography-heading-1-font-size);
+  line-height: var(--typography-heading-1-line-height);
+  font-weight: var(--typography-heading-1-font-weight);
+  letter-spacing: var(--typography-heading-1-letter-spacing);
+}
+
+@utility text-heading-2 {
+  font-family: var(--typography-heading-2-font-family);
+  font-size: var(--typography-heading-2-font-size);
+  line-height: var(--typography-heading-2-line-height);
+  font-weight: var(--typography-heading-2-font-weight);
+  letter-spacing: var(--typography-heading-2-letter-spacing);
+}
+
+@utility text-heading-3 {
+  font-family: var(--typography-heading-3-font-family);
+  font-size: var(--typography-heading-3-font-size);
+  line-height: var(--typography-heading-3-line-height);
+  font-weight: var(--typography-heading-3-font-weight);
+  letter-spacing: var(--typography-heading-3-letter-spacing);
+}
+
+@utility text-heading-4 {
+  font-family: var(--typography-heading-4-font-family);
+  font-size: var(--typography-heading-4-font-size);
+  line-height: var(--typography-heading-4-line-height);
+  font-weight: var(--typography-heading-4-font-weight);
+  letter-spacing: var(--typography-heading-4-letter-spacing);
+}
+
+@utility text-overline {
+  font-family: var(--typography-overline-font-family);
+  font-size: var(--typography-overline-font-size);
+  line-height: var(--typography-overline-line-height);
+  font-weight: var(--typography-overline-font-weight);
+  letter-spacing: var(--typography-overline-letter-spacing);
 }
 
 /* Dark theme overrides */

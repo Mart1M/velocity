@@ -1,3 +1,6 @@
+/* Sora — used by text-heading-* (see core typography `font.family.heading`) */
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap");
+
 @import "../src/styles/tokens.css";
 
 *, *::before, *::after {

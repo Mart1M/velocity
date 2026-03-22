@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Select as BaseSelect } from '@base-ui-components/react/select';
+import { RiArrowDownSLine, RiCheckLine } from 'react-icons/ri';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -79,41 +80,6 @@ const triggerSizeClasses: Record<
     icon: 'size-5',
   },
 };
-
-// ── Icons ──────────────────────────────────────────────────────────────────
-
-function ChevronDownIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M4 6l4 4 4-4"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 12 12" fill="none" className="size-full" aria-hidden="true">
-      <path
-        d="M2 6l3 3 5-5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -234,7 +200,7 @@ export function Select({
             <BaseSelect.Value className="flex-1 text-left truncate text-content-primary" />
           )}
           <BaseSelect.Icon className="ml-2 text-content-tertiary shrink-0">
-            <ChevronDownIcon className={sc.icon} />
+            <RiArrowDownSLine className={sc.icon} aria-hidden />
           </BaseSelect.Icon>
         </BaseSelect.Trigger>
         <BaseSelect.Portal>
@@ -287,7 +253,7 @@ export function SelectOption({
     >
       <span className="flex items-center justify-center size-4 shrink-0 text-content-brand">
         <BaseSelect.ItemIndicator>
-          <CheckIcon />
+          <RiCheckLine className="size-full" aria-hidden />
         </BaseSelect.ItemIndicator>
       </span>
       <BaseSelect.ItemText>{children}</BaseSelect.ItemText>
