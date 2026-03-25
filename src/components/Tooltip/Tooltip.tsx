@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
+import * as React from "react";
+import { Tooltip as BaseTooltip } from "@base-ui-components/react/tooltip";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-export type TooltipSide = 'top' | 'right' | 'bottom' | 'left';
+export type TooltipSide = "top" | "right" | "bottom" | "left";
 
 export interface TooltipProps {
   /** Whether the tooltip is currently open (controlled) */
@@ -20,7 +20,7 @@ export interface TooltipProps {
   /** Whether the tooltip contents can be hovered without closing */
   disableHoverablePopup?: boolean;
   /** Which axis the tooltip should track the cursor on */
-  trackCursorAxis?: 'none' | 'x' | 'y' | 'both';
+  trackCursorAxis?: "none" | "x" | "y" | "both";
   /** Whether the tooltip is disabled */
   disabled?: boolean;
   /** Tooltip content — typically TooltipTrigger + TooltipPortal */
@@ -28,7 +28,11 @@ export interface TooltipProps {
 }
 
 export interface TooltipTriggerProps {
-  /** Trigger content */
+  /**
+   * When using `render={<Button>Label</Button>}`, put the visible label **inside** that
+   * element. Children of `TooltipTrigger` are not merged into `render` (Base UI uses
+   * `cloneElement` on `render` only).
+   */
   children?: React.ReactNode;
   /** Additional CSS classes */
   className?: string;
@@ -39,7 +43,7 @@ export interface TooltipTriggerProps {
   /** Render as a custom element */
   render?:
     | React.ReactElement<Record<string, unknown>>
-    | ((props: React.ComponentProps<'button'>) => React.ReactElement);
+    | ((props: React.ComponentProps<"button">) => React.ReactElement);
 }
 
 export interface TooltipPortalProps {
@@ -55,7 +59,7 @@ export interface TooltipPositionerProps {
   /** Offset between the tooltip and the trigger (px) */
   sideOffset?: number;
   /** Alignment along the opposite axis */
-  align?: 'start' | 'center' | 'end';
+  align?: "start" | "center" | "end";
   /** Offset for alignment (px) */
   alignOffset?: number;
   /** Additional CSS classes */
@@ -113,7 +117,7 @@ export function Tooltip({
   );
 }
 
-Tooltip.displayName = 'Tooltip';
+Tooltip.displayName = "Tooltip";
 
 // ── TooltipTrigger ─────────────────────────────────────────────────────────
 
@@ -136,7 +140,7 @@ export function TooltipTrigger({
   );
 }
 
-TooltipTrigger.displayName = 'TooltipTrigger';
+TooltipTrigger.displayName = "TooltipTrigger";
 
 // ── TooltipPortal ──────────────────────────────────────────────────────────
 
@@ -148,14 +152,14 @@ export function TooltipPortal({ keepMounted, children }: TooltipPortalProps) {
   );
 }
 
-TooltipPortal.displayName = 'TooltipPortal';
+TooltipPortal.displayName = "TooltipPortal";
 
 // ── TooltipPositioner ──────────────────────────────────────────────────────
 
 export function TooltipPositioner({
-  side = 'top',
+  side = "top",
   sideOffset = 8,
-  align = 'center',
+  align = "center",
   alignOffset,
   className,
   children,
@@ -166,14 +170,14 @@ export function TooltipPositioner({
       sideOffset={sideOffset}
       align={align}
       alignOffset={alignOffset}
-      className={className}
+      className={["z-50", className].filter(Boolean).join(" ")}
     >
       {children}
     </BaseTooltip.Positioner>
   );
 }
 
-TooltipPositioner.displayName = 'TooltipPositioner';
+TooltipPositioner.displayName = "TooltipPositioner";
 
 // ── TooltipPopup ───────────────────────────────────────────────────────────
 
@@ -181,24 +185,25 @@ export function TooltipPopup({ className, children }: TooltipPopupProps) {
   return (
     <BaseTooltip.Popup
       className={[
-        'bg-surface-secondary text-content-primary text-sm',
-        'px-3 py-1.5',
-        'rounded-lg shadow-md',
-        'origin-[var(--transform-origin)]',
-        'transition-[transform,opacity] duration-[200ms]',
-        'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
-        'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
+        "z-50 max-w-xs",
+        "bg-background-inverse text-content-inverse text-sm",
+        "px-3 py-1.5",
+        "rounded-lg shadow-md",
+        "origin-[var(--transform-origin)]",
+        "transition-[transform,opacity] duration-[200ms]",
+        "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
+        "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {children}
     </BaseTooltip.Popup>
   );
 }
 
-TooltipPopup.displayName = 'TooltipPopup';
+TooltipPopup.displayName = "TooltipPopup";
 
 // ── TooltipArrow ───────────────────────────────────────────────────────────
 
@@ -206,20 +211,20 @@ export function TooltipArrow({ className }: TooltipArrowProps) {
   return (
     <BaseTooltip.Arrow
       className={[
-        'fill-surface-secondary',
-        'data-[side=top]:bottom-0 data-[side=top]:translate-y-full',
-        'data-[side=bottom]:top-0 data-[side=bottom]:-translate-y-full',
-        'data-[side=left]:right-0 data-[side=left]:translate-x-full',
-        'data-[side=right]:left-0 data-[side=right]:-translate-x-full',
+        "fill-surface-secondary",
+        "data-[side=top]:bottom-0 data-[side=top]:translate-y-full",
+        "data-[side=bottom]:top-0 data-[side=bottom]:-translate-y-full",
+        "data-[side=left]:right-0 data-[side=left]:translate-x-full",
+        "data-[side=right]:left-0 data-[side=right]:-translate-x-full",
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     />
   );
 }
 
-TooltipArrow.displayName = 'TooltipArrow';
+TooltipArrow.displayName = "TooltipArrow";
 
 // ── TooltipProvider ────────────────────────────────────────────────────────
 
@@ -230,10 +235,14 @@ export function TooltipProvider({
   children,
 }: TooltipProviderProps) {
   return (
-    <BaseTooltip.Provider delay={delay} closeDelay={closeDelay} timeout={timeout}>
+    <BaseTooltip.Provider
+      delay={delay}
+      closeDelay={closeDelay}
+      timeout={timeout}
+    >
       {children}
     </BaseTooltip.Provider>
   );
 }
 
-TooltipProvider.displayName = 'TooltipProvider';
+TooltipProvider.displayName = "TooltipProvider";

@@ -56,9 +56,9 @@ const rootSizeClasses: Record<RadioSize, string> = {
 };
 
 const indicatorSizeClasses: Record<RadioSize, string> = {
-  sm: "size-[7px]",
+  sm: "size-[6px]",
   md: "size-2",
-  lg: "size-[9px]",
+  lg: "size-[8px]",
 };
 
 const labelSizeClasses: Record<RadioSize, string> = {
@@ -97,14 +97,18 @@ export function RadioGroup({
     <BaseRadioGroup
       value={value}
       defaultValue={defaultValue}
-      onValueChange={onValueChange ? (v: unknown) => onValueChange(v as string) : undefined}
+      onValueChange={
+        onValueChange ? (v: unknown) => onValueChange(v as string) : undefined
+      }
       disabled={disabled}
       readOnly={readOnly}
       required={required}
       name={name}
       className={[
         "flex",
-        orientation === "horizontal" ? "flex-row flex-wrap gap-4" : "flex-col gap-3",
+        orientation === "horizontal"
+          ? "flex-row flex-wrap gap-4"
+          : "flex-col gap-3",
         className,
       ]
         .filter(Boolean)
@@ -129,7 +133,8 @@ export function RadioItem({
   children,
   className,
 }: RadioItemProps) {
-  const hasContent = label !== undefined || description !== undefined || children !== undefined;
+  const hasContent =
+    label !== undefined || description !== undefined || children !== undefined;
 
   return (
     <label
@@ -174,7 +179,7 @@ export function RadioItem({
       >
         <Radio.Indicator
           className={[
-            "rounded-full bg-content-primary",
+            "rounded-full bg-content-inverse",
             "transition-[transform,opacity] duration-[200ms]",
             // scale in/out animation
             "data-[starting-style]:scale-0 data-[ending-style]:scale-0",

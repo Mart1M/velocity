@@ -10,6 +10,11 @@ import {
   TooltipProvider,
 } from './Tooltip';
 
+/**
+ * Base UI merges trigger props via `cloneElement(render, mergedProps)`.
+ * Put **label text inside** `<Button>...</Button>` in `render` — children of
+ * `<TooltipTrigger>` are not passed into `render`, so `render={<Button />}` alone yields an empty button and broken hover targets.
+ */
 const meta = {
   title: 'Components/Tooltip',
   component: Tooltip,
@@ -18,7 +23,7 @@ const meta = {
     docs: {
       description: {
         component:
-          'A popup that appears on hover/focus showing supplementary information. Ideal for price info bubbles, form field help, and icon-button labels. Built on Base UI Tooltip.',
+          'A popup that appears on hover/focus showing supplementary information. Ideal for price info bubbles, form field help, and icon-button labels. Built on Base UI Tooltip. When using `render={<Button />}`, put the label **inside** the Button; do not rely on children of `TooltipTrigger`.',
       },
     },
   },
@@ -36,14 +41,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const outlineBtn = (label: string) => (
+  <Button variant="outline" colorScheme="neutral">
+    {label}
+  </Button>
+);
+
+const ghostSmBtn = (label: string) => (
+  <Button variant="ghost" colorScheme="neutral" size="sm">
+    {label}
+  </Button>
+);
+
 // ─── Default ──────────────────────────────────────────────────────────────────
 
 export const Default: Story = {
   render: (args) => (
     <Tooltip {...args}>
-      <TooltipTrigger render={<Button variant="outline" colorScheme="neutral" />}>
-        Hover me
-      </TooltipTrigger>
+      <TooltipTrigger delay={200} render={outlineBtn('Hover me')} />
       <TooltipPortal>
         <TooltipPositioner>
           <TooltipPopup>
@@ -63,9 +78,7 @@ export const Placement: Story = {
     <div className="flex flex-col items-center gap-10 p-16">
       <div className="flex justify-center">
         <Tooltip>
-          <TooltipTrigger render={<Button variant="outline" colorScheme="neutral" />}>
-            Top
-          </TooltipTrigger>
+          <TooltipTrigger delay={200} render={outlineBtn('Top')} />
           <TooltipPortal>
             <TooltipPositioner side="top">
               <TooltipPopup>
@@ -79,9 +92,7 @@ export const Placement: Story = {
 
       <div className="flex justify-center gap-32">
         <Tooltip>
-          <TooltipTrigger render={<Button variant="outline" colorScheme="neutral" />}>
-            Left
-          </TooltipTrigger>
+          <TooltipTrigger delay={200} render={outlineBtn('Left')} />
           <TooltipPortal>
             <TooltipPositioner side="left">
               <TooltipPopup>
@@ -93,9 +104,7 @@ export const Placement: Story = {
         </Tooltip>
 
         <Tooltip>
-          <TooltipTrigger render={<Button variant="outline" colorScheme="neutral" />}>
-            Right
-          </TooltipTrigger>
+          <TooltipTrigger delay={200} render={outlineBtn('Right')} />
           <TooltipPortal>
             <TooltipPositioner side="right">
               <TooltipPopup>
@@ -109,9 +118,7 @@ export const Placement: Story = {
 
       <div className="flex justify-center">
         <Tooltip>
-          <TooltipTrigger render={<Button variant="outline" colorScheme="neutral" />}>
-            Bottom
-          </TooltipTrigger>
+          <TooltipTrigger delay={200} render={outlineBtn('Bottom')} />
           <TooltipPortal>
             <TooltipPositioner side="bottom">
               <TooltipPopup>
@@ -132,9 +139,14 @@ export const Placement: Story = {
 export const WithoutArrow: Story = {
   render: () => (
     <Tooltip>
-      <TooltipTrigger render={<Button variant="solid" colorScheme="primary" />}>
-        No arrow
-      </TooltipTrigger>
+      <TooltipTrigger
+        delay={200}
+        render={
+          <Button variant="solid" colorScheme="primary">
+            No arrow
+          </Button>
+        }
+      />
       <TooltipPortal>
         <TooltipPositioner>
           <TooltipPopup>Tooltip without an arrow</TooltipPopup>
@@ -150,12 +162,7 @@ export const CustomDelay: Story = {
   render: () => (
     <div className="flex gap-4">
       <Tooltip>
-        <TooltipTrigger
-          delay={0}
-          render={<Button variant="outline" colorScheme="neutral" />}
-        >
-          Instant
-        </TooltipTrigger>
+        <TooltipTrigger delay={0} render={outlineBtn('Instant')} />
         <TooltipPortal>
           <TooltipPositioner>
             <TooltipPopup>
@@ -167,12 +174,7 @@ export const CustomDelay: Story = {
       </Tooltip>
 
       <Tooltip>
-        <TooltipTrigger
-          delay={1000}
-          render={<Button variant="outline" colorScheme="neutral" />}
-        >
-          1s delay
-        </TooltipTrigger>
+        <TooltipTrigger delay={1000} render={outlineBtn('1s delay')} />
         <TooltipPortal>
           <TooltipPositioner>
             <TooltipPopup>
@@ -190,10 +192,13 @@ export const CustomDelay: Story = {
 
 export const PriceInfoBubble: Story = {
   render: () => (
-    <div className="flex items-center gap-2 p-8 rounded-2xl bg-surface-primary">
+    <div className="flex items-center gap-2 rounded-2xl bg-surface-primary p-8">
       <span className="text-xl font-bold text-content-primary">$149.99</span>
       <Tooltip>
-        <TooltipTrigger className="inline-flex items-center justify-center size-5 rounded-full bg-surface-secondary text-content-secondary text-xs cursor-pointer hover:bg-surface-hover transition-colors duration-[200ms]">
+        <TooltipTrigger
+          delay={200}
+          className="inline-flex size-5 cursor-pointer items-center justify-center rounded-full bg-surface-secondary text-xs text-content-secondary transition-colors duration-[200ms] hover:bg-surface-hover"
+        >
           ?
         </TooltipTrigger>
         <TooltipPortal>
@@ -213,13 +218,16 @@ export const PriceInfoBubble: Story = {
 
 export const FormFieldHelp: Story = {
   render: () => (
-    <div className="flex flex-col gap-1.5 p-8 rounded-2xl bg-surface-primary w-72">
+    <div className="flex w-72 flex-col gap-1.5 rounded-2xl bg-surface-primary p-8">
       <div className="flex items-center gap-1.5">
         <label className="text-sm font-medium text-content-primary">
           Password
         </label>
         <Tooltip>
-          <TooltipTrigger className="inline-flex items-center justify-center size-4 rounded-full bg-surface-secondary text-content-tertiary text-[10px] cursor-pointer hover:bg-surface-hover transition-colors duration-[200ms]">
+          <TooltipTrigger
+            delay={200}
+            className="inline-flex size-4 cursor-pointer items-center justify-center rounded-full bg-surface-secondary text-[10px] text-content-tertiary transition-colors duration-[200ms] hover:bg-surface-hover"
+          >
             i
           </TooltipTrigger>
           <TooltipPortal>
@@ -235,7 +243,7 @@ export const FormFieldHelp: Story = {
       <input
         type="password"
         placeholder="••••••••"
-        className="h-10 px-3 rounded-xl border border-border-default bg-surface-secondary text-content-primary text-sm placeholder:text-content-tertiary focus:outline-none focus:ring-2 focus:ring-border-focus focus:border-border-brand transition-[border-color,box-shadow] duration-[200ms]"
+        className="h-10 rounded-xl border border-border-default bg-surface-secondary px-3 text-sm text-content-primary transition-[border-color,box-shadow] duration-[200ms] placeholder:text-content-tertiary focus:border-border-brand focus:outline-none focus:ring-2 focus:ring-border-focus"
       />
     </div>
   ),
@@ -249,9 +257,7 @@ export const ProviderGrouping: Story = {
       <div className="flex gap-2">
         {['Bold', 'Italic', 'Underline'].map((label) => (
           <Tooltip key={label}>
-            <TooltipTrigger render={<Button variant="ghost" colorScheme="neutral" size="sm" />}>
-              {label.charAt(0)}
-            </TooltipTrigger>
+            <TooltipTrigger delay={200} render={ghostSmBtn(label.charAt(0))} />
             <TooltipPortal>
               <TooltipPositioner side="bottom">
                 <TooltipPopup>
@@ -271,16 +277,14 @@ export const ProviderGrouping: Story = {
 
 export const Overview: Story = {
   render: () => (
-    <div className="flex flex-col gap-8 p-8 rounded-2xl bg-surface-primary">
+    <div className="flex flex-col gap-8 rounded-2xl bg-surface-primary p-8">
       <p className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
         Tooltip — Positions
       </p>
-      <div className="flex gap-4 justify-center">
+      <div className="flex justify-center gap-4">
         {(['top', 'right', 'bottom', 'left'] as const).map((side) => (
           <Tooltip key={side}>
-            <TooltipTrigger render={<Button variant="outline" colorScheme="neutral" size="sm" />}>
-              {side}
-            </TooltipTrigger>
+            <TooltipTrigger delay={200} render={ghostSmBtn(side)} />
             <TooltipPortal>
               <TooltipPositioner side={side}>
                 <TooltipPopup>
@@ -296,11 +300,14 @@ export const Overview: Story = {
       <p className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
         Tooltip — Use Cases
       </p>
-      <div className="flex gap-6 items-center">
+      <div className="flex items-center gap-6">
         <div className="flex items-center gap-2">
           <span className="text-lg font-bold text-content-primary">$99.00</span>
           <Tooltip>
-            <TooltipTrigger className="inline-flex items-center justify-center size-5 rounded-full bg-surface-secondary text-content-secondary text-xs cursor-pointer hover:bg-surface-hover transition-colors duration-[200ms]">
+            <TooltipTrigger
+              delay={200}
+              className="inline-flex size-5 cursor-pointer items-center justify-center rounded-full bg-surface-secondary text-xs text-content-secondary transition-colors duration-[200ms] hover:bg-surface-hover"
+            >
               ?
             </TooltipTrigger>
             <TooltipPortal>
@@ -315,9 +322,14 @@ export const Overview: Story = {
         </div>
 
         <Tooltip>
-          <TooltipTrigger render={<Button variant="solid" colorScheme="primary" size="sm" />}>
-            Save
-          </TooltipTrigger>
+          <TooltipTrigger
+            delay={200}
+            render={
+              <Button variant="solid" colorScheme="primary" size="sm">
+                Save
+              </Button>
+            }
+          />
           <TooltipPortal>
             <TooltipPositioner side="bottom">
               <TooltipPopup>

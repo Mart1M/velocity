@@ -1,0 +1,194 @@
+{
+  "skills": [
+    {
+      "name": "parse_natural_language_request",
+      "hub": "intent",
+      "agent": "goal-interpreter",
+      "description": "Extract structured intent from a free-form user request",
+      "input_schema": { "raw_input": "string" },
+      "output_schema": { "goal": "string", "detected_components": "array" },
+      "limits": "Does not make file system calls",
+      "error_cases": ["AMBIGUOUS_INPUT", "EMPTY_INPUT"]
+    },
+    {
+      "name": "detect_component_references",
+      "hub": "intent",
+      "agent": "goal-interpreter",
+      "description": "Identify component names mentioned in a user request",
+      "input_schema": { "raw_input": "string" },
+      "output_schema": { "components": "array of string" },
+      "limits": "Returns empty array if none found",
+      "error_cases": []
+    },
+    {
+      "name": "map_scope_to_domain",
+      "hub": "intent",
+      "agent": "scope-clarifier",
+      "description": "Map a goal string to a scope enum value",
+      "input_schema": { "goal": "string" },
+      "output_schema": { "scope": "component | pattern | token | documentation | refactor" },
+      "limits": "Defaults to 'component' if ambiguous",
+      "error_cases": ["SCOPE_CONFLICT"]
+    },
+    {
+      "name": "search_patterns_by_use_case",
+      "hub": "ground",
+      "agent": "pattern-resolver",
+      "description": "Find applicable patterns in src/components/ for a given use case",
+      "input_schema": { "use_case": "string", "domain": "string" },
+      "output_schema": { "patterns": "array of { name, path, description }" },
+      "limits": "Returns empty array if no patterns found",
+      "error_cases": ["PATTERN_SEARCH_FAILED"]
+    },
+    {
+      "name": "resolve_component_by_name",
+      "hub": "ground",
+      "agent": "component-resolver",
+      "description": "Check if a named component exists in src/components/ and find its Base UI primitive",
+      "input_schema": { "component_name": "string" },
+      "output_schema": { "path": "string | null", "baseUIPrimitive": "string | null", "status": "existing | new" },
+      "limits": "Only searches src/components/ and @base-ui-components",
+      "error_cases": ["COMPONENT_NOT_FOUND"]
+    },
+    {
+      "name": "extract_semantic_tokens",
+      "hub": "ground",
+      "agent": "token-resolver",
+      "description": "Extract relevant semantic tokens from src/tokens/ for a given component scope",
+      "input_schema": { "scope": "string", "categories": "array of string" },
+      "output_schema": { "tokens": "object keyed by category" },
+      "limits": "Only returns CSS custom property references",
+      "error_cases": ["TOKEN_NOT_FOUND"]
+    },
+    {
+      "name": "load_project_rules",
+      "hub": "ground",
+      "agent": "rule-resolver",
+      "description": "Load naming conventions and file structure rules from .hive/rules/ and CLAUDE.md",
+      "input_schema": {},
+      "output_schema": { "rules": "object" },
+      "limits": "Returns empty object if no rule files found",
+      "error_cases": ["RULES_NOT_FOUND"]
+    },
+    {
+      "name": "find_usage_examples",
+      "hub": "ground",
+      "agent": "example-resolver",
+      "description": "Find .stories.tsx files and usage examples for a given component",
+      "input_schema": { "component_name": "string" },
+      "output_schema": { "examples": "array of { name, path, relevance }" },
+      "limits": "Searches src/components/ only",
+      "error_cases": ["EXAMPLE_READ_FAILED"]
+    },
+    {
+      "name": "compose_component_blueprint",
+      "hub": "compose",
+      "agent": "layout-composer",
+      "description": "Build a structured component blueprint from ground context",
+      "input_schema": { "intent": "object", "ground": "object" },
+      "output_schema": { "blueprint": "object" },
+      "limits": "Does not write files",
+      "error_cases": ["NO_BASE_UI_PRIMITIVE", "BLUEPRINT_INCOMPLETE"]
+    },
+    {
+      "name": "generate_prop_interface",
+      "hub": "compose",
+      "agent": "component-composer",
+      "description": "Generate a TypeScript prop interface from blueprint and ground context",
+      "input_schema": { "component_name": "string", "base_ui_primitive": "string" },
+      "output_schema": { "props": "array of { name, type, required, description }" },
+      "limits": "Extends Base UI prop types; does not invent APIs",
+      "error_cases": ["TOKEN_MISSING"]
+    },
+    {
+      "name": "map_tokens_to_props",
+      "hub": "compose",
+      "agent": "component-composer",
+      "description": "Map semantic tokens to component visual properties",
+      "input_schema": { "component_name": "string", "tokens": "object" },
+      "output_schema": { "tokenMapping": "object" },
+      "limits": "Only uses tokens present in ground.tokens",
+      "error_cases": ["TOKEN_MISSING"]
+    },
+    {
+      "name": "check_token_usage",
+      "hub": "verify",
+      "agent": "compliance-agent",
+      "description": "Verify all color/spacing values in a blueprint are semantic token references",
+      "input_schema": { "blueprint": "object", "allowed_tokens": "object" },
+      "output_schema": { "violations": "array of string", "valid": "boolean" },
+      "limits": "Checks compose.tokenMapping and inline styles",
+      "error_cases": ["RAW_VALUE_USED"]
+    },
+    {
+      "name": "validate_prop_types",
+      "hub": "verify",
+      "agent": "technical-feasibility",
+      "description": "Validate TypeScript prop types in the blueprint are correct and complete",
+      "input_schema": { "props": "array", "platform": "object" },
+      "output_schema": { "errors": "array", "warnings": "array", "valid": "boolean" },
+      "limits": "Static analysis only; does not compile",
+      "error_cases": ["TYPE_ERROR", "UNKNOWN_IMPORT"]
+    },
+    {
+      "name": "audit_accessibility",
+      "hub": "verify",
+      "agent": "accessibility-agent",
+      "description": "Check blueprint for WCAG 2.2 AA compliance, ARIA correctness, and keyboard nav",
+      "input_schema": { "blueprint": "object", "interactions": "array" },
+      "output_schema": { "passed": "array", "failed": "array", "warnings": "array" },
+      "limits": "Structural analysis only; not a browser-based axe run",
+      "error_cases": ["ARIA_MISSING", "KEYBOARD_NAV_MISSING"]
+    },
+    {
+      "name": "lint_naming_conventions",
+      "hub": "verify",
+      "agent": "consistency-agent",
+      "description": "Check component name, file paths, and prop names against project rules",
+      "input_schema": { "blueprint": "object", "rules": "object" },
+      "output_schema": { "violations": "array", "valid": "boolean" },
+      "limits": "Checks naming only; not logic",
+      "error_cases": ["NAMING_VIOLATION"]
+    },
+    {
+      "name": "write_component_file",
+      "hub": "deliver",
+      "agent": "code-generator",
+      "description": "Write a React component .tsx file from a verified blueprint",
+      "input_schema": { "blueprint": "object", "tokens": "object" },
+      "output_schema": { "path": "string", "status": "written | failed" },
+      "limits": "Confirms with user before overwriting existing files",
+      "error_cases": ["FILE_WRITE_FAILED", "BLUEPRINT_MISSING_FIELD"]
+    },
+    {
+      "name": "write_stories_file",
+      "hub": "deliver",
+      "agent": "specification-writer",
+      "description": "Write a Storybook .stories.tsx file from blueprint variants",
+      "input_schema": { "blueprint": "object" },
+      "output_schema": { "path": "string", "status": "written | failed" },
+      "limits": "Requires at least a Default story",
+      "error_cases": ["FILE_WRITE_FAILED"]
+    },
+    {
+      "name": "update_index_exports",
+      "hub": "deliver",
+      "agent": "documentation-agent",
+      "description": "Add a new export to src/index.ts and write the component barrel index.ts",
+      "input_schema": { "component_name": "string", "component_path": "string" },
+      "output_schema": { "updated_files": "array", "status": "updated | skipped" },
+      "limits": "Never removes existing exports",
+      "error_cases": ["DUPLICATE_EXPORT"]
+    },
+    {
+      "name": "format_code",
+      "hub": "deliver",
+      "agent": "delivery-formatter",
+      "description": "Run Prettier on generated files and verify TypeScript compilation",
+      "input_schema": { "file_paths": "array of string" },
+      "output_schema": { "formatted": "array", "ts_errors": "array", "warnings": "array" },
+      "limits": "Does not modify code beyond formatting",
+      "error_cases": ["TS_COMPILE_ERROR", "PRETTIER_FAILED"]
+    }
+  ]
+}

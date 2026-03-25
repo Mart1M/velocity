@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "domain": "design-system",
+  "project": "velocity",
+  "description": "Velocity Design System — Base UI primitives, semantic tokens, and Storybook component library for Runswap",
+  "truth_sources": [
+    "src/components/",
+    "src/tokens/",
+    "src/index.ts"
+  ],
+  "output_formats": ["code", "markdown", "json"],
+  "governance": {
+    "require_verify": true,
+    "require_grounding": true,
+    "allow_direct_delivery": false
+  },
+  "hubs": {
+    "intent":   { "enabled": true },
+    "ground":   { "enabled": true },
+    "compose":  { "enabled": true },
+    "verify":   { "enabled": true },
+    "deliver":  { "enabled": true }
+  }
+}

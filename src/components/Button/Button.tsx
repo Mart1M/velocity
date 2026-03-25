@@ -11,13 +11,15 @@ export type ButtonColorScheme =
   | "danger"
   | "neutral";
 
-export interface ButtonProps {
+export type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   /** Visual style variant */
   variant?: ButtonVariant;
   /** Size of the button */
   size?: ButtonSize;
   /** Color scheme */
   colorScheme?: ButtonColorScheme;
+  /** Whether the button remains focusable when disabled (Base UI) */
+  focusableWhenDisabled?: boolean;
   /** Show loading spinner and disable interaction */
   loading?: boolean;
   /** Left icon element */
@@ -26,23 +28,11 @@ export interface ButtonProps {
   endIcon?: React.ReactNode;
   /** Make button full width */
   fullWidth?: boolean;
-  /** Whether the button is disabled */
-  disabled?: boolean;
-  /** Whether the button remains focusable when disabled */
-  focusableWhenDisabled?: boolean;
-  /** Button type attribute */
-  type?: "button" | "submit" | "reset";
-  /** Click handler */
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  /** Button content */
-  children?: React.ReactNode;
-  /** Additional CSS classes */
-  className?: string;
   /** Render as a different element */
   render?:
     | React.ReactElement<Record<string, unknown>>
     | ((props: React.ComponentProps<"button">) => React.ReactElement);
-}
+};
 
 // Shared pseudo-element classes for the glass/gradient effect on solid buttons.
 // before: gradient border (white top highlight → transparent)
@@ -150,22 +140,27 @@ function LoadingSpinner({ className }: { className?: string }) {
   );
 }
 
-export function Button({
-  variant = "solid",
-  size = "md",
-  colorScheme = "primary",
-  loading = false,
-  startIcon,
-  endIcon,
-  fullWidth = false,
-  disabled,
-  focusableWhenDisabled,
-  type = "button",
-  onClick,
-  children,
-  className,
-  render,
-}: ButtonProps) {
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  function Button(
+    {
+      variant = "solid",
+      size = "md",
+      colorScheme = "primary",
+      loading = false,
+      startIcon,
+      endIcon,
+      fullWidth = false,
+      disabled,
+      focusableWhenDisabled,
+      type = "button",
+      onClick,
+      children,
+      className,
+      render,
+      ...rest
+    },
+    ref,
+  ) {
   const isDisabled = disabled || loading;
 
   const classes = [
@@ -181,14 +176,15 @@ export function Button({
     variantColorClasses[colorScheme][variant],
     // Full width
     fullWidth ? "w-full" : "",
-    className,
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
     <BaseButton
-      className={classes}
+      ref={ref}
+      {...rest}
+      className={[classes, className].filter(Boolean).join(" ")}
       disabled={isDisabled}
       focusableWhenDisabled={focusableWhenDisabled}
       type={type}
@@ -210,6 +206,7 @@ export function Button({
       ) : null}
     </BaseButton>
   );
-}
+  },
+);
 
 Button.displayName = "Button";

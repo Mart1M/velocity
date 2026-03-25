@@ -43,7 +43,7 @@ In your global CSS entry point (e.g. `src/index.css`), import the Velocity token
 import { Button } from '@runswap/velocity';
 
 export function App() {
-  return <Button variant="primary">Click me</Button>;
+  return <Button variant="solid" colorScheme="primary">Click me</Button>;
 }
 ```
 
@@ -51,7 +51,13 @@ export function App() {
 
 | Component | Description |
 |---|---|
-| `Button` | Accessible button with `primary`, `secondary`, `ghost`, and `destructive` variants |
+| `Button` | Accessible button with `solid`, `outline`, `ghost`, and `link` variants + color schemes |
+| `NumberField` | Numeric input with steppers (optional scrub area) on [Base UI Number Field](https://base-ui.com/react/components/number-field) |
+| `Chip` | Tags / filters — optional **remove** control; **selectable** mode uses [Base UI Toggle](https://base-ui.com/react/components/toggle) |
+| `Avatar` | User photo / initials / fallback on [Base UI Avatar](https://base-ui.com/react/components/avatar) |
+| `Table` | Semantic HTML table (`Table`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`) — Velocity tokens |
+| `Rating` | Star rating (buttons + Remix icons); not a Base UI primitive |
+| `Card` | Generic container (`CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, `CardFooter`) — not a Base UI primitive |
 | `SelectBox` / `SelectBoxGroup` | Card-style option (icon, title, description); group `mode="radio"` or `mode="checkbox"` |
 | `RadioGroup` / `RadioItem` | Accessible radio group built on Base UI |
 

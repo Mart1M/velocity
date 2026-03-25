@@ -111,8 +111,8 @@ export function Switch({
             "rounded-full bg-background-primary shadow-sm",
             sizes.thumb,
             sizes.thumbChecked,
-            // Smooth slide + scale-in animation
-            "transition-transform duration-[200ms]",
+            // Bounce slide animation
+            "transition-transform duration-slow ease-spring",
           ]
             .filter(Boolean)
             .join(" ")}

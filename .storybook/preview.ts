@@ -1,4 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
+import * as React from 'react';
+import { TooltipProvider } from '../src/components/Tooltip/Tooltip';
 import './preview.css';
 
 const preview: Preview = {
@@ -25,7 +27,11 @@ const preview: Preview = {
         'data-theme',
         String(context.globals.theme ?? 'light')
       );
-      return Story();
+      return React.createElement(
+        TooltipProvider,
+        { delay: 200 },
+        React.createElement(Story),
+      );
     },
   ],
   parameters: {

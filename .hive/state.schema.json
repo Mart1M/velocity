@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HIVE Shared State",
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "object",
+      "properties": {
+        "id":        { "type": "string" },
+        "source":    { "type": "string" },
+        "raw_input": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "raw_input"]
+    },
+    "intent": {
+      "type": "object",
+      "properties": {
+        "goal":             { "type": "string" },
+        "domain":           { "type": "string" },
+        "constraints":      { "type": "array", "items": { "type": "string" } },
+        "success_criteria": { "type": "array", "items": { "type": "string" } },
+        "scope":            { "type": "string" }
+      }
+    },
+    "ground": {
+      "type": "object",
+      "properties": {
+        "patterns":   { "type": "array" },
+        "components": { "type": "array" },
+        "tokens":     { "type": "object" },
+        "rules":      { "type": "object" },
+        "docs":       { "type": "array" },
+        "examples":   { "type": "array" }
+      }
+    },
+    "compose": {
+      "type": "object",
+      "properties": {
+        "blueprint":    {},
+        "layout":       {},
+        "components":   { "type": "array" },
+        "interactions": { "type": "array" },
+        "state_map":    { "type": "object" }
+      }
+    },
+    "verify": {
+      "type": "object",
+      "properties": {
+        "valid":    { "type": "boolean" },
+        "warnings": { "type": "array", "items": { "type": "string" } },
+        "issues":   { "type": "array", "items": { "type": "string" } },
+        "fixes":    { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["valid"]
+    },
+    "deliver": {
+      "type": "object",
+      "properties": {
+        "artifacts": { "type": "array" },
+        "format":    { "type": "string" },
+        "output":    {}
+      }
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "version":    { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["initialized", "intent_done", "ground_done", "compose_done", "verify_done", "delivered", "error"]
+        },
+        "run_id":     { "type": "string" },
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" }
+      }
+    }
+  }
+}

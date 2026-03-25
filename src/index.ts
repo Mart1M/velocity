@@ -8,6 +8,9 @@ export type { IconButtonProps } from './components/IconButton';
 export { Input } from './components/Input';
 export type { InputProps, InputSize } from './components/Input';
 
+export { NumberField, NumberFieldParts } from './components/NumberField';
+export type { NumberFieldProps, NumberFieldSize } from './components/NumberField';
+
 export { Checkbox } from './components/Checkbox';
 export type { CheckboxProps, CheckboxSize } from './components/Checkbox';
 
@@ -41,8 +44,74 @@ export type { LabelProps, LabelSize } from './components/Label';
 export { Badge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
 
+export { Chip } from './components/Chip';
+export type { ChipProps, ChipVariant, ChipSize } from './components/Chip';
+
+export { Combobox, ComboboxOption, ComboboxGroup } from './components/Combobox';
+export type { ComboboxProps, ComboboxSize, ComboboxOptionProps, ComboboxGroupProps } from './components/Combobox';
+
+export { DatePicker } from './components/DatePicker';
+export type {
+  DatePickerProps,
+  DatePickerSize,
+  DateRangeValue,
+  DatePickerSingleProps,
+  DatePickerRangeProps,
+} from './components/DatePicker';
+
+export { Avatar, AvatarParts } from './components/Avatar';
+export type { AvatarProps, AvatarSize } from './components/Avatar';
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableRow,
+  TableHead,
+  TableCell,
+} from './components/Table';
+export type {
+  TableProps,
+  TableSize,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+  TableRowProps,
+  TableHeadProps,
+  TableCellProps,
+} from './components/Table';
+
+export { Rating } from './components/Rating';
+export type { RatingProps, RatingSize, RatingLabelPosition } from './components/Rating';
+
+export {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from './components/Card';
+export type {
+  CardProps,
+  CardSize,
+  CardVariant,
+  CardHeaderProps,
+  CardTitleProps,
+  CardDescriptionProps,
+  CardContentProps,
+  CardFooterProps,
+} from './components/Card';
+
 export { Spinner } from './components/Spinner';
 export type { SpinnerProps, SpinnerSize, SpinnerColorScheme } from './components/Spinner';
+
+export { Skeleton } from './components/Skeleton';
+export type { SkeletonProps, SkeletonVariant, SkeletonAnimation } from './components/Skeleton';
+
+export { FileUpload } from './components/FileUpload';
+export type { FileUploadProps, FileUploadSize, FileUploadOrientation, FileUploadValidationIssue } from './components/FileUpload';
 
 export { Tabs, TabsList, TabsTab, TabsIndicator, TabsPanel } from './components/Tabs';
 export type { TabsProps, TabsListProps, TabsTabProps, TabsIndicatorProps, TabsPanelProps } from './components/Tabs';
