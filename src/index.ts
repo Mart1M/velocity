@@ -237,5 +237,23 @@ export type {
   CartContentOrderSummaryProps,
 } from './components/ecommerce/CartContent';
 
+export {
+  Footer,
+  FooterContent,
+  FooterSection,
+  FooterSectionTitle,
+  FooterLink,
+  FooterBottom,
+} from './components/Footer';
+export type {
+  FooterProps,
+  FooterVariant,
+  FooterContentProps,
+  FooterSectionProps,
+  FooterSectionTitleProps,
+  FooterLinkProps,
+  FooterBottomProps,
+} from './components/Footer';
+
 // Tokens
 export * from './tokens';

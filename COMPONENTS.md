@@ -38,6 +38,7 @@ E-commerce–specific UI lives under **`src/components/ecommerce/`** (e.g. `Prod
 | `Accordion` | `@base-ui-components/react/accordion` | FAQ, mobile filters, order details |
 | `Breadcrumb` | — | Category → subcategory → product navigation |
 | `Pagination` | — | Product listings, order history |
+| ~~`Footer`~~ ✅ | — | Page footer with multi-column link groups and bottom bar |
 
 ### Feedback & Overlays
 
