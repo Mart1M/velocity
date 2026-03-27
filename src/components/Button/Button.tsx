@@ -131,6 +131,15 @@ const iconSizeClasses: Record<ButtonSize, string> = {
   lg: "h-5 w-5",
 };
 
+/** Centers SVG / icon components; avoids baseline offset from inline SVG. */
+function iconSlotClass(size: ButtonSize): string {
+  return [
+    "inline-flex shrink-0 items-center justify-center self-center",
+    iconSizeClasses[size],
+    "[&_svg]:pointer-events-none [&_svg]:block [&_svg]:h-full [&_svg]:w-full [&_svg]:shrink-0",
+  ].join(" ");
+}
+
 function LoadingSpinner({ className }: { className?: string }) {
   return (
     <RiLoader4Line
@@ -164,8 +173,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   const isDisabled = disabled || loading;
 
   const classes = [
-    // Base styles
-    "inline-flex items-center justify-center font-medium",
+    // Base styles — leading-none keeps icon + label vertically centered vs text metrics
+    "inline-flex items-center justify-center font-medium leading-none",
     "cursor-pointer transition-colors duration-150",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary",
     "disabled:opacity-50 disabled:cursor-not-allowed",
@@ -192,15 +201,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       render={render}
     >
       {loading ? (
-        <LoadingSpinner className={iconSizeClasses[size]} />
+        <span className={iconSlotClass(size)} aria-hidden="true">
+          <LoadingSpinner className="size-full" />
+        </span>
       ) : startIcon ? (
-        <span className={iconSizeClasses[size]} aria-hidden="true">
+        <span className={iconSlotClass(size)} aria-hidden="true">
           {startIcon}
         </span>
       ) : null}
-      {children}
+      {children ? (
+        <span className="min-w-0 leading-normal">{children}</span>
+      ) : null}
       {!loading && endIcon ? (
-        <span className={iconSizeClasses[size]} aria-hidden="true">
+        <span className={iconSlotClass(size)} aria-hidden="true">
           {endIcon}
         </span>
       ) : null}

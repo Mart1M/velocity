@@ -18,11 +18,14 @@ export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   separator?: boolean;
 }
 
-export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
+export interface CardTitleProps
+  extends React.HTMLAttributes<HTMLHeadingElement> {}
 
-export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+export interface CardDescriptionProps
+  extends React.HTMLAttributes<HTMLParagraphElement> {}
 
-export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardContentProps
+  extends React.HTMLAttributes<HTMLDivElement> {}
 
 export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Divider above the footer */
@@ -111,114 +114,120 @@ Card.displayName = "Card";
 
 // ── CardHeader ─────────────────────────────────────────────────────────────
 
-export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(function CardHeader(
-  { className, separator = false, children, ...props },
-  ref,
-) {
-  const { size } = useCardContext();
-  return (
-    <div
-      ref={ref}
-      className={[
-        "flex flex-col gap-1",
-        headerPadding[size],
-        separator ? "border-b border-border-subtle" : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-});
+export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
+  function CardHeader(
+    { className, separator = false, children, ...props },
+    ref,
+  ) {
+    const { size } = useCardContext();
+    return (
+      <div
+        ref={ref}
+        className={[
+          "flex flex-col gap-1 pb-2",
+          headerPadding[size],
+          separator ? "border-b border-border-subtle" : "",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  },
+);
 
 CardHeader.displayName = "CardHeader";
 
 // ── CardTitle ─────────────────────────────────────────────────────────────
 
-export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(function CardTitle(
-  { className, children, ...props },
-  ref,
-) {
-  const { size } = useCardContext();
-  return (
-    <h3
-      ref={ref}
-      className={[
-        "font-semibold leading-snug tracking-tight text-content-primary",
-        titleSize[size],
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
-    >
-      {children}
-    </h3>
-  );
-});
+export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
+  function CardTitle({ className, children, ...props }, ref) {
+    const { size } = useCardContext();
+    return (
+      <h3
+        ref={ref}
+        className={[
+          "font-semibold leading-snug tracking-tight text-content-primary",
+          titleSize[size],
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        {...props}
+      >
+        {children}
+      </h3>
+    );
+  },
+);
 
 CardTitle.displayName = "CardTitle";
 
 // ── CardDescription ───────────────────────────────────────────────────────
 
-export const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(
-  function CardDescription({ className, ...props }, ref) {
+export const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  CardDescriptionProps
+>(function CardDescription({ className, ...props }, ref) {
+  return (
+    <p
+      ref={ref}
+      className={["text-body-sm text-content-secondary", className]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    />
+  );
+});
+
+CardDescription.displayName = "CardDescription";
+
+// ── CardContent ───────────────────────────────────────────────────────────
+
+export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
+  function CardContent({ className, ...props }, ref) {
+    const { size } = useCardContext();
     return (
-      <p
+      <div
         ref={ref}
-        className={["text-body-sm text-content-secondary", className].filter(Boolean).join(" ")}
+        className={[
+          "flex flex-1 flex-col gap-3",
+          contentPadding[size],
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
         {...props}
       />
     );
   },
 );
 
-CardDescription.displayName = "CardDescription";
-
-// ── CardContent ───────────────────────────────────────────────────────────
-
-export const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(function CardContent(
-  { className, ...props },
-  ref,
-) {
-  const { size } = useCardContext();
-  return (
-    <div
-      ref={ref}
-      className={["flex flex-1 flex-col gap-3", contentPadding[size], className]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
-    />
-  );
-});
-
 CardContent.displayName = "CardContent";
 
 // ── CardFooter ─────────────────────────────────────────────────────────────
 
-export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(function CardFooter(
-  { className, separator = true, ...props },
-  ref,
-) {
-  const { size } = useCardContext();
-  return (
-    <div
-      ref={ref}
-      className={[
-        "flex flex-wrap items-center gap-2",
-        footerPadding[size],
-        separator ? "border-t border-border-subtle" : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      {...props}
-    />
-  );
-});
+export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
+  function CardFooter({ className, separator = true, ...props }, ref) {
+    const { size } = useCardContext();
+    return (
+      <div
+        ref={ref}
+        className={[
+          "flex flex-wrap items-center gap-2",
+          footerPadding[size],
+          separator ? "border-t border-border-subtle" : "",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+        {...props}
+      />
+    );
+  },
+);
 
 CardFooter.displayName = "CardFooter";

@@ -10,13 +10,13 @@ import {
   ProductCardPrice,
   ProductCardActions,
 } from "./ProductCard";
-import { Badge } from "../Badge";
-import { Button } from "../Button";
-import { IconButton } from "../IconButton";
+import { Badge } from "../../Badge";
+import { Button } from "../../Button";
+import { IconButton } from "../../IconButton";
 import { RiHeartLine } from "react-icons/ri";
 
 const meta = {
-  title: "Components/ProductCard",
+  title: "Ecommerce/ProductCard",
   component: ProductCard,
   parameters: {
     layout: "centered",

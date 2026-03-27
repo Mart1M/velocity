@@ -5,6 +5,9 @@ export type { ButtonProps, ButtonVariant, ButtonSize, ButtonColorScheme } from '
 export { IconButton } from './components/IconButton';
 export type { IconButtonProps } from './components/IconButton';
 
+export { Logo } from './components/Logo';
+export type { LogoProps, LogoSize, LogoVariant } from './components/Logo';
+
 export { Input } from './components/Input';
 export type { InputProps, InputSize } from './components/Input';
 
@@ -41,8 +44,18 @@ export type { SelectProps, SelectOptionProps, SelectGroupProps, SelectSize } fro
 export { Label } from './components/Label';
 export type { LabelProps, LabelSize } from './components/Label';
 
+export { Separator } from './components/Separator';
+export type { SeparatorProps, SeparatorOrientation } from './components/Separator';
+
 export { Badge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
+
+export { NotificationBadge } from './components/NotificationBadge';
+export type {
+  NotificationBadgeProps,
+  NotificationBadgeVariant,
+  NotificationBadgeSize,
+} from './components/NotificationBadge';
 
 export { Chip } from './components/Chip';
 export type { ChipProps, ChipVariant, ChipSize } from './components/Chip';
@@ -143,6 +156,14 @@ export type { PopoverProps, PopoverTriggerProps, PopoverPortalProps, PopoverPosi
 export { AlertBanner } from './components/AlertBanner';
 export type { AlertBannerProps, AlertBannerVariant, AlertBannerAction } from './components/AlertBanner';
 
+export { MarketingBanner } from './components/MarketingBanner';
+export type {
+  MarketingBannerProps,
+  MarketingBannerVariant,
+  MarketingBannerLayout,
+  MarketingBannerCta,
+} from './components/MarketingBanner';
+
 export {
   ProductCard,
   ProductCardImage,
@@ -153,7 +174,7 @@ export {
   ProductCardTitle,
   ProductCardPrice,
   ProductCardActions,
-} from './components/ProductCard';
+} from './components/ecommerce/ProductCard';
 export type {
   ProductCardProps,
   ProductCardLayout,
@@ -166,7 +187,55 @@ export type {
   ProductCardTitleProps,
   ProductCardPriceProps,
   ProductCardActionsProps,
-} from './components/ProductCard';
+} from './components/ecommerce/ProductCard';
+
+export {
+  EcommerceNavigation,
+  EcommerceNavigationMenu,
+  EcommerceNavigationMenuList,
+  EcommerceNavigationMenuItem,
+  EcommerceNavigationMenuTrigger,
+  EcommerceNavigationMenuContent,
+  EcommerceNavigationMenuLink,
+  EcommerceNavigationMenuIcon,
+  EcommerceNavigationMegaViewport,
+} from './components/ecommerce/EcommerceNavigation';
+export type {
+  EcommerceNavigationProps,
+  EcommerceNavigationMenuProps,
+  EcommerceNavigationMenuListProps,
+  EcommerceNavigationMenuItemProps,
+  EcommerceNavigationMenuTriggerProps,
+  EcommerceNavigationMenuContentProps,
+  EcommerceNavigationMenuLinkProps,
+  EcommerceNavigationMenuIconProps,
+  EcommerceNavigationMegaViewportProps,
+  EcommerceNavigationMenuTriggerOwnProps,
+  NavigationMenuRootChangeEventDetails,
+} from './components/ecommerce/EcommerceNavigation';
+
+export {
+  CartContent,
+  CartContentMain,
+  CartContentAside,
+  CartContentSection,
+  CartContentItems,
+  CartContentItem,
+  CartContentRow,
+  CartContentTotalRow,
+  CartContentOrderSummary,
+} from './components/ecommerce/CartContent';
+export type {
+  CartContentProps,
+  CartContentMainProps,
+  CartContentAsideProps,
+  CartContentSectionProps,
+  CartContentItemsProps,
+  CartContentItemProps,
+  CartContentRowProps,
+  CartContentTotalRowProps,
+  CartContentOrderSummaryProps,
+} from './components/ecommerce/CartContent';
 
 // Tokens
 export * from './tokens';

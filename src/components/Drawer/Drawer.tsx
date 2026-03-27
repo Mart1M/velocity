@@ -46,6 +46,8 @@ export interface DrawerPopupProps {
   /** Which side the drawer slides in from. Overrides the root-level `side`. */
   side?: DrawerSide;
   className?: string;
+  /** Classes for the inner scrollable wrapper (default padding: `p-6`). */
+  contentClassName?: string;
   children?: React.ReactNode;
 }
 
@@ -159,6 +161,7 @@ DrawerBackdrop.displayName = "DrawerBackdrop";
 export function DrawerPopup({
   side: sideProp,
   className,
+  contentClassName,
   children,
 }: DrawerPopupProps) {
   const contextSide = React.useContext(DrawerContext);
@@ -178,7 +181,12 @@ export function DrawerPopup({
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="flex h-full flex-col overflow-y-auto p-6">
+      <div
+        className={[
+          "flex h-full flex-col overflow-y-auto",
+          contentClassName ?? "p-6",
+        ].join(" ")}
+      >
         {children}
       </div>
     </BaseDialog.Popup>

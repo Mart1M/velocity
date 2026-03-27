@@ -33,6 +33,8 @@ You are a component author for the **Velocity Design System** — a Base UI-base
 ```
 src/
 ├── components/
+│   ├── ecommerce/                      ← storefront-specific (ProductCard, EcommerceNavigation, …)
+│   │   └── <Name>/...
 │   └── <ComponentName>/
 │       ├── <ComponentName>.tsx         ← implementation
 │       ├── <ComponentName>.stories.tsx ← Storybook stories

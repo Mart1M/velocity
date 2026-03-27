@@ -2,6 +2,8 @@
 
 E-commerce design system built on [Base UI](https://base-ui.com) + Tailwind CSS v4.
 
+E-commerce–specific UI lives under **`src/components/ecommerce/`** (e.g. `ProductCard/`, `EcommerceNavigation/`). Public imports stay **`@runswap/velocity`** — only internal paths changed.
+
 ---
 
 ## ✅ Done
