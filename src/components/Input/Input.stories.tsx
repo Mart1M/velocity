@@ -14,7 +14,7 @@ const lockIcon = <RiLockLine className="size-full" aria-hidden />;
 const tagIcon = <RiPriceTag3Line className="size-full" aria-hidden />;
 const mailIcon = <RiMailLine className="size-full" aria-hidden />;
 
-const meta = {
+const meta: Meta<typeof Input> = {
   title: 'Components/Input',
   component: Input,
   parameters: {
@@ -60,7 +60,7 @@ const meta = {
     disabled: false,
     placeholder: 'Placeholder…',
   },
-} satisfies Meta<typeof Input>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { Rating } from "./Rating";
 
-const meta = {
+const meta: Meta<typeof Rating> = {
   title: "Components/Rating",
   component: Rating,
   parameters: {
@@ -37,7 +37,7 @@ const meta = {
     showLabel: false,
     labelPosition: "top",
   },
-} satisfies Meta<typeof Rating>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

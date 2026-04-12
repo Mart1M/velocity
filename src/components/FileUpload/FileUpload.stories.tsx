@@ -2,7 +2,7 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FileUpload } from "./FileUpload";
 
-const meta = {
+const meta: Meta<typeof FileUpload> = {
   title: "Components/FileUpload",
   component: FileUpload,
   parameters: {
@@ -32,7 +32,7 @@ const meta = {
     label: "Upload a file",
     description: "PNG, JPG or PDF — max 10 MB",
   },
-} satisfies Meta<typeof FileUpload>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

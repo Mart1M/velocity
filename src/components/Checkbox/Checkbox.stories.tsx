@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Checkbox } from "./Checkbox";
 
-const meta = {
+const meta: Meta<typeof Checkbox> = {
   title: "Components/Checkbox",
   component: Checkbox,
   parameters: {
@@ -25,7 +25,7 @@ const meta = {
     indeterminate: false,
     children: "Accept terms and conditions",
   },
-} satisfies Meta<typeof Checkbox>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

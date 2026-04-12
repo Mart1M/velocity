@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Tabs, TabsList, TabsTab, TabsPanel } from "./Tabs";
 
-const meta = {
+const meta: Meta<typeof Tabs> = {
   title: "Components/Tabs",
   component: Tabs,
   parameters: {
@@ -23,7 +23,7 @@ const meta = {
   args: {
     orientation: "horizontal",
   },
-} satisfies Meta<typeof Tabs>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

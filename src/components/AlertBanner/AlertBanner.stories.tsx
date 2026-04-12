@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RiGiftLine } from "react-icons/ri";
 import { AlertBanner } from "./AlertBanner";
 
-const meta = {
+const meta: Meta<typeof AlertBanner> = {
   title: "Components/AlertBanner",
   component: AlertBanner,
   parameters: {
@@ -49,7 +49,7 @@ const meta = {
       "We just shipped dark mode support. Try it out in your account settings.",
     dismissible: false,
   },
-} satisfies Meta<typeof AlertBanner>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

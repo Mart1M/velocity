@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Label } from './Label';
 import { Input } from '../Input';
 
-const meta = {
+const meta: Meta<typeof Label> = {
   title: 'Components/Label',
   component: Label,
   parameters: {
@@ -44,7 +44,7 @@ const meta = {
     required: false,
     children: 'Email address',
   },
-} satisfies Meta<typeof Label>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

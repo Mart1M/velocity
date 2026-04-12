@@ -25,14 +25,19 @@ export interface EcommerceNavigationProps {
   /** Primary navigation — compose with `EcommerceNavigationMenu*` + `EcommerceNavigationMegaViewport` */
   menu: React.ReactNode;
   /**
-   * Content for the mobile drawer (viewports below `lg`). When set, **menu** is hidden there and a control opens this panel.
+   * Content for the mobile drawer (viewports below `md`). When set, **menu** is hidden there and a control opens this panel.
    */
   mobileMenu?: React.ReactNode;
   /** Actions — search, account, cart (right) */
   utilities?: React.ReactNode;
+  /**
+   * Desktop layout for **menu**: same row as brand (`inline`, default) or full-width row under the top bar (`below`).
+   * With `mobileMenu`, the desktop mega menu and this row show from **`md`** up; narrower viewports use the drawer.
+   */
+  navPlacement?: "inline" | "below";
   /** Extra classes on `<header>` */
   className?: string;
-  /** Extra classes on the inner width-constrained row */
+  /** Extra classes on the inner width-constrained shell (wraps all rows) */
   innerClassName?: string;
 }
 
@@ -58,7 +63,7 @@ export interface EcommerceNavigationMegaViewportProps {
 // ── Shell ───────────────────────────────────────────────────────────────────
 
 /**
- * Storefront header row: **brand** (left), **menu** (center/flex), **utilities** (right).
+ * Storefront header: **brand** + **utilities** on the top bar; **menu** inline with brand or on a second row (`navPlacement="below"`).
  * Pair with Base UI [Navigation Menu](https://base-ui.com/react/components/navigation-menu)
  * primitives exposed as `EcommerceNavigationMenu*`.
  */
@@ -67,12 +72,28 @@ export function EcommerceNavigation({
   menu,
   mobileMenu,
   utilities,
+  navPlacement = "inline",
   className,
   innerClassName,
 }: EcommerceNavigationProps) {
+  const menuBelow = navPlacement === "below";
+
   const menuShellClass = mobileMenu
-    ? "hidden min-w-0 flex-1 items-center lg:flex"
+    ? "hidden min-w-0 flex-1 items-center md:flex"
     : "flex min-w-0 flex-1 items-center";
+
+  const menuBelowRowClass = "hidden w-full min-w-0 items-center md:flex";
+
+  const shellClass = [
+    "mx-auto flex w-full max-w-7xl min-w-0 flex-col px-4 sm:px-6 lg:px-8",
+    innerClassName,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const topBarClass = [
+    "flex h-14 min-w-0 flex-nowrap items-center justify-between gap-4 sm:h-16 sm:gap-6",
+  ].join(" ");
 
   return (
     <header
@@ -84,49 +105,54 @@ export function EcommerceNavigation({
         .filter(Boolean)
         .join(" ")}
     >
-      <div
-        className={[
-          "mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:h-16 sm:gap-6 sm:px-6 lg:px-8",
-          innerClassName,
-        ]
-          .filter(Boolean)
-          .join(" ")}
-      >
-        <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-6 lg:gap-10">
-          {/* flex + items-center: inline-flex brand links don’t sit on text baseline vs nav triggers */}
-          <div className="flex shrink-0 items-center">{brand}</div>
-          {mobileMenu ? (
-            <div className="flex shrink-0 items-center gap-2 lg:hidden">
-              <Separator orientation="vertical" className="h-5" />
-              <Drawer side="left">
-                <DrawerTrigger
-                  render={
-                    <IconButton
-                      label="Open navigation menu"
-                      variant="ghost"
-                      colorScheme="neutral"
-                      size="sm"
-                    >
-                      <RiMenuLine className="h-5 w-5" />
-                    </IconButton>
-                  }
-                />
-                <DrawerPortal>
-                  <DrawerBackdrop />
-                  <DrawerPopup side="left" contentClassName="px-4 pb-4 pt-6">
-                    <DrawerClose />
-                    <DrawerTitle className="pr-10">Menu</DrawerTitle>
-                    <div className="mt-3">{mobileMenu}</div>
-                  </DrawerPopup>
-                </DrawerPortal>
-              </Drawer>
+      <div className={shellClass}>
+        <div className={topBarClass}>
+          <div className="flex min-w-0 max-w-full shrink grow-0 basis-auto items-center gap-3 sm:gap-6 lg:gap-10">
+            <div className="flex shrink-0 items-center">{brand}</div>
+            {mobileMenu ? (
+              <div className="flex shrink-0 items-center gap-2 md:hidden">
+                <Separator orientation="vertical" className="h-5" />
+                <Drawer side="left">
+                  <DrawerTrigger
+                    render={
+                      <IconButton
+                        label="Open navigation menu"
+                        variant="ghost"
+                        colorScheme="neutral"
+                        size="sm"
+                      >
+                        <RiMenuLine className="h-5 w-5" />
+                      </IconButton>
+                    }
+                  />
+                  <DrawerPortal>
+                    <DrawerBackdrop />
+                    <DrawerPopup side="left" contentClassName="px-4 pb-4 pt-20">
+                      <DrawerClose />
+                      <div className="mt-3">{mobileMenu}</div>
+                    </DrawerPopup>
+                  </DrawerPortal>
+                </Drawer>
+              </div>
+            ) : null}
+            {!menuBelow ? <div className={menuShellClass}>{menu}</div> : null}
+          </div>
+          {utilities ? (
+            <div
+              className={[
+                "flex max-w-full min-w-0 flex-1 flex-nowrap items-center justify-end",
+                "gap-1 sm:gap-2",
+              ].join(" ")}
+            >
+              {utilities}
             </div>
           ) : null}
-          <div className={menuShellClass}>{menu}</div>
         </div>
-        {utilities ? (
-          <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-            {utilities}
+        {menuBelow ? (
+          <div className={menuBelowRowClass}>
+            <div className="flex min-h-11 min-w-0 flex-1 items-center pb-2">
+              <div className="flex min-w-0 flex-1 items-center">{menu}</div>
+            </div>
           </div>
         ) : null}
       </div>
@@ -201,7 +227,7 @@ EcommerceNavigationMenuList.displayName = "EcommerceNavigationMenuList";
 export const EcommerceNavigationMenuItem = NM.Item;
 
 const triggerClass = [
-  "inline-flex h-9 items-center gap-1 rounded-lg px-2.5 text-sm font-medium",
+  "inline-flex h-10 items-center gap-2 rounded-xl px-4 text-sm font-medium",
   "text-content-primary outline-none transition-colors duration-200",
   "hover:bg-surface-hover active:bg-surface-active",
   "data-popup-open:bg-surface-secondary",

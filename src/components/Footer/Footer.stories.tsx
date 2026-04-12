@@ -8,7 +8,7 @@ import {
   FooterSectionTitle,
 } from "./Footer";
 
-const meta = {
+const meta: Meta<typeof Footer> = {
   title: "Components/Footer",
   component: Footer,
   parameters: {
@@ -31,7 +31,7 @@ const meta = {
   args: {
     variant: "default",
   },
-} satisfies Meta<typeof Footer>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

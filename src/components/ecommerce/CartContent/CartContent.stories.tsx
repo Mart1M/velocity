@@ -23,7 +23,7 @@ import {
   CartContentTotalRow,
 } from "./CartContent";
 
-const meta = {
+const meta: Meta = {
   title: "Ecommerce/CartContent",
   parameters: {
     layout: "fullscreen",
@@ -35,7 +35,7 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

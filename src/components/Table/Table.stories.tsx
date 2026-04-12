@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "./Table";
 
-const meta = {
+const meta: Meta<typeof Table> = {
   title: "Components/Table",
   component: Table,
   parameters: {
@@ -32,7 +32,7 @@ const meta = {
     striped: false,
     scrollable: true,
   },
-} satisfies Meta<typeof Table>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "../Button/Button";
 import { MarketingBanner } from "./MarketingBanner";
 
-const meta = {
+const meta: Meta<typeof MarketingBanner> = {
   title: "Components/MarketingBanner",
   component: MarketingBanner,
   parameters: {
@@ -29,7 +29,7 @@ const meta = {
     message: "Free express shipping on orders over $150.",
     dismissible: false,
   },
-} satisfies Meta<typeof MarketingBanner>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

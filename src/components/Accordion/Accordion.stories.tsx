@@ -6,7 +6,7 @@ import {
   AccordionPanel,
 } from "./Accordion";
 
-const meta = {
+const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
   component: Accordion,
   parameters: {
@@ -27,7 +27,7 @@ const meta = {
     multiple: false,
     disabled: false,
   },
-} satisfies Meta<typeof Accordion>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

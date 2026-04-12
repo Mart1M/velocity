@@ -189,6 +189,9 @@ export type {
   ProductCardActionsProps,
 } from './components/ecommerce/ProductCard';
 
+export { EcommerceSearchInput } from './components/ecommerce/EcommerceSearchInput';
+export type { EcommerceSearchInputProps } from './components/ecommerce/EcommerceSearchInput';
+
 export {
   EcommerceNavigation,
   EcommerceNavigationMenu,

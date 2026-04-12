@@ -7,7 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "./Breadcrumb";
 
-const meta = {
+const meta: Meta<typeof Breadcrumb> = {
   title: "Components/Breadcrumb",
   component: Breadcrumb,
   parameters: {
@@ -34,7 +34,7 @@ const meta = {
   args: {
     size: "md",
   },
-} satisfies Meta<typeof Breadcrumb>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

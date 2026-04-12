@@ -15,7 +15,7 @@ import { Button } from "../../Button";
 import { IconButton } from "../../IconButton";
 import { RiHeartLine } from "react-icons/ri";
 
-const meta = {
+const meta: Meta<typeof ProductCard> = {
   title: "Ecommerce/ProductCard",
   component: ProductCard,
   parameters: {
@@ -57,7 +57,7 @@ const meta = {
     disabled: false,
     layout: "vertical",
   },
-} satisfies Meta<typeof ProductCard>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

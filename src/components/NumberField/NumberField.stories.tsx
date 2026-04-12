@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { NumberField } from "./index";
 
-const meta = {
+const meta: Meta<typeof NumberField> = {
   title: "Components/NumberField",
   component: NumberField,
   parameters: {
@@ -18,7 +18,7 @@ const meta = {
   argTypes: {
     size: { control: "select", options: ["sm", "md", "lg"] },
   },
-} satisfies Meta<typeof NumberField>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

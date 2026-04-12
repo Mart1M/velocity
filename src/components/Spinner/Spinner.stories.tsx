@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Spinner } from "./Spinner";
 
-const meta = {
+const meta: Meta<typeof Spinner> = {
   title: "Components/Spinner",
   component: Spinner,
   parameters: {
@@ -35,7 +35,7 @@ const meta = {
     colorScheme: "brand",
     label: "Loading",
   },
-} satisfies Meta<typeof Spinner>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

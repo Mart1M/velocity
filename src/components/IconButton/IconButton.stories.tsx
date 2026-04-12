@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RiDeleteBinLine, RiHeartLine, RiShoppingCartLine } from "react-icons/ri";
 import { IconButton } from "./IconButton";
 
-const meta = {
+const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
   component: IconButton,
   parameters: {
@@ -38,7 +38,7 @@ const meta = {
     disabled: false,
     children: <RiHeartLine className="h-4 w-4 shrink-0" aria-hidden />,
   },
-} satisfies Meta<typeof IconButton>;
+};
 
 export default meta;
 type Story = StoryObj<typeof IconButton>;

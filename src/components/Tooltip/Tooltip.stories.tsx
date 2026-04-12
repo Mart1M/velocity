@@ -15,7 +15,7 @@ import {
  * Put **label text inside** `<Button>...</Button>` in `render` — children of
  * `<TooltipTrigger>` are not passed into `render`, so `render={<Button />}` alone yields an empty button and broken hover targets.
  */
-const meta = {
+const meta: Meta<typeof Tooltip> = {
   title: 'Components/Tooltip',
   component: Tooltip,
   parameters: {
@@ -36,7 +36,7 @@ const meta = {
     defaultOpen: false,
     disabled: false,
   },
-} satisfies Meta<typeof Tooltip>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
