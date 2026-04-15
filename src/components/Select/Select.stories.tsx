@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Select, SelectOption, SelectGroup } from './Select';
 
-const meta = {
+const meta: Meta<typeof Select> = {
   title: 'Components/Select',
   component: Select,
   parameters: {
@@ -28,7 +28,7 @@ const meta = {
     error: false,
     placeholder: 'Select an option…',
   },
-} satisfies Meta<typeof Select>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

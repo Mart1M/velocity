@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import * as React from 'react';
-import { DatePicker } from './DatePicker';
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import * as React from "react";
+import { DatePicker } from "./DatePicker";
 
-const meta = {
-  title: 'Components/DatePicker',
+const meta: Meta<typeof DatePicker> = {
+  title: "Components/DatePicker",
   component: DatePicker,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component:
@@ -14,21 +14,21 @@ const meta = {
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
-    weekStartsOn: { control: 'select', options: [0, 1] },
-    disabled: { control: 'boolean' },
-    error: { control: 'boolean' },
+    size: { control: "select", options: ["sm", "md", "lg"] },
+    weekStartsOn: { control: "select", options: [0, 1] },
+    disabled: { control: "boolean" },
+    error: { control: "boolean" },
   },
   args: {
-    size: 'md',
+    size: "md",
     disabled: false,
     error: false,
-    placeholder: 'Select a date',
+    placeholder: "Select a date",
     weekStartsOn: 1,
   },
-} satisfies Meta<typeof DatePicker>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -46,7 +46,7 @@ export const Default: Story = {
 
 export const WithValue: Story = {
   render: function WithValueStory() {
-    const [value, setValue] = React.useState<string | null>('2026-06-15');
+    const [value, setValue] = React.useState<string | null>("2026-06-15");
     return (
       <div className="w-72">
         <DatePicker value={value} onValueChange={setValue} label="Event" />
@@ -81,8 +81,8 @@ export const RangeWithValue: Story = {
       start: string;
       end: string;
     } | null>({
-      start: '2026-03-10',
-      end: '2026-03-24',
+      start: "2026-03-10",
+      end: "2026-03-24",
     });
     return (
       <div className="w-80">
@@ -147,7 +147,7 @@ export const Sizes: Story = {
       </div>
     );
   },
-  parameters: { layout: 'padded' },
+  parameters: { layout: "padded" },
 };
 
 export const FrenchLocale: Story = {
@@ -155,7 +155,12 @@ export const FrenchLocale: Story = {
     const [value, setValue] = React.useState<string | null>(null);
     return (
       <div className="w-72">
-        <DatePicker value={value} onValueChange={setValue} label="French locale (fr-FR)" locale="fr-FR" />
+        <DatePicker
+          value={value}
+          onValueChange={setValue}
+          label="French locale (fr-FR)"
+          locale="fr-FR"
+        />
       </div>
     );
   },
@@ -163,7 +168,7 @@ export const FrenchLocale: Story = {
 
 export const Overview: Story = {
   render: function OverviewStory() {
-    const [value, setValue] = React.useState<string | null>('2026-03-15');
+    const [value, setValue] = React.useState<string | null>("2026-03-15");
     return (
       <div className="rounded-2xl bg-surface-primary p-8">
         <div className="w-72">
@@ -177,5 +182,5 @@ export const Overview: Story = {
       </div>
     );
   },
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: "fullscreen" },
 };

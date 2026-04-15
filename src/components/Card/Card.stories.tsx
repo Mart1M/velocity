@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "./Card";
 
-const meta = {
+const meta: Meta<typeof Card> = {
   title: "Components/Card",
   component: Card,
   parameters: {
@@ -33,7 +33,7 @@ const meta = {
     variant: "default",
     size: "md",
   },
-} satisfies Meta<typeof Card>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

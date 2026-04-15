@@ -3,7 +3,7 @@ import * as React from "react";
 import { RiBox3Line, RiStore2Line, RiTruckLine } from "react-icons/ri";
 import { SelectBox, SelectBoxGroup } from "./index";
 
-const meta = {
+const meta: Meta = {
   title: "Components/SelectBox",
   parameters: {
     layout: "padded",
@@ -15,7 +15,7 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

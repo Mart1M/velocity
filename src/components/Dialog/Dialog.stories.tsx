@@ -11,7 +11,7 @@ import {
   DialogClose,
 } from './Dialog';
 
-const meta = {
+const meta: Meta<typeof Dialog> = {
   title: 'Components/Dialog',
   component: Dialog,
   parameters: {
@@ -30,7 +30,7 @@ const meta = {
   args: {
     modal: true,
   },
-} satisfies Meta<typeof Dialog>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -8,7 +8,7 @@ function TypographyScale() {
   return null;
 }
 
-const meta = {
+const meta: Meta<typeof TypographyScale> = {
   title: "Foundations/Typography",
   component: TypographyScale,
   parameters: {
@@ -21,7 +21,7 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof TypographyScale>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -3,7 +3,7 @@ import * as React from "react";
 import { RiRunLine, RiMapPinLine } from "react-icons/ri";
 import { Chip } from "./Chip";
 
-const meta = {
+const meta: Meta<typeof Chip> = {
   title: "Components/Chip",
   component: Chip,
   parameters: {
@@ -36,7 +36,7 @@ const meta = {
     disabled: false,
     selectable: false,
   },
-} satisfies Meta<typeof Chip>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

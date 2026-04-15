@@ -2,13 +2,30 @@ import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   RiArrowRightSLine,
+  RiPriceTag3Line,
   RiSearchLine,
   RiShoppingCart2Line,
   RiUser3Line,
 } from "react-icons/ri";
 import { Button } from "../../Button/Button";
+import {
+  Drawer,
+  DrawerBackdrop,
+  DrawerClose,
+  DrawerPortal,
+  DrawerPopup,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../Drawer/Drawer";
 import { IconButton } from "../../IconButton/IconButton";
 import { Logo } from "../../Logo/Logo";
+import {
+  Popover,
+  PopoverPortal,
+  PopoverPositioner,
+  PopoverPopup,
+} from "../../Popover/Popover";
+import { EcommerceSearchInput } from "../EcommerceSearchInput/EcommerceSearchInput";
 import {
   EcommerceNavigation,
   EcommerceNavigationMegaViewport,
@@ -102,12 +119,12 @@ function MegaLinkGrid({
         <li key={item.title}>
           <EcommerceNavigationMenuLink
             href={item.href}
-            className="px-3 py-2.5 sm:px-4 sm:py-3"
+            className="px-4 py-3 sm:px-5 sm:py-3.5"
           >
-            <span className="block text-sm font-medium text-content-primary">
+            <span className="block text-base font-medium text-content-primary">
               {item.title}
             </span>
-            <span className="mt-0.5 block text-xs text-content-tertiary">
+            <span className="mt-1 block text-sm text-content-tertiary">
               {item.desc}
             </span>
           </EcommerceNavigationMenuLink>
@@ -135,7 +152,7 @@ function ShoesNavAsideCard({ className }: { className?: string }) {
         type="button"
         variant="outline"
         colorScheme="neutral"
-        size="sm"
+        size="md"
         className="mt-4 w-full"
       >
         Read the guide
@@ -180,7 +197,7 @@ const mobileSections = [
   { id: "apparel" as const, label: "Apparel", items: apparelLinks },
   {
     id: "accessories" as const,
-    label: "Accessories & tech",
+    label: "Accessories",
     items: accessoriesLinks,
   },
 ];
@@ -201,13 +218,36 @@ const breadcrumbLinkClass = [
   "focus-visible:ring-offset-surface-primary",
 ].join(" ");
 
+function SellProductCta({
+  className,
+  fullWidth,
+  children = "Vendre un produit",
+}: {
+  className?: string;
+  fullWidth?: boolean;
+  children?: React.ReactNode;
+}) {
+  return (
+    <Button
+      type="button"
+      variant="solid"
+      colorScheme="primary"
+      size="md"
+      fullWidth={fullWidth}
+      className={className}
+      aria-label="Vendre un produit"
+      startIcon={<RiPriceTag3Line className="h-4 w-4" aria-hidden />}
+    >
+      {children}
+    </Button>
+  );
+}
+
 /** Same IA as the mega menu: drill-down with breadcrumb (small viewports). */
 function MobileNavPanel() {
   const [section, setSection] = React.useState<MobileSectionId | null>(null);
 
-  const active = section
-    ? mobileSections.find((s) => s.id === section)
-    : null;
+  const active = section ? mobileSections.find((s) => s.id === section) : null;
 
   return (
     <div>
@@ -226,7 +266,10 @@ function MobileNavPanel() {
                 Menu
               </a>
             </li>
-            <li aria-hidden className="shrink-0 select-none text-content-tertiary">
+            <li
+              aria-hidden
+              className="shrink-0 select-none text-content-tertiary"
+            >
               /
             </li>
             <li className="min-w-0 px-2 py-1.5 font-medium text-content-primary">
@@ -285,23 +328,278 @@ function MobileNavPanel() {
           </div>
         )}
       </nav>
+
+      <div className="mt-6 border-t border-border-default pt-4">
+        <SellProductCta fullWidth />
+      </div>
     </div>
   );
 }
 
-const meta = {
+/** Demo dataset for the navigation search suggestions popover (French marketplace). */
+const NAV_SEARCH_SUGGESTIONS = [
+  { label: "Nike Pegasus 40 — taille 42", hint: "Chaussures route" },
+  { label: "Saucony Endorphin Speed 3", hint: "Chaussures route" },
+  { label: "Garmin Forerunner 965", hint: "Montre GPS" },
+  { label: "Wahoo Elemnt Roam", hint: "GPS vélo" },
+  { label: "Polar H10 — ceinture cardio", hint: "Capteurs" },
+  { label: "Short trail Patagonia", hint: "Textile" },
+  { label: "Casquette On Running", hint: "Accessoires" },
+  { label: "Bidon isotherme 500 ml", hint: "Hydratation" },
+] as const;
+
+function filterNavSearchSuggestions(query: string) {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return NAV_SEARCH_SUGGESTIONS.filter(
+    (s) =>
+      s.label.toLowerCase().includes(q) || s.hint.toLowerCase().includes(q),
+  ).slice(0, 8);
+}
+
+function NavSearchSuggestionList({
+  id,
+  items,
+  onPick,
+  listClassName,
+}: {
+  id: string;
+  items: readonly { label: string; hint: string }[];
+  onPick: (label: string) => void;
+  listClassName?: string;
+}) {
+  if (items.length === 0) return null;
+  const suggestionBtnClass = [
+    "flex w-full cursor-pointer flex-col gap-0.5 rounded-lg px-3 py-2.5 text-left",
+    "text-sm text-content-primary outline-none transition-colors",
+    "hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:ring-2",
+    "focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-surface-primary",
+  ].join(" ");
+
+  return (
+    <ul
+      id={id}
+      role="listbox"
+      aria-label="Suggestions"
+      className={["m-0 list-none overflow-y-auto p-0", listClassName]
+        .filter(Boolean)
+        .join(" ")}
+    >
+      {items.map((s) => (
+        <li key={s.label} role="presentation">
+          <button
+            type="button"
+            role="option"
+            aria-selected={false}
+            className={suggestionBtnClass}
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => onPick(s.label)}
+          >
+            <span className="font-medium">{s.label}</span>
+            <span className="text-xs text-content-tertiary">{s.hint}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * Desktop (`md+`): search + suggestions in a popover under the field.
+ */
+function NavigationProductSearchWithSuggestions({
+  className,
+}: {
+  className?: string;
+}) {
+  const anchorRef = React.useRef<HTMLDivElement>(null);
+  const listId = React.useId();
+  const [query, setQuery] = React.useState("");
+  const [dismissed, setDismissed] = React.useState(false);
+  const [panelWidth, setPanelWidth] = React.useState<number | undefined>();
+
+  React.useEffect(() => {
+    setDismissed(false);
+  }, [query]);
+
+  const filtered = React.useMemo(
+    () => filterNavSearchSuggestions(query),
+    [query],
+  );
+
+  const showPanel = filtered.length > 0 && query.trim().length > 0;
+  const open = showPanel && !dismissed;
+
+  React.useLayoutEffect(() => {
+    const el = anchorRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => {
+      setPanelWidth(el.getBoundingClientRect().width);
+    });
+    ro.observe(el);
+    setPanelWidth(el.getBoundingClientRect().width);
+    return () => ro.disconnect();
+  }, []);
+
+  const pick = React.useCallback((label: string) => {
+    setQuery(label);
+    setDismissed(true);
+  }, []);
+
+  return (
+    <Popover
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) setDismissed(true);
+      }}
+      modal={false}
+    >
+      <div ref={anchorRef} className={className}>
+        <EcommerceSearchInput
+          size="md"
+          placeholder="Rechercher un produit…"
+          aria-label="Rechercher sur le site"
+          aria-autocomplete="list"
+          aria-controls={listId}
+          aria-expanded={open}
+          role="combobox"
+          className="min-w-0 w-full"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
+      <PopoverPortal>
+        <PopoverPositioner
+          anchor={anchorRef}
+          side="bottom"
+          align="start"
+          sideOffset={6}
+          className="z-50"
+        >
+          <PopoverPopup
+            initialFocus={false}
+            style={panelWidth ? { width: panelWidth } : undefined}
+          >
+            <NavSearchSuggestionList
+              id={listId}
+              items={filtered}
+              onPick={pick}
+              listClassName="max-h-72"
+            />
+          </PopoverPopup>
+        </PopoverPositioner>
+      </PopoverPortal>
+    </Popover>
+  );
+}
+
+/**
+ * Mobile: **full-viewport** search sheet (`md:hidden`) — same dataset as desktop, list scrolls under the field.
+ */
+function NavigationMobileFullPageSearch() {
+  const [sheetOpen, setSheetOpen] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const listId = React.useId();
+  const [query, setQuery] = React.useState("");
+
+  const filtered = React.useMemo(
+    () => filterNavSearchSuggestions(query),
+    [query],
+  );
+
+  React.useEffect(() => {
+    if (sheetOpen) {
+      inputRef.current?.focus();
+    }
+  }, [sheetOpen]);
+
+  const pick = React.useCallback((label: string) => {
+    setQuery(label);
+    setSheetOpen(false);
+  }, []);
+
+  const trimmed = query.trim();
+
+  return (
+    <Drawer open={sheetOpen} onOpenChange={setSheetOpen} side="right" modal>
+      <DrawerTrigger
+        render={
+          <IconButton
+            className="md:hidden"
+            label="Rechercher"
+            variant="ghost"
+            colorScheme="neutral"
+            size="md"
+          >
+            <RiSearchLine className="h-6 w-6" />
+          </IconButton>
+        }
+      />
+      <DrawerPortal>
+        <DrawerBackdrop />
+        <DrawerPopup
+          className="w-full! max-w-none border-0 shadow-xl"
+          contentClassName="flex h-full min-h-0 flex-col overflow-hidden p-0"
+        >
+          <div className="flex shrink-0 items-center gap-3 border-b border-border-default px-4 py-3">
+            <DrawerClose className="relative top-0 right-0 shrink-0" />
+            <DrawerTitle className="m-0 flex-1 text-base font-semibold text-content-primary">
+              Rechercher
+            </DrawerTitle>
+          </div>
+          <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4 py-4">
+            <EcommerceSearchInput
+              ref={inputRef}
+              size="md"
+              placeholder="Rechercher un produit…"
+              aria-label="Rechercher sur le site"
+              aria-controls={listId}
+              className="w-full shrink-0"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            {filtered.length > 0 ? (
+              <NavSearchSuggestionList
+                id={listId}
+                items={filtered}
+                onPick={pick}
+                listClassName="min-h-0 flex-1"
+              />
+            ) : trimmed ? (
+              <p className="m-0 text-sm text-content-tertiary">
+                Aucun résultat pour « {trimmed} »
+              </p>
+            ) : (
+              <p className="m-0 text-sm text-content-secondary">
+                Saisissez un nom de produit, une marque ou une catégorie…
+              </p>
+            )}
+          </div>
+        </DrawerPopup>
+      </DrawerPortal>
+    </Drawer>
+  );
+}
+
+const meta: Meta = {
   title: "Ecommerce/Navigation",
   parameters: {
     layout: "fullscreen",
     docs: {
       description: {
-        component:
-          "Storefront header for a **second-hand running gear** marketplace (shoes, apparel, accessories & electronics). Built on [Base UI Navigation Menu](https://base-ui.com/react/components/navigation-menu). Compose `EcommerceNavigationMenu*` and place `EcommerceNavigationMegaViewport` once next to the list. Pass `mobileMenu` for a left drawer below `lg` (demo uses breadcrumb drill-down); the desktop mega menu stays for `lg` and up.",
+        component: [
+          "Storefront header for a **second-hand running gear** marketplace (shoes, apparel, accessories & electronics).",
+          "Built on [Base UI Navigation Menu](https://base-ui.com/react/components/navigation-menu).",
+          "Compose `EcommerceNavigationMenu*` and place `EcommerceNavigationMegaViewport` once next to the list.",
+          "Pass `mobileMenu` for a left drawer below `md` (demo uses breadcrumb drill-down).",
+          'Set `navPlacement="below"` to put desktop nav links on a **second row** under the logo / search bar.',
+          "The **Default** story: desktop search uses a `Popover` of suggestions; **below `md`** the loupe opens a **full-viewport** search sheet (`Drawer`) with the same suggestions (illustrative data).",
+        ].join(" "),
       },
     },
   },
   tags: ["autodocs"],
-} satisfies Meta;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -315,10 +613,11 @@ export const Default: Story = {
             href="#"
             className="flex shrink-0 items-center rounded-lg no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
-            <Logo size="sm" aria-label="Runswap — Home" />
+            <Logo size="md" aria-label="Runswap — Home" />
           </a>
         }
         mobileMenu={<MobileNavPanel />}
+        navPlacement="below"
         menu={
           <EcommerceNavigationMenu>
             <EcommerceNavigationMenuList>
@@ -355,7 +654,7 @@ export const Default: Story = {
 
               <EcommerceNavigationMenuItem value="accessories">
                 <EcommerceNavigationMenuTrigger>
-                  Accessories & tech
+                  Accessories
                 </EcommerceNavigationMenuTrigger>
                 <EcommerceNavigationMenuContent>
                   <h2 className="m-0 mb-3 font-heading text-xl font-semibold text-content-primary">
@@ -368,10 +667,10 @@ export const Default: Story = {
               <EcommerceNavigationMenuItem value="deals">
                 <EcommerceNavigationMenuLink
                   href="#"
-                  className="inline-flex h-9 items-center px-2.5 text-sm font-medium text-content-brand"
+                  className="inline-flex h-10 items-center gap-2 rounded-xl px-4 text-sm font-medium text-content-brand"
                 >
                   Deals
-                  <Badge variant="brand" size="sm" className="ml-2">
+                  <Badge variant="brand" size="md" className="ml-0">
                     New
                   </Badge>
                 </EcommerceNavigationMenuLink>
@@ -382,36 +681,37 @@ export const Default: Story = {
         }
         utilities={
           <>
-            <IconButton
-              label="Search"
-              variant="ghost"
-              colorScheme="neutral"
-              size="sm"
-            >
-              <RiSearchLine className="h-5 w-5" />
-            </IconButton>
+            <div className="hidden min-w-0 max-w-full flex-1 basis-0 md:block">
+              <NavigationProductSearchWithSuggestions className="min-w-0 w-full" />
+            </div>
+            <NavigationMobileFullPageSearch />
             <IconButton
               label="Account"
               variant="ghost"
               colorScheme="neutral"
-              size="sm"
+              size="md"
             >
-              <RiUser3Line className="h-5 w-5" />
+              <RiUser3Line className="h-6 w-6" />
             </IconButton>
             <span className="relative inline-flex">
               <IconButton
                 label="Cart, 3 items"
                 variant="ghost"
                 colorScheme="neutral"
-                size="sm"
+                size="md"
               >
-                <RiShoppingCart2Line className="h-5 w-5" />
+                <RiShoppingCart2Line className="h-6 w-6" />
               </IconButton>
               <NotificationBadge
                 count={3}
                 className="absolute -right-0.5 -top-0.5 z-10"
                 aria-hidden
               />
+            </span>
+            <span className="hidden md:contents">
+              <SellProductCta className="ml-2 shrink-0 whitespace-nowrap">
+                <span className="inline">Vendre un produit</span>
+              </SellProductCta>
             </span>
           </>
         }
@@ -420,7 +720,8 @@ export const Default: Story = {
       <main className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <p className="text-sm text-content-secondary">
           Page content — on wide screens, hover nav items for the mega menu; on
-          narrow screens, use the menu control next to the logo.
+          narrow screens, use the menu and search icons next to the logo (search
+          opens a full-screen sheet with suggestions).
         </p>
       </main>
     </div>
@@ -436,7 +737,7 @@ export const WithArrow: Story = {
             href="#"
             className="flex shrink-0 items-center rounded-lg no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus"
           >
-            <Logo size="sm" aria-label="Runswap — Home" />
+            <Logo size="md" aria-label="Runswap — Home" />
           </a>
         }
         menu={

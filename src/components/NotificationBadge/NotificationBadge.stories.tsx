@@ -3,7 +3,7 @@ import { RiNotification3Line } from "react-icons/ri";
 import { IconButton } from "../IconButton/IconButton";
 import { NotificationBadge } from "./NotificationBadge";
 
-const meta = {
+const meta: Meta<typeof NotificationBadge> = {
   title: "Components/NotificationBadge",
   component: NotificationBadge,
   parameters: {
@@ -35,7 +35,7 @@ const meta = {
     variant: "danger",
     size: "sm",
   },
-} satisfies Meta<typeof NotificationBadge>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Textarea } from './Textarea';
 
-const meta = {
+const meta: Meta<typeof Textarea> = {
   title: 'Components/Textarea',
   component: Textarea,
   parameters: {
@@ -58,7 +58,7 @@ const meta = {
     rows: 4,
     resize: 'vertical',
   },
-} satisfies Meta<typeof Textarea>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

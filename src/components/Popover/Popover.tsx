@@ -1,10 +1,14 @@
-import * as React from 'react';
-import { Popover as BasePopover } from '@base-ui-components/react/popover';
-import { RiCloseLine } from 'react-icons/ri';
+import * as React from "react";
+import { Popover as BasePopover } from "@base-ui-components/react/popover";
+import { RiCloseLine } from "react-icons/ri";
+
+type BasePopoverPopupProps = React.ComponentPropsWithoutRef<
+  typeof BasePopover.Popup
+>;
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
-export type PopoverSide = 'top' | 'bottom' | 'left' | 'right';
+export type PopoverSide = "top" | "bottom" | "left" | "right";
 
 export interface PopoverProps {
   /** Whether the popover is currently open (controlled). */
@@ -25,7 +29,7 @@ export interface PopoverProps {
    * - `'trap-focus'`: focus-trapped only
    * @default false
    */
-  modal?: boolean | 'trap-focus';
+  modal?: boolean | "trap-focus";
   /** Popover content — typically `PopoverTrigger` + `PopoverPortal`. */
   children?: React.ReactNode;
 }
@@ -41,7 +45,7 @@ export interface PopoverTriggerProps {
    */
   render?:
     | React.ReactElement<Record<string, unknown>>
-    | ((props: React.ComponentProps<'button'>) => React.ReactElement);
+    | ((props: React.ComponentProps<"button">) => React.ReactElement);
   /** Whether the popover should also open when the trigger is hovered. */
   openOnHover?: boolean;
   /** How long to wait before opening on hover (ms). Requires `openOnHover`. */
@@ -63,18 +67,26 @@ export interface PopoverPositionerProps {
   /** Distance between the anchor and the popup in pixels. */
   sideOffset?: number;
   /** How to align the popup relative to the specified side. */
-  align?: 'start' | 'center' | 'end';
+  align?: "start" | "center" | "end";
   /** Additional offset along the alignment axis in pixels. */
   alignOffset?: number;
+  /**
+   * Position against this element instead of the nearest `PopoverTrigger`.
+   * Use for “anchored” panels built from plain inputs (e.g. search suggestions).
+   */
+  anchor?: React.RefObject<HTMLElement | null>;
   /** Additional CSS classes. */
   className?: string;
   /** Positioner content — typically `PopoverPopup`. */
   children?: React.ReactNode;
 }
 
-export interface PopoverPopupProps {
+export interface PopoverPopupProps
+  extends Pick<BasePopoverPopupProps, "initialFocus" | "finalFocus"> {
   /** Additional CSS classes. */
   className?: string;
+  /** Inline styles (e.g. match anchor width for search suggestions). */
+  style?: React.CSSProperties;
   /** Popup content. */
   children?: React.ReactNode;
 }
@@ -123,7 +135,7 @@ export function Popover({
   );
 }
 
-Popover.displayName = 'Popover';
+Popover.displayName = "Popover";
 
 // ── PopoverTrigger ─────────────────────────────────────────────────────────
 
@@ -137,7 +149,7 @@ export function PopoverTrigger({
 }: PopoverTriggerProps) {
   return (
     <BasePopover.Trigger
-      className={['cursor-pointer', className].filter(Boolean).join(' ')}
+      className={["cursor-pointer", className].filter(Boolean).join(" ")}
       render={render}
       openOnHover={openOnHover}
       delay={delay}
@@ -148,7 +160,7 @@ export function PopoverTrigger({
   );
 }
 
-PopoverTrigger.displayName = 'PopoverTrigger';
+PopoverTrigger.displayName = "PopoverTrigger";
 
 // ── PopoverPortal ──────────────────────────────────────────────────────────
 
@@ -160,15 +172,16 @@ export function PopoverPortal({ keepMounted, children }: PopoverPortalProps) {
   );
 }
 
-PopoverPortal.displayName = 'PopoverPortal';
+PopoverPortal.displayName = "PopoverPortal";
 
 // ── PopoverPositioner ──────────────────────────────────────────────────────
 
 export function PopoverPositioner({
-  side = 'bottom',
+  side = "bottom",
   sideOffset = 8,
-  align = 'center',
+  align = "center",
   alignOffset,
+  anchor,
   className,
   children,
 }: PopoverPositionerProps) {
@@ -178,6 +191,7 @@ export function PopoverPositioner({
       sideOffset={sideOffset}
       align={align}
       alignOffset={alignOffset}
+      anchor={anchor}
       className={className}
     >
       {children}
@@ -185,47 +199,56 @@ export function PopoverPositioner({
   );
 }
 
-PopoverPositioner.displayName = 'PopoverPositioner';
+PopoverPositioner.displayName = "PopoverPositioner";
 
 // ── PopoverPopup ───────────────────────────────────────────────────────────
 
-export function PopoverPopup({ className, children }: PopoverPopupProps) {
+export function PopoverPopup({
+  className,
+  style,
+  children,
+  initialFocus,
+  finalFocus,
+}: PopoverPopupProps) {
   return (
     <BasePopover.Popup
+      initialFocus={initialFocus}
+      finalFocus={finalFocus}
       className={[
-        'bg-surface-primary border border-border-default rounded-xl shadow-lg',
-        'p-4 outline-none',
+        "bg-surface-primary border border-border-default rounded-xl shadow-lg",
+        "p-4 outline-none",
         // Match Dialog: opacity-only enter/exit — avoids close jank from scale + transform
-        'will-change-opacity transition-opacity duration-[200ms]',
-        'data-[starting-style]:opacity-0',
-        'data-[ending-style]:opacity-0',
+        "will-change-opacity transition-opacity duration-[200ms]",
+        "data-[starting-style]:opacity-0",
+        "data-[ending-style]:opacity-0",
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
+      style={style}
     >
       {children}
     </BasePopover.Popup>
   );
 }
 
-PopoverPopup.displayName = 'PopoverPopup';
+PopoverPopup.displayName = "PopoverPopup";
 
 // ── PopoverTitle ───────────────────────────────────────────────────────────
 
 export function PopoverTitle({ className, children }: PopoverTitleProps) {
   return (
     <BasePopover.Title
-      className={['text-base font-semibold text-content-primary', className]
+      className={["text-base font-semibold text-content-primary", className]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {children}
     </BasePopover.Title>
   );
 }
 
-PopoverTitle.displayName = 'PopoverTitle';
+PopoverTitle.displayName = "PopoverTitle";
 
 // ── PopoverDescription ─────────────────────────────────────────────────────
 
@@ -235,16 +258,16 @@ export function PopoverDescription({
 }: PopoverDescriptionProps) {
   return (
     <BasePopover.Description
-      className={['mt-1 text-sm text-content-secondary', className]
+      className={["mt-1 text-sm text-content-secondary", className]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {children}
     </BasePopover.Description>
   );
 }
 
-PopoverDescription.displayName = 'PopoverDescription';
+PopoverDescription.displayName = "PopoverDescription";
 
 // ── PopoverClose ───────────────────────────────────────────────────────────
 
@@ -252,24 +275,24 @@ export function PopoverClose({ className, children }: PopoverCloseProps) {
   return (
     <BasePopover.Close
       className={[
-        'absolute top-3 right-3',
-        'inline-flex items-center justify-center',
-        'size-7 rounded-lg',
-        'text-content-secondary',
-        'cursor-pointer',
-        'transition-colors duration-[200ms]',
-        'hover:bg-surface-hover hover:text-content-primary',
-        'focus-visible:outline-none focus-visible:ring-2',
-        'focus-visible:ring-border-focus focus-visible:ring-offset-2',
-        'focus-visible:ring-offset-surface-primary',
+        "absolute top-3 right-3",
+        "inline-flex items-center justify-center",
+        "size-7 rounded-lg",
+        "text-content-secondary",
+        "cursor-pointer",
+        "transition-colors duration-[200ms]",
+        "hover:bg-surface-hover hover:text-content-primary",
+        "focus-visible:outline-none focus-visible:ring-2",
+        "focus-visible:ring-border-focus focus-visible:ring-offset-2",
+        "focus-visible:ring-offset-surface-primary",
         className,
       ]
         .filter(Boolean)
-        .join(' ')}
+        .join(" ")}
     >
       {children ?? <RiCloseLine className="size-4" aria-hidden />}
     </BasePopover.Close>
   );
 }
 
-PopoverClose.displayName = 'PopoverClose';
+PopoverClose.displayName = "PopoverClose";

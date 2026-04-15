@@ -12,7 +12,7 @@ import {
 import { Button } from "../Button";
 import { Checkbox } from "../Checkbox";
 
-const meta = {
+const meta: Meta<typeof Drawer> = {
   title: "Components/Drawer",
   component: Drawer,
   parameters: {
@@ -31,7 +31,7 @@ const meta = {
   args: {
     side: "right",
   },
-} satisfies Meta<typeof Drawer>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

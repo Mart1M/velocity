@@ -41,6 +41,27 @@ export type { TextareaProps, TextareaSize, TextareaResize } from './components/T
 export { Select, SelectOption, SelectGroup } from './components/Select';
 export type { SelectProps, SelectOptionProps, SelectGroupProps, SelectSize } from './components/Select';
 
+export {
+  Form,
+  FormSection,
+  FormField,
+  FormLabel,
+  FormDescription,
+  FormMessage,
+  FormActions,
+} from './components/Form';
+export type {
+  FormProps,
+  FormSize,
+  FormLayout,
+  FormSectionProps,
+  FormFieldProps,
+  FormLabelProps,
+  FormDescriptionProps,
+  FormMessageProps,
+  FormActionsProps,
+} from './components/Form';
+
 export { Label } from './components/Label';
 export type { LabelProps, LabelSize } from './components/Label';
 
@@ -126,8 +147,15 @@ export type { SkeletonProps, SkeletonVariant, SkeletonAnimation } from './compon
 export { FileUpload } from './components/FileUpload';
 export type { FileUploadProps, FileUploadSize, FileUploadOrientation, FileUploadValidationIssue } from './components/FileUpload';
 
-export { Tabs, TabsList, TabsTab, TabsIndicator, TabsPanel } from './components/Tabs';
-export type { TabsProps, TabsListProps, TabsTabProps, TabsIndicatorProps, TabsPanelProps } from './components/Tabs';
+export { Tabs, TabsList, TabsTab, TabsIndicator, TabsPanels, TabsPanel } from './components/Tabs';
+export type {
+  TabsProps,
+  TabsListProps,
+  TabsTabProps,
+  TabsIndicatorProps,
+  TabsPanelsProps,
+  TabsPanelProps,
+} from './components/Tabs';
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionPanel } from './components/Accordion';
 export type { AccordionProps, AccordionItemProps, AccordionTriggerProps, AccordionPanelProps } from './components/Accordion';
@@ -189,6 +217,9 @@ export type {
   ProductCardActionsProps,
 } from './components/ecommerce/ProductCard';
 
+export { EcommerceSearchInput } from './components/ecommerce/EcommerceSearchInput';
+export type { EcommerceSearchInputProps } from './components/ecommerce/EcommerceSearchInput';
+
 export {
   EcommerceNavigation,
   EcommerceNavigationMenu,
@@ -236,6 +267,24 @@ export type {
   CartContentTotalRowProps,
   CartContentOrderSummaryProps,
 } from './components/ecommerce/CartContent';
+
+export {
+  Footer,
+  FooterContent,
+  FooterSection,
+  FooterSectionTitle,
+  FooterLink,
+  FooterBottom,
+} from './components/Footer';
+export type {
+  FooterProps,
+  FooterVariant,
+  FooterContentProps,
+  FooterSectionProps,
+  FooterSectionTitleProps,
+  FooterLinkProps,
+  FooterBottomProps,
+} from './components/Footer';
 
 // Tokens
 export * from './tokens';

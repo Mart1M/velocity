@@ -9,7 +9,7 @@ import {
   PaginationEllipsis,
 } from "./Pagination";
 
-const meta = {
+const meta: Meta<typeof Pagination> = {
   title: "Components/Pagination",
   component: Pagination,
   parameters: {
@@ -47,7 +47,7 @@ const meta = {
     totalPages: 10,
     siblingCount: 1,
   },
-} satisfies Meta<typeof Pagination>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

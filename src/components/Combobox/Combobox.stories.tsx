@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Combobox, ComboboxOption, ComboboxGroup } from './Combobox';
 
-const meta = {
+const meta: Meta<typeof Combobox> = {
   title: 'Components/Combobox',
   component: Combobox,
   parameters: {
@@ -28,7 +28,7 @@ const meta = {
     error: false,
     placeholder: 'Search…',
   },
-} satisfies Meta<typeof Combobox>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

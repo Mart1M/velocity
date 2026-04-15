@@ -8,7 +8,7 @@ function TokensPlaceholder() {
   return null;
 }
 
-const meta = {
+const meta: Meta<typeof TokensPlaceholder> = {
   title: "Foundations/Design tokens",
   component: TokensPlaceholder,
   parameters: {
@@ -21,7 +21,7 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof TokensPlaceholder>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Switch } from "./Switch";
 
-const meta = {
+const meta: Meta<typeof Switch> = {
   title: "Components/Switch",
   component: Switch,
   parameters: {
@@ -25,7 +25,7 @@ const meta = {
     disabled: false,
     children: "Enable notifications",
   },
-} satisfies Meta<typeof Switch>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

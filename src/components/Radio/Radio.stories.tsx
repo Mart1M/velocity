@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
 import { RadioGroup, RadioItem } from "./Radio";
 
-const meta = {
+const meta: Meta<typeof RadioItem> = {
   title: "Components/Radio",
   component: RadioItem,
   parameters: {
@@ -34,7 +34,7 @@ const meta = {
       </RadioGroup>
     ),
   ],
-} satisfies Meta<typeof RadioItem>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

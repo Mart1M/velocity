@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Logo } from "./Logo";
 
-const meta = {
+const meta: Meta<typeof Logo> = {
   title: "Components/Logo",
   component: Logo,
   parameters: {
@@ -22,7 +22,7 @@ const meta = {
     size: "md",
     variant: "default",
   },
-} satisfies Meta<typeof Logo>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,0 +1,604 @@
+{
+  "request": {
+    "id": "login-form-2026-04-15",
+    "source": "hive-compose",
+    "raw_input": "Login Form",
+    "timestamp": "2026-04-15T00:00:00Z"
+  },
+  "intent": {
+    "goal": "Build a Login Form component using Velocity DS primitives — email field, password field with show/hide toggle, remember-me checkbox, and a primary submit button",
+    "domain": "authentication-ui",
+    "constraints": [
+      "Use only grounded Velocity DS components (Form, Input, Button, Checkbox, Label)",
+      "No new component invention — log gaps",
+      "Semantic design tokens only (no raw hex or arbitrary values)",
+      "Base UI primitives for accessible field/error binding",
+      "Tailwind utility classes consistent with existing DS patterns",
+      "Vertical form layout (single column)",
+      "fullWidth Button for primary CTA"
+    ],
+    "success_criteria": [
+      "Email and password fields render with proper labels and accessible error messages",
+      "Submit button supports loading state during async auth",
+      "Password field has show/hide toggle via trailingIcon",
+      "Remember-me checkbox is present and accessible",
+      "All form fields surface validation errors via FormMessage (Field.Error)",
+      "Component composes cleanly from Velocity exports"
+    ],
+    "scope": "single-component"
+  },
+  "ground": {
+    "patterns": [
+      {
+        "id": "vertical-form",
+        "name": "Vertical Form Layout",
+        "description": "Single-column stacked form with gap-6 between fields. Used for compact auth and settings forms.",
+        "source": "src/components/Form/Form.tsx"
+      },
+      {
+        "id": "field-with-error",
+        "name": "FormField with inline error",
+        "description": "FormField wrapping FormLabel + Input + FormMessage. FormMessage renders via Field.Error and is only visible when invalid=true on FormField.",
+        "source": "src/components/Form/Form.tsx"
+      },
+      {
+        "id": "fullwidth-cta",
+        "name": "Full-width primary CTA button",
+        "description": "Button with variant=solid, colorScheme=primary, fullWidth=true, type=submit. Supports loading spinner.",
+        "source": "src/components/Button/Button.tsx"
+      }
+    ],
+    "components": [
+      {
+        "name": "Form",
+        "path": "src/components/Form/Form.tsx",
+        "export": "Form",
+        "props": {
+          "layout": "'vertical' | 'horizontal'",
+          "children": "ReactNode",
+          "className": "string"
+        },
+        "usage": "Root form element. Use layout='vertical' for login forms."
+      },
+      {
+        "name": "FormSection",
+        "path": "src/components/Form/Form.tsx",
+        "export": "FormSection",
+        "props": {
+          "title": "string?",
+          "description": "string?",
+          "children": "ReactNode"
+        },
+        "usage": "Optional section grouping with title/description heading."
+      },
+      {
+        "name": "FormField",
+        "path": "src/components/Form/Form.tsx",
+        "export": "FormField",
+        "props": {
+          "name": "string",
+          "invalid": "boolean",
+          "disabled": "boolean",
+          "children": "ReactNode"
+        },
+        "usage": "Wraps Field.Root. Provides field-level invalid/disabled state to children via context."
+      },
+      {
+        "name": "FormLabel",
+        "path": "src/components/Form/Form.tsx",
+        "export": "FormLabel",
+        "props": {
+          "required": "boolean",
+          "children": "ReactNode"
+        },
+        "usage": "Renders Field.Label. Shows required asterisk when required=true."
+      },
+      {
+        "name": "FormDescription",
+        "path": "src/components/Form/Form.tsx",
+        "export": "FormDescription",
+        "props": { "children": "ReactNode" },
+        "usage": "Optional helper text rendered below the label."
+      },
+      {
+        "name": "FormMessage",
+        "path": "src/components/Form/Form.tsx",
+        "export": "FormMessage",
+        "props": { "children": "ReactNode" },
+        "usage": "Renders Field.Error. Visible only when FormField has invalid=true. Text is feedback-negative color."
+      },
+      {
+        "name": "FormActions",
+        "path": "src/components/Form/Form.tsx",
+        "export": "FormActions",
+        "props": { "children": "ReactNode" },
+        "usage": "Flex row container for bottom-of-form actions (buttons, links). Has pt-2 built in."
+      },
+      {
+        "name": "Input",
+        "path": "src/components/Input/Input.tsx",
+        "export": "Input",
+        "props": {
+          "size": "'sm' | 'md' | 'lg'",
+          "error": "boolean",
+          "helperText": "string?",
+          "leadingIcon": "ReactNode?",
+          "trailingIcon": "ReactNode?",
+          "leadingAddon": "ReactNode?",
+          "trailingAddon": "ReactNode?",
+          "label": "string?",
+          "type": "string",
+          "placeholder": "string",
+          "disabled": "boolean"
+        },
+        "usage": "Core text input. Use trailingIcon for password visibility toggle button."
+      },
+      {
+        "name": "Button",
+        "path": "src/components/Button/Button.tsx",
+        "export": "Button",
+        "props": {
+          "variant": "'solid' | 'outline' | 'ghost' | 'link'",
+          "size": "'sm' | 'md' | 'lg'",
+          "colorScheme": "'primary' | 'success' | 'warning' | 'danger' | 'neutral'",
+          "loading": "boolean",
+          "fullWidth": "boolean",
+          "type": "'button' | 'submit' | 'reset'",
+          "startIcon": "ReactNode?",
+          "endIcon": "ReactNode?",
+          "disabled": "boolean"
+        },
+        "usage": "Primary CTA: variant=solid, colorScheme=primary, fullWidth=true, type=submit."
+      },
+      {
+        "name": "Checkbox",
+        "path": "src/components/Checkbox/Checkbox.tsx",
+        "export": "Checkbox",
+        "props": {
+          "checked": "boolean",
+          "defaultChecked": "boolean",
+          "onCheckedChange": "(checked: boolean) => void",
+          "size": "'sm' | 'md' | 'lg'",
+          "disabled": "boolean",
+          "name": "string",
+          "children": "ReactNode"
+        },
+        "usage": "Remember-me toggle. Use children prop for inline label."
+      },
+      {
+        "name": "Label",
+        "path": "src/components/Label/Label.tsx",
+        "export": "Label",
+        "props": {
+          "size": "'sm' | 'md' | 'lg'",
+          "disabled": "boolean",
+          "required": "boolean",
+          "children": "ReactNode"
+        },
+        "usage": "Standalone label. Prefer FormLabel inside FormField for proper Field.Label binding."
+      }
+    ],
+    "tokens": {
+      "colors": {
+        "surface-primary": "Form card background",
+        "surface-secondary": "Input addon background",
+        "border-default": "Input/card border",
+        "border-brand": "Focused input border",
+        "border-focus": "Focus ring color",
+        "content-primary": "Primary text, labels",
+        "content-secondary": "Placeholder, helper text",
+        "content-tertiary": "Subtle placeholder",
+        "content-brand": "Brand-colored text",
+        "accent-primary": "Primary button background, checked checkbox",
+        "feedback-negative": "Error text, required asterisk",
+        "state-error": "Error border",
+        "background-primary": "Page/focus-ring offset"
+      },
+      "spacing": {
+        "gap-1.5": "Label-to-input gap (FormField default)",
+        "gap-4": "Inter-section gap",
+        "gap-6": "Inter-field gap (Form vertical default)",
+        "p-8": "Card padding (32px — 4×8px grid)"
+      },
+      "radius": {
+        "rounded-xl": "Input, md/sm buttons",
+        "rounded-2xl": "Card, lg buttons"
+      },
+      "typography": {
+        "text-sm": "Input text, labels (md size)",
+        "text-xs": "Helper/error text",
+        "font-medium": "Labels, button text"
+      }
+    },
+    "rules": {
+      "layout": {
+        "grid": "8px base grid",
+        "column": "single-column for auth forms",
+        "maxWidth": "400px (recommended for login)",
+        "formSpacing": "gap-6 between fields (Form default)",
+        "fieldSpacing": "gap-1.5 between label and input (FormField default)"
+      },
+      "accessibility": {
+        "fieldBinding": "Always use FormField > FormLabel + Input pattern for proper label-control association via Field.Root",
+        "errorAnnouncement": "FormMessage renders Field.Error which announces via aria-live when invalid",
+        "requiredIndicator": "Use FormLabel required=true — asterisk is aria-hidden, label text alone must convey requirement for screen readers",
+        "passwordToggle": "Password show/hide button must have aria-label; input type switches between 'password' and 'text'",
+        "loadingState": "Button loading=true sets disabled internally; ensure aria-busy on form during submission"
+      },
+      "constraints": [
+        "Primary CTA must use variant=solid + colorScheme=primary",
+        "Do not use raw hex colors — use semantic token classes only",
+        "FormField must wrap any Input that needs error display",
+        "Do not use standalone Label inside FormField — use FormLabel for proper Field.Label binding"
+      ]
+    },
+    "docs": [],
+    "examples": []
+  },
+  "compose": {
+    "blueprint": {
+      "id": "login-form-blueprint-2026-04-15",
+      "title": "Login Form",
+      "goal": "Build a Login Form component using Velocity DS primitives — email field, password field with show/hide toggle, remember-me checkbox, and a primary submit button",
+      "layout": {
+        "type": "single-column-card",
+        "sections": [
+          { "id": "form-header", "description": "Title and subtitle above the form", "position": "top" },
+          { "id": "email-field", "description": "Email address field with label, input, and error message", "position": "field-1" },
+          { "id": "password-field", "description": "Password field with show/hide toggle, label, input, and error message", "position": "field-2" },
+          { "id": "form-meta-row", "description": "Inline row: remember-me checkbox (left) + forgot password link (right)", "position": "field-3" },
+          { "id": "submit-action", "description": "Full-width primary submit button with loading state", "position": "actions" },
+          { "id": "signup-prompt", "description": "Sign-up nudge below the form card", "position": "bottom" }
+        ],
+        "grid": "single-column",
+        "max_width": "400px",
+        "card_padding": "p-8",
+        "field_gap": "gap-6 (Form vertical default)",
+        "card_radius": "rounded-2xl",
+        "card_border": "border border-border-default",
+        "card_shadow": "shadow-sm",
+        "card_bg": "bg-surface-primary"
+      },
+      "component_tree": [
+        {
+          "id": "login-card",
+          "type": "div",
+          "section": "root",
+          "purpose": "Card container — no Card DS component exists; use div with DS token classes",
+          "classes": "w-full max-w-md mx-auto rounded-2xl border border-border-default bg-surface-primary shadow-sm p-8",
+          "children": ["form-header", "login-form"]
+        },
+        {
+          "id": "form-header",
+          "type": "div",
+          "section": "form-header",
+          "purpose": "Title + subtitle above the form",
+          "classes": "mb-6 flex flex-col gap-1",
+          "children": ["header-title", "header-subtitle"]
+        },
+        {
+          "id": "header-title",
+          "type": "h1",
+          "section": "form-header",
+          "purpose": "Page-level heading",
+          "classes": "text-xl font-semibold text-content-primary",
+          "text": "Sign in"
+        },
+        {
+          "id": "header-subtitle",
+          "type": "p",
+          "section": "form-header",
+          "purpose": "Subtitle / welcome back line",
+          "classes": "text-sm text-content-secondary",
+          "text": "Welcome back! Enter your credentials to continue."
+        },
+        {
+          "id": "login-form",
+          "component": "Form",
+          "section": "root",
+          "purpose": "Root form element with vertical layout",
+          "props": {
+            "layout": "vertical",
+            "onSubmit": "handleSubmit"
+          },
+          "children": ["email-field", "password-field", "form-meta-row", "submit-field"]
+        },
+        {
+          "id": "email-field",
+          "component": "FormField",
+          "section": "email-field",
+          "purpose": "Email address form field with validation binding",
+          "props": {
+            "name": "email",
+            "invalid": "errors.email !== undefined"
+          },
+          "children": ["email-label", "email-input", "email-error"]
+        },
+        {
+          "id": "email-label",
+          "component": "FormLabel",
+          "section": "email-field",
+          "purpose": "Accessible label bound to email input via Field.Label",
+          "props": { "required": true },
+          "text": "Email address"
+        },
+        {
+          "id": "email-input",
+          "component": "Input",
+          "section": "email-field",
+          "purpose": "Email text input",
+          "props": {
+            "type": "email",
+            "size": "md",
+            "placeholder": "you@example.com",
+            "autoComplete": "email",
+            "value": "email",
+            "onChange": "handleEmailChange",
+            "error": "errors.email !== undefined",
+            "leadingIcon": "<RiMailLine />"
+          }
+        },
+        {
+          "id": "email-error",
+          "component": "FormMessage",
+          "section": "email-field",
+          "purpose": "Inline error message, only visible when email FormField is invalid",
+          "text": "Please enter a valid email address."
+        },
+        {
+          "id": "password-field",
+          "component": "FormField",
+          "section": "password-field",
+          "purpose": "Password form field with validation binding",
+          "props": {
+            "name": "password",
+            "invalid": "errors.password !== undefined"
+          },
+          "children": ["password-label-row", "password-input", "password-error"]
+        },
+        {
+          "id": "password-label-row",
+          "type": "div",
+          "section": "password-field",
+          "purpose": "Row with FormLabel on left and forgot-password link on right",
+          "classes": "flex items-center justify-between",
+          "children": ["password-label", "forgot-password-link"]
+        },
+        {
+          "id": "password-label",
+          "component": "FormLabel",
+          "section": "password-field",
+          "purpose": "Accessible label for password input",
+          "props": { "required": true },
+          "text": "Password"
+        },
+        {
+          "id": "forgot-password-link",
+          "component": "Button",
+          "section": "password-field",
+          "purpose": "Forgot password link-style button",
+          "props": {
+            "variant": "link",
+            "colorScheme": "primary",
+            "size": "sm",
+            "type": "button",
+            "onClick": "handleForgotPassword"
+          },
+          "text": "Forgot password?"
+        },
+        {
+          "id": "password-input",
+          "component": "Input",
+          "section": "password-field",
+          "purpose": "Password input with show/hide toggle",
+          "props": {
+            "type": "showPassword ? 'text' : 'password'",
+            "size": "md",
+            "placeholder": "••••••••",
+            "autoComplete": "current-password",
+            "value": "password",
+            "onChange": "handlePasswordChange",
+            "error": "errors.password !== undefined",
+            "trailingIcon": "<button type='button' aria-label={showPassword ? 'Hide password' : 'Show password'} onClick={toggleShowPassword}>{showPassword ? <RiEyeOffLine /> : <RiEyeLine />}</button>"
+          }
+        },
+        {
+          "id": "password-error",
+          "component": "FormMessage",
+          "section": "password-field",
+          "purpose": "Inline error message for password field",
+          "text": "Password is required."
+        },
+        {
+          "id": "form-meta-row",
+          "component": "FormActions",
+          "section": "form-meta-row",
+          "purpose": "Row with remember-me checkbox; justify-between if forgot-password moved here",
+          "props": { "className": "justify-between pt-0" },
+          "children": ["remember-me-checkbox"]
+        },
+        {
+          "id": "remember-me-checkbox",
+          "component": "Checkbox",
+          "section": "form-meta-row",
+          "purpose": "Remember this device / stay signed in",
+          "props": {
+            "name": "rememberMe",
+            "size": "md",
+            "checked": "rememberMe",
+            "onCheckedChange": "setRememberMe"
+          },
+          "text": "Remember me"
+        },
+        {
+          "id": "submit-field",
+          "component": "FormActions",
+          "section": "submit-action",
+          "purpose": "Full-width submit button action area",
+          "props": { "className": "pt-0" },
+          "children": ["submit-button"]
+        },
+        {
+          "id": "submit-button",
+          "component": "Button",
+          "section": "submit-action",
+          "purpose": "Primary CTA — submits the login form",
+          "props": {
+            "variant": "solid",
+            "colorScheme": "primary",
+            "size": "md",
+            "type": "submit",
+            "fullWidth": true,
+            "loading": "isLoading",
+            "disabled": "isLoading"
+          },
+          "text": "Sign in"
+        },
+        {
+          "id": "signup-prompt",
+          "type": "p",
+          "section": "signup-prompt",
+          "purpose": "Nudge unauthenticated users toward registration",
+          "classes": "mt-6 text-center text-sm text-content-secondary",
+          "text": "Don't have an account? <Button variant='link' colorScheme='primary' size='sm'>Sign up</Button>"
+        }
+      ],
+      "interactions": [
+        {
+          "id": "email-validation",
+          "trigger": "Email input loses focus (onBlur)",
+          "validation": "Check email format via regex or browser validity",
+          "success": "Clear errors.email",
+          "error": "Set errors.email = 'Please enter a valid email address.'; FormField invalid=true; FormMessage visible"
+        },
+        {
+          "id": "password-validation",
+          "trigger": "Password input loses focus (onBlur)",
+          "validation": "Check password.length > 0",
+          "success": "Clear errors.password",
+          "error": "Set errors.password = 'Password is required.'; FormField invalid=true; FormMessage visible"
+        },
+        {
+          "id": "form-submit",
+          "trigger": "User clicks 'Sign in' button (form onSubmit)",
+          "validation": "Validate all fields; block submission if any invalid",
+          "loading": "Set isLoading=true; Button shows spinner; form fields disabled",
+          "success": "Set isLoading=false; redirect or callback",
+          "error": "Set isLoading=false; show server error (e.g. 'Invalid credentials') via FormMessage or toast"
+        },
+        {
+          "id": "password-toggle",
+          "trigger": "User clicks trailing eye icon button in password Input",
+          "action": "Toggle showPassword boolean",
+          "outcome": "Input type switches between 'password' and 'text'; icon switches RiEyeLine ↔ RiEyeOffLine; aria-label updates"
+        },
+        {
+          "id": "remember-me-toggle",
+          "trigger": "User clicks Checkbox",
+          "action": "Checkbox.onCheckedChange fires → setRememberMe(checked)",
+          "outcome": "rememberMe state toggled; checkbox visual updates via data-checked"
+        },
+        {
+          "id": "forgot-password",
+          "trigger": "User clicks 'Forgot password?' Button",
+          "action": "handleForgotPassword callback fires",
+          "outcome": "Navigate to password-reset flow or open dialog"
+        }
+      ],
+      "state_map": {
+        "email": {
+          "type": "string",
+          "source": "user-input",
+          "initial": "''",
+          "used_by": ["email-input", "email-field"]
+        },
+        "password": {
+          "type": "string",
+          "source": "user-input",
+          "initial": "''",
+          "used_by": ["password-input", "password-field"]
+        },
+        "showPassword": {
+          "type": "boolean",
+          "source": "local-toggle",
+          "initial": "false",
+          "used_by": ["password-input (type prop)", "password-toggle button (aria-label, icon)"]
+        },
+        "rememberMe": {
+          "type": "boolean",
+          "source": "user-input",
+          "initial": "false",
+          "used_by": ["remember-me-checkbox"]
+        },
+        "isLoading": {
+          "type": "boolean",
+          "source": "async-auth-call",
+          "initial": "false",
+          "used_by": ["submit-button (loading, disabled)", "form (aria-busy)"]
+        },
+        "errors": {
+          "type": "{ email?: string; password?: string }",
+          "source": "validation",
+          "initial": "{}",
+          "used_by": [
+            "email-field (invalid prop)",
+            "email-error (children text)",
+            "password-field (invalid prop)",
+            "password-error (children text)"
+          ]
+        }
+      },
+      "metadata": {
+        "patterns_used": ["vertical-form", "field-with-error", "fullwidth-cta"],
+        "components_used": ["Form", "FormField", "FormLabel", "FormMessage", "FormActions", "Input", "Button", "Checkbox"],
+        "tokens_applied": [
+          "bg-surface-primary", "border-border-default", "rounded-2xl", "shadow-sm",
+          "text-content-primary", "text-content-secondary", "text-content-tertiary",
+          "text-feedback-negative", "accent-primary", "gap-6", "gap-1.5", "p-8"
+        ],
+        "grounding_gaps": [
+          {
+            "needed": "Card component",
+            "gap": "No Card component exists in Velocity DS",
+            "workaround": "Use plain div with DS token classes: bg-surface-primary border border-border-default rounded-2xl shadow-sm p-8"
+          },
+          {
+            "needed": "Password visibility IconButton inside Input",
+            "gap": "Input.trailingIcon accepts ReactNode but no dedicated IconButton-in-Input pattern exists",
+            "workaround": "Use a plain <button> element as trailingIcon with aria-label and Remix icon child (RiEyeLine / RiEyeOffLine)"
+          }
+        ]
+      }
+    },
+    "layout": {
+      "type": "single-column-card",
+      "max_width": "400px",
+      "card_classes": "w-full max-w-md mx-auto rounded-2xl border border-border-default bg-surface-primary shadow-sm p-8",
+      "form_layout": "vertical",
+      "field_gap": "gap-6"
+    },
+    "components": [
+      "Form", "FormField", "FormLabel", "FormMessage", "FormActions",
+      "Input", "Button", "Checkbox"
+    ],
+    "interactions": [
+      "email-validation", "password-validation", "form-submit",
+      "password-toggle", "remember-me-toggle", "forgot-password"
+    ],
+    "state_map": {
+      "email": { "source": "user-input", "used_by": ["email-input"] },
+      "password": { "source": "user-input", "used_by": ["password-input"] },
+      "showPassword": { "source": "local-toggle", "used_by": ["password-input", "password-toggle"] },
+      "rememberMe": { "source": "user-input", "used_by": ["remember-me-checkbox"] },
+      "isLoading": { "source": "async-auth-call", "used_by": ["submit-button"] },
+      "errors": { "source": "validation", "used_by": ["email-field", "password-field"] }
+    }
+  },
+  "meta": {
+    "version": "1.0.0",
+    "status": "compose_done",
+    "run_id": "login-form-2026-04-15",
+    "created_at": "2026-04-15T00:00:00Z",
+    "updated_at": "2026-04-15T00:00:00Z"
+  }
+}

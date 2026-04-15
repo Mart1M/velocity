@@ -11,7 +11,7 @@ import {
   PopoverClose,
 } from './Popover';
 
-const meta = {
+const meta: Meta<typeof Popover> = {
   title: 'Components/Popover',
   component: Popover,
   parameters: {
@@ -30,7 +30,7 @@ const meta = {
   args: {
     modal: false,
   },
-} satisfies Meta<typeof Popover>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
