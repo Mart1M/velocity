@@ -5,41 +5,41 @@ import { RiArrowDownSLine } from "react-icons/ri";
 // ── Types ──────────────────────────────────────────────────────────────────
 
 export interface AccordionProps {
-  /** The controlled value of the expanded item(s) */
-  value?: (string | number)[];
-  /** The initially expanded item(s) (uncontrolled) */
-  defaultValue?: (string | number)[];
-  /** Callback when an item is expanded or collapsed */
-  onValueChange?: (value: (string | number)[]) => void;
-  /** Allow multiple items open simultaneously */
+  /** The uncontrolled value(s) of the expanded item(s) */
+  defaultValue?: string[];
+  /** The controlled value(s) of the expanded item(s) */
+  value?: string[];
+  /** Callback fired when an item is expanded or collapsed */
+  onValueChange?: (value: string[]) => void;
+  /** Allow multiple items to be open simultaneously */
   multiple?: boolean;
-  /** Disable all items */
+  /** Disable the entire accordion */
   disabled?: boolean;
-  /** Keep closed panels in the DOM */
-  keepMounted?: boolean;
-  /** Orientation of the accordion */
-  orientation?: "vertical" | "horizontal";
+  /** Loop keyboard focus at list boundaries */
+  loopFocus?: boolean;
   children?: React.ReactNode;
   className?: string;
 }
 
 export interface AccordionItemProps {
   /** Unique value identifying this item */
-  value: string | number;
-  /** Disable this individual item */
+  value: string;
+  /** Disable interaction for this item */
   disabled?: boolean;
-  /** Callback when this item is opened or closed */
-  onOpenChange?: (open: boolean) => void;
   children?: React.ReactNode;
   className?: string;
 }
 
 export interface AccordionTriggerProps {
+  /** Hide the animated chevron icon */
+  hideIcon?: boolean;
   children?: React.ReactNode;
   className?: string;
 }
 
 export interface AccordionPanelProps {
+  /** Keep the panel in the DOM when closed */
+  keepMounted?: boolean;
   children?: React.ReactNode;
   className?: string;
 }
@@ -47,31 +47,24 @@ export interface AccordionPanelProps {
 // ── Accordion (Root) ───────────────────────────────────────────────────────
 
 export function Accordion({
-  value,
   defaultValue,
+  value,
   onValueChange,
   multiple = false,
   disabled = false,
-  keepMounted = false,
-  orientation = "vertical",
+  loopFocus = true,
   children,
   className,
 }: AccordionProps) {
   return (
     <BaseAccordion.Root
-      value={value}
       defaultValue={defaultValue}
+      value={value}
       onValueChange={onValueChange}
       multiple={multiple}
       disabled={disabled}
-      keepMounted={keepMounted}
-      orientation={orientation}
-      className={[
-        "w-full divide-y divide-border-default border-y border-border-default",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
+      loopFocus={loopFocus}
+      className={["w-full", className].filter(Boolean).join(" ")}
     >
       {children}
     </BaseAccordion.Root>
@@ -85,7 +78,6 @@ Accordion.displayName = "Accordion";
 export function AccordionItem({
   value,
   disabled,
-  onOpenChange,
   children,
   className,
 }: AccordionItemProps) {
@@ -93,10 +85,9 @@ export function AccordionItem({
     <BaseAccordion.Item
       value={value}
       disabled={disabled}
-      onOpenChange={onOpenChange}
       className={[
-        "group/item",
-        "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
+        "border-b border-border-subtle",
+        "data-disabled:opacity-50",
         className,
       ]
         .filter(Boolean)
@@ -111,38 +102,48 @@ AccordionItem.displayName = "AccordionItem";
 
 // ── AccordionTrigger ───────────────────────────────────────────────────────
 
-export function AccordionTrigger({ children, className }: AccordionTriggerProps) {
+export function AccordionTrigger({
+  hideIcon = false,
+  children,
+  className,
+}: AccordionTriggerProps) {
   return (
     <BaseAccordion.Header className="flex">
       <BaseAccordion.Trigger
         className={[
-          "group/trigger",
-          "flex flex-1 items-center justify-between gap-2",
-          "py-4 text-left font-medium",
-          "text-content-primary bg-transparent",
-          "cursor-pointer transition-colors duration-[200ms]",
-          "hover:text-content-secondary",
-          // focus ring
+          // layout
+          "group flex flex-1 items-center justify-between",
+          "py-4 px-0 gap-3",
+          // typography
+          "text-sm font-medium text-content-primary text-left",
+          // interaction
+          "cursor-pointer",
+          "transition-colors duration-200",
+          // hover
+          "hover:text-content-brand",
+          // focus
           "focus-visible:outline-none focus-visible:ring-2",
           "focus-visible:ring-border-focus focus-visible:ring-offset-2",
           "focus-visible:ring-offset-background-primary",
-          "rounded-sm",
           // disabled
           "data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50",
+          "data-[disabled]:hover:text-content-primary",
           className,
         ]
           .filter(Boolean)
           .join(" ")}
       >
         {children}
-        <RiArrowDownSLine
-          className={[
-            "size-4 shrink-0 text-content-secondary",
-            "transition-transform duration-[200ms] ease-out",
-            "group-data-[panel-open]/trigger:rotate-180",
-          ].join(" ")}
-          aria-hidden
-        />
+        {!hideIcon && (
+          <RiArrowDownSLine
+            className={[
+              "shrink-0 h-4 w-4 text-content-secondary",
+              "transition-transform duration-[200ms]",
+              "group-data-[panel-open]:rotate-180",
+            ].join(" ")}
+            aria-hidden
+          />
+        )}
       </BaseAccordion.Trigger>
     </BaseAccordion.Header>
   );
@@ -152,13 +153,20 @@ AccordionTrigger.displayName = "AccordionTrigger";
 
 // ── AccordionPanel ─────────────────────────────────────────────────────────
 
-export function AccordionPanel({ children, className }: AccordionPanelProps) {
+export function AccordionPanel({
+  keepMounted = false,
+  children,
+  className,
+}: AccordionPanelProps) {
   return (
     <BaseAccordion.Panel
+      keepMounted={keepMounted}
       className={[
-        "overflow-hidden text-sm text-content-secondary",
-        "transition-[height] duration-[200ms] ease-out",
-        "h-[var(--accordion-panel-height)]",
+        // height animation using the CSS custom property Base UI provides
+        "overflow-hidden",
+        "h-(--accordion-panel-height)",
+        "transition-[height] duration-[200ms] ease-in-out",
+        // enter/exit animation states (Base UI sets these data attributes)
         "data-[starting-style]:h-0",
         "data-[ending-style]:h-0",
         className,
@@ -166,7 +174,7 @@ export function AccordionPanel({ children, className }: AccordionPanelProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      <div className="pb-4">{children}</div>
+      <div className="pb-4 text-sm text-content-secondary">{children}</div>
     </BaseAccordion.Panel>
   );
 }
