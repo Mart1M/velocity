@@ -119,7 +119,7 @@ export function Checkbox({
           keepMounted
           className={[
             "flex items-center justify-center",
-            "text-white",
+            "text-content-primary",
             "transition-[transform,opacity] duration-200",
             "data-unchecked:opacity-0 data-unchecked:scale-0",
             "data-starting-style:scale-0 data-ending-style:scale-0",

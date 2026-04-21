@@ -31,11 +31,11 @@ export interface BadgeProps {
 
 const filledVariantClasses: Record<BadgeVariant, string> = {
   default: "bg-surface-secondary text-content-secondary",
-  success: "bg-state-success text-white",
-  warning: "bg-state-warning text-white",
-  error: "bg-state-error text-white",
-  info: "bg-state-info text-white",
-  brand: "bg-accent-primary text-white",
+  success: "bg-state-success text-content-inverse ",
+  warning: "bg-state-warning text-content-inverse ",
+  error: "bg-state-error text-content-inverse ",
+  info: "bg-state-info text-content-inverse ",
+  brand: "bg-accent-primary text-content-primary",
 };
 
 const outlineVariantClasses: Record<BadgeVariant, string> = {

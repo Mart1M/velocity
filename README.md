@@ -100,6 +100,8 @@ npm run storybook
 npm run type-check
 ```
 
+Storybook `10.3.x` in this package requires a newer Node runtime than Node `20.16.0`. Use Node `22` for local development; `.nvmrc` and `.node-version` are provided in this package directory for version managers that support them.
+
 ### Popover / Tooltip hover (Base UI patch)
 
 This repo applies a **`patch-package`** fix to `@base-ui-components/react`: upstream `Popover.Trigger` (`openOnHover`) and **`Tooltip.Trigger`** wired hover delays so **`mouseenter` exited early** until the pointer moved (`move: false` without `delay.open`). Tooltips/popovers then felt “broken” on a normal hover.

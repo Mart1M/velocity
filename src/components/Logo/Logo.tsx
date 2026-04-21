@@ -11,8 +11,10 @@ export type LogoSize = "sm" | "md" | "lg";
  */
 export type LogoVariant = "default" | "inverse" | "inherit";
 
-export interface LogoProps
-  extends Omit<React.ComponentPropsWithoutRef<"span">, "children"> {
+export interface LogoProps extends Omit<
+  React.ComponentPropsWithoutRef<"span">,
+  "children"
+> {
   /**
    * Preset width (`266:60` viewBox). Height follows aspect ratio.
    * @default 'md'
@@ -111,19 +113,19 @@ export const Logo = React.forwardRef<HTMLSpanElement, LogoProps>(function Logo(
           />
           <path
             d="M223.461 36.002L221.976 46.2877H216.826L218.313 36.002H223.461Z"
-            fill="var(--color-primary-600)"
+            fill="var(--color-yellow-200)"
           />
           <path
             d="M232.075 36.002L230.591 46.2877H225.655L227.14 36.002H232.075Z"
-            fill="var(--color-primary-500)"
+            fill="var(--color-yellow-200)"
           />
           <path
             d="M240.673 36.002L239.188 46.2877H234.269L235.754 36.002H240.673Z"
-            fill="var(--color-primary-400)"
+            fill="var(--color-yellow-200)"
           />
           <path
             d="M249.567 36.0019C252.884 36.0019 255.573 33.3156 255.573 30.0018C255.573 26.6881 252.884 24.0018 249.567 24.0018H219.119L241.637 1.50854L248.917 8.78087L243.976 13.7161H249.567C258.571 13.7161 265.87 21.0075 265.87 30.0018C265.87 38.7087 259.03 45.8184 250.425 46.2641V46.2876H242.867L244.351 36.0019H249.567Z"
-            fill="var(--color-primary-400)"
+            fill="var(--color-yellow-200)"
           />
         </g>
         <defs>
