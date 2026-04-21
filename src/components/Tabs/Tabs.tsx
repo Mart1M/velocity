@@ -1,14 +1,6 @@
 import * as React from "react";
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 
-const TabsChromeContext = React.createContext<{ orientation: "horizontal" | "vertical" }>({
-  orientation: "horizontal",
-});
-
-function useTabsChromeContext() {
-  return React.useContext(TabsChromeContext);
-}
-
 // ── Types ──────────────────────────────────────────────────────────────────
 
 export interface TabsProps {
@@ -49,17 +41,8 @@ export interface TabsIndicatorProps {
 export interface TabsPanelProps {
   /** Value that associates this panel with its Tab */
   value: any;
-  /**
-   * Keep inactive panels mounted so they can participate in layout.
-   * Defaults to `true` when using `TabsPanels` for a stable content height.
-   */
+  /** Keep the panel DOM node when hidden */
   keepMounted?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-}
-
-export interface TabsPanelsProps {
-  /** Tab panels only — place every `TabsPanel` inside this wrapper */
   children?: React.ReactNode;
   className?: string;
 }
@@ -74,21 +57,17 @@ export function Tabs({
   children,
   className,
 }: TabsProps) {
-  const chrome = React.useMemo(() => ({ orientation }), [orientation]);
   return (
     <BaseTabs.Root
       value={value}
       defaultValue={defaultValue}
       onValueChange={onValueChange}
       orientation={orientation}
-      className={[
-        orientation === "vertical" ? "flex flex-row gap-4 items-start" : "",
-        className,
-      ]
+      className={[orientation === "vertical" ? "flex" : "", className]
         .filter(Boolean)
         .join(" ")}
     >
-      <TabsChromeContext.Provider value={chrome}>{children}</TabsChromeContext.Provider>
+      {children}
     </BaseTabs.Root>
   );
 }
@@ -188,42 +167,11 @@ export function TabsIndicator({ className }: TabsIndicatorProps) {
 
 TabsIndicator.displayName = "TabsIndicator";
 
-// ── TabsPanels ─────────────────────────────────────────────────────────────
-
-/**
- * Wrap all `TabsPanel` siblings so the content area keeps a **stable height**
- * equal to the tallest panel (no layout jump when switching tabs).
- * Requires each `TabsPanel` to stay mounted (`keepMounted`, default `true`).
- */
-export function TabsPanels({ children, className }: TabsPanelsProps) {
-  const { orientation } = useTabsChromeContext();
-  return (
-    <div
-      className={[
-        "w-full min-h-0 min-w-0",
-        // Stack every panel in the same grid cell; row height = max(child heights)
-        "grid grid-cols-1 grid-rows-1 justify-items-stretch",
-        "[&>*]:col-start-1 [&>*]:row-start-1 [&>*]:self-start",
-        // Vertical root is flex row — let the panel region use remaining width
-        orientation === "vertical" ? "min-w-0 flex-1" : "",
-        className,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      data-tabs-panels=""
-    >
-      {children}
-    </div>
-  );
-}
-
-TabsPanels.displayName = "TabsPanels";
-
 // ── TabsPanel ──────────────────────────────────────────────────────────────
 
 export function TabsPanel({
   value,
-  keepMounted = true,
+  keepMounted = false,
   children,
   className,
 }: TabsPanelProps) {
@@ -234,10 +182,6 @@ export function TabsPanel({
       className={[
         "pt-3 text-sm text-content-primary",
         "focus-visible:outline-none",
-        "min-w-0",
-        // With keepMounted, Base sets `hidden` on inactive panels (display:none → height collapse).
-        // Override so inactive panels still occupy layout; visibility hides them for users.
-        "[&[hidden]]:!block [&[hidden]]:invisible [&[hidden]]:pointer-events-none [&[hidden]]:select-none",
         className,
       ]
         .filter(Boolean)

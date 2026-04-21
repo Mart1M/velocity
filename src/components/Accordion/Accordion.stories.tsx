@@ -1,7 +1,12 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionPanel } from "./Accordion";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionPanel,
+} from "./Accordion";
 
-const meta = {
+const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
   component: Accordion,
   parameters: {
@@ -9,7 +14,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "A set of collapsible panels with headings. Built on Base UI Accordion with smooth height animations and full keyboard navigation.",
+          "Accessible accordion for collapsible content sections. Built on Base UI Accordion. Ideal for FAQ, mobile filters, and order details.",
       },
     },
   },
@@ -22,205 +27,185 @@ const meta = {
     multiple: false,
     disabled: false,
   },
-} satisfies Meta<typeof Accordion>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// ── Default ────────────────────────────────────────────────────────────────
+const faqItems = [
+  {
+    value: "shipping",
+    question: "How long does shipping take?",
+    answer:
+      "Standard shipping takes 5–7 business days. Express shipping is available for 2–3 business day delivery. Free shipping on orders over $75.",
+  },
+  {
+    value: "returns",
+    question: "What is your return policy?",
+    answer:
+      "We accept returns within 30 days of purchase. Items must be unused and in their original packaging. Refunds are processed within 5–10 business days.",
+  },
+  {
+    value: "payment",
+    question: "What payment methods do you accept?",
+    answer:
+      "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, Apple Pay, and Google Pay.",
+  },
+];
 
 export const Default: Story = {
-  args: {
-    defaultValue: ["item-1"],
-  },
   render: (args) => (
     <div className="w-[480px]">
       <Accordion {...args}>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>What is Base UI?</AccordionTrigger>
-          <AccordionPanel>
-            Base UI is a library of unstyled, accessible React components. It
-            provides the behavior and accessibility primitives so you can focus
-            on your design system.
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>How do I get started?</AccordionTrigger>
-          <AccordionPanel>
-            Install Base UI from npm:{" "}
-            <code className="font-mono text-xs bg-surface-secondary px-1 py-0.5 rounded">
-              npm install @base-ui-components/react
-            </code>
-            , then import and compose the components you need.
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Can I use it for my project?</AccordionTrigger>
-          <AccordionPanel>
-            Yes! Base UI is open source and freely available under the MIT
-            license. It&apos;s designed to work with any styling approach.
-          </AccordionPanel>
-        </AccordionItem>
+        {faqItems.map((item) => (
+          <AccordionItem key={item.value} value={item.value}>
+            <AccordionTrigger>{item.question}</AccordionTrigger>
+            <AccordionPanel>{item.answer}</AccordionPanel>
+          </AccordionItem>
+        ))}
       </Accordion>
     </div>
   ),
 };
 
-// ── Multiple open ──────────────────────────────────────────────────────────
-
-export const MultipleOpen: Story = {
-  name: "Multiple Open",
-  args: {
-    multiple: true,
-    defaultValue: ["item-1", "item-2"],
-  },
+export const DefaultOpen: Story = {
   render: (args) => (
     <div className="w-[480px]">
-      <Accordion {...args}>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Shipping policy</AccordionTrigger>
-          <AccordionPanel>
-            We offer free standard shipping on all orders over $50. Expedited
-            and overnight options are available at checkout.
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Return policy</AccordionTrigger>
-          <AccordionPanel>
-            Items can be returned within 30 days of purchase in their original
-            condition. Refunds are processed within 5–7 business days.
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Warranty information</AccordionTrigger>
-          <AccordionPanel>
-            All products come with a 1-year limited warranty covering
-            manufacturing defects. Extended warranties are available for
-            purchase.
-          </AccordionPanel>
-        </AccordionItem>
+      <Accordion {...args} defaultValue={["shipping"]}>
+        {faqItems.map((item) => (
+          <AccordionItem key={item.value} value={item.value}>
+            <AccordionTrigger>{item.question}</AccordionTrigger>
+            <AccordionPanel>{item.answer}</AccordionPanel>
+          </AccordionItem>
+        ))}
       </Accordion>
     </div>
   ),
 };
 
-// ── Disabled item ──────────────────────────────────────────────────────────
+export const Multiple: Story = {
+  args: { multiple: true },
+  render: (args) => (
+    <div className="w-[480px]">
+      <Accordion {...args} defaultValue={["shipping", "returns"]}>
+        {faqItems.map((item) => (
+          <AccordionItem key={item.value} value={item.value}>
+            <AccordionTrigger>{item.question}</AccordionTrigger>
+            <AccordionPanel>{item.answer}</AccordionPanel>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  ),
+};
+
+export const DisabledAll: Story = {
+  args: { disabled: true },
+  render: (args) => (
+    <div className="w-[480px]">
+      <Accordion {...args}>
+        {faqItems.map((item) => (
+          <AccordionItem key={item.value} value={item.value}>
+            <AccordionTrigger>{item.question}</AccordionTrigger>
+            <AccordionPanel>{item.answer}</AccordionPanel>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </div>
+  ),
+};
 
 export const DisabledItem: Story = {
-  name: "Disabled Item",
   render: (args) => (
     <div className="w-[480px]">
       <Accordion {...args}>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Active item</AccordionTrigger>
+        <AccordionItem value="shipping">
+          <AccordionTrigger>How long does shipping take?</AccordionTrigger>
           <AccordionPanel>
-            This item is active and can be toggled open and closed.
+            Standard shipping takes 5–7 business days.
           </AccordionPanel>
         </AccordionItem>
-        <AccordionItem value="item-2" disabled>
-          <AccordionTrigger>Disabled item</AccordionTrigger>
+        <AccordionItem value="returns" disabled>
+          <AccordionTrigger>What is your return policy?</AccordionTrigger>
           <AccordionPanel>
-            This content is not reachable because the item is disabled.
+            We accept returns within 30 days of purchase.
           </AccordionPanel>
         </AccordionItem>
-        <AccordionItem value="item-3">
-          <AccordionTrigger>Another active item</AccordionTrigger>
+        <AccordionItem value="payment">
+          <AccordionTrigger>
+            What payment methods do you accept?
+          </AccordionTrigger>
           <AccordionPanel>
-            This item is also active and can be toggled normally.
+            We accept all major credit cards, PayPal, Apple Pay, and Google Pay.
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
     </div>
   ),
 };
-
-// ── Disabled accordion ─────────────────────────────────────────────────────
-
-export const DisabledAccordion: Story = {
-  name: "Disabled Accordion",
-  args: {
-    disabled: true,
-  },
-  render: (args) => (
-    <div className="w-[480px]">
-      <Accordion {...args}>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Entire accordion disabled</AccordionTrigger>
-          <AccordionPanel>
-            Setting disabled on the root disables all items at once.
-          </AccordionPanel>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger>Also disabled</AccordionTrigger>
-          <AccordionPanel>
-            All interaction is blocked when the root accordion is disabled.
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </div>
-  ),
-};
-
-// ── Overview ───────────────────────────────────────────────────────────────
 
 export const Overview: Story = {
-  parameters: { layout: "padded" },
   render: () => (
-    <div className="flex flex-col gap-8 p-8 rounded-2xl bg-surface-primary max-w-xl mx-auto">
-      <div>
-        <p className="text-xs font-medium text-content-tertiary uppercase tracking-widest mb-3">
-          Single open (default)
+    <div className="flex flex-col gap-10 p-8 rounded-2xl bg-surface-primary w-[540px]">
+      {/* Default — single expand */}
+      <div className="flex flex-col gap-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+          Single expand (FAQ)
         </p>
-        <Accordion defaultValue={["q1"]}>
-          <AccordionItem value="q1">
-            <AccordionTrigger>What is Velocity?</AccordionTrigger>
+        <Accordion defaultValue={["shipping"]}>
+          {faqItems.map((item) => (
+            <AccordionItem key={item.value} value={item.value}>
+              <AccordionTrigger>{item.question}</AccordionTrigger>
+              <AccordionPanel>{item.answer}</AccordionPanel>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+
+      {/* Multiple expand */}
+      <div className="flex flex-col gap-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+          Multiple expand
+        </p>
+        <Accordion multiple defaultValue={["shipping", "returns"]}>
+          <AccordionItem value="shipping">
+            <AccordionTrigger>Shipping information</AccordionTrigger>
             <AccordionPanel>
-              Velocity is a design system built on Base UI, styled with Tailwind
-              v4 and a semantic token system for consistent, themeable UIs.
+              Free shipping on orders over $75. Express delivery available.
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem value="q2">
-            <AccordionTrigger>Is it open source?</AccordionTrigger>
+          <AccordionItem value="returns">
+            <AccordionTrigger>Return policy</AccordionTrigger>
             <AccordionPanel>
-              Yes — Velocity is free and open source, available under the MIT
-              license.
+              30-day return window on all unused items.
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem value="q3">
-            <AccordionTrigger>Which frameworks are supported?</AccordionTrigger>
+          <AccordionItem value="warranty">
+            <AccordionTrigger>Warranty details</AccordionTrigger>
             <AccordionPanel>
-              Velocity works with any React-based framework, including Next.js,
-              Remix, and Vite.
+              All products come with a 1-year manufacturer warranty.
             </AccordionPanel>
           </AccordionItem>
         </Accordion>
       </div>
 
-      <div>
-        <p className="text-xs font-medium text-content-tertiary uppercase tracking-widest mb-3">
-          Multiple open
+      {/* Disabled item */}
+      <div className="flex flex-col gap-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+          Disabled item
         </p>
-        <Accordion multiple defaultValue={["f1", "f2"]}>
-          <AccordionItem value="f1">
-            <AccordionTrigger>Semantic tokens</AccordionTrigger>
-            <AccordionPanel>
-              Every color, spacing, and shadow value maps to a named token so
-              themes can be swapped without touching component code.
-            </AccordionPanel>
+        <Accordion>
+          <AccordionItem value="available">
+            <AccordionTrigger>Available section</AccordionTrigger>
+            <AccordionPanel>This section is interactive.</AccordionPanel>
           </AccordionItem>
-          <AccordionItem value="f2">
-            <AccordionTrigger>Accessible by default</AccordionTrigger>
-            <AccordionPanel>
-              Components are built on Base UI primitives that implement ARIA
-              patterns and keyboard navigation out of the box.
-            </AccordionPanel>
-          </AccordionItem>
-          <AccordionItem value="f3" disabled>
-            <AccordionTrigger>Coming soon (disabled)</AccordionTrigger>
-            <AccordionPanel>This feature is not yet available.</AccordionPanel>
+          <AccordionItem value="locked" disabled>
+            <AccordionTrigger>Locked section</AccordionTrigger>
+            <AccordionPanel>This section is disabled.</AccordionPanel>
           </AccordionItem>
         </Accordion>
       </div>
     </div>
   ),
+  parameters: { layout: "padded" },
 };

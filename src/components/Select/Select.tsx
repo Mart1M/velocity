@@ -163,12 +163,14 @@ export function Select({
   const popupClasses = [
     'bg-surface-primary border border-border-default rounded-xl shadow-lg',
     'p-1',
-    'overflow-y-auto',
+    'overflow-y-auto overflow-x-hidden',
     'outline-none',
     'origin-[var(--transform-origin)]',
     'transition-[scale,opacity] duration-[200ms]',
     'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
     'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
+    /* Floating UI `size` middleware sets --anchor-width on the positioner; inherit → match trigger */
+    'w-[var(--anchor-width)] min-w-[var(--anchor-width)] max-w-[var(--anchor-width)]',
   ].join(' ');
 
   return (
@@ -204,7 +206,7 @@ export function Select({
           </BaseSelect.Icon>
         </BaseSelect.Trigger>
         <BaseSelect.Portal>
-          <BaseSelect.Positioner sideOffset={4} alignItemWithTrigger={false}>
+          <BaseSelect.Positioner sideOffset={4} align="start" alignItemWithTrigger={false}>
             <BaseSelect.Popup className={popupClasses}>
               {children}
             </BaseSelect.Popup>
@@ -240,7 +242,7 @@ export function SelectOption({
       value={value}
       disabled={disabled}
       className={[
-        'flex items-center gap-2 rounded-lg py-2 px-2 text-sm',
+        'flex min-w-0 items-center gap-2 rounded-lg py-2 px-2 text-sm',
         'cursor-pointer outline-none select-none',
         'text-content-primary',
         'transition-colors duration-[200ms]',
@@ -256,7 +258,7 @@ export function SelectOption({
           <RiCheckLine className="size-full" aria-hidden />
         </BaseSelect.ItemIndicator>
       </span>
-      <BaseSelect.ItemText>{children}</BaseSelect.ItemText>
+      <BaseSelect.ItemText className="min-w-0 flex-1 truncate">{children}</BaseSelect.ItemText>
     </BaseSelect.Item>
   );
 }

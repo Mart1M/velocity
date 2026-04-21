@@ -139,7 +139,11 @@ export function ProductCard({
   );
 
   const baseClasses = [
-    "group block w-full",
+    "group w-full",
+    // Vertical: grid so the text block gets a real 1fr row — flex-1 alone often
+    // fails when the root’s height isn’t propagated from the grid cell.
+    layout === "vertical" &&
+      "grid min-h-0 h-full grid-rows-[auto_minmax(0,1fr)]",
     layout === "horizontal" && "flex flex-row items-stretch",
     "bg-surface-primary border border-border-default",
     "overflow-hidden transition-all duration-[200ms]",
@@ -187,7 +191,8 @@ export function ProductCardImage({
     <div
       className={[
         "relative overflow-hidden bg-surface-secondary",
-        layout === "vertical" && imageAspectVerticalClasses[size],
+        layout === "vertical" &&
+          `shrink-0 ${imageAspectVerticalClasses[size]}`,
         layout === "horizontal" && imageHorizontalClasses[size],
         className,
       ]
@@ -278,7 +283,9 @@ export function ProductCardContent({
   return (
     <div
       className={[
-        "flex flex-col gap-1.5 p-4",
+        "flex min-h-0 flex-col gap-1.5 p-4",
+        // Vertical: parent is grid row 1fr — fill that row so mt-auto on price works.
+        layout === "vertical" && "h-full min-h-0",
         layout === "horizontal" &&
           "min-w-0 flex-1 flex flex-col justify-start py-3 sm:py-4",
         className,
@@ -355,7 +362,10 @@ export function ProductCardPrice({
 }: ProductCardPriceProps) {
   return (
     <div
-      className={["flex items-baseline gap-2 flex-wrap", className]
+      className={[
+        "mt-auto flex flex-wrap items-baseline gap-2",
+        className,
+      ]
         .filter(Boolean)
         .join(" ")}
     >
@@ -384,8 +394,8 @@ export function ProductCardActions({
   return (
     <div
       className={[
-        "mt-2 pt-2 border-t border-border-subtle",
-        layout === "horizontal" && "mt-auto pt-3",
+        "mt-2 border-t border-border-subtle pt-2",
+        layout === "horizontal" && "pt-3",
         className,
       ]
         .filter(Boolean)
