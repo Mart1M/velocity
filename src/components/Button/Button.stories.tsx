@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A flexible button component built on BaseUI, supporting multiple variants, sizes, and color schemes.',
+        component: 'A flexible button component built on BaseUI. Supports **4 variants** (solid, outline, ghost, link), 3 sizes, and 5 color schemes.',
       },
     },
   },
