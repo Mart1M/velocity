@@ -147,15 +147,8 @@ export type { SkeletonProps, SkeletonVariant, SkeletonAnimation } from './compon
 export { FileUpload } from './components/FileUpload';
 export type { FileUploadProps, FileUploadSize, FileUploadOrientation, FileUploadValidationIssue } from './components/FileUpload';
 
-export { Tabs, TabsList, TabsTab, TabsIndicator, TabsPanels, TabsPanel } from './components/Tabs';
-export type {
-  TabsProps,
-  TabsListProps,
-  TabsTabProps,
-  TabsIndicatorProps,
-  TabsPanelsProps,
-  TabsPanelProps,
-} from './components/Tabs';
+export { Tabs, TabsList, TabsTab, TabsIndicator, TabsPanel } from './components/Tabs';
+export type { TabsProps, TabsListProps, TabsTabProps, TabsIndicatorProps, TabsPanelProps } from './components/Tabs';
 
 export { Accordion, AccordionItem, AccordionTrigger, AccordionPanel } from './components/Accordion';
 export type { AccordionProps, AccordionItemProps, AccordionTriggerProps, AccordionPanelProps } from './components/Accordion';

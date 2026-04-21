@@ -60,49 +60,49 @@ const variantColorClasses: Record<
   primary: {
     solid: [
       solidGlassEffect,
-      "bg-accent-primary text-content-on-brand shadow-sm",
-      "hover:bg-yellow-500 active:bg-yellow-600",
+      "bg-accent-primary text-white shadow-sm",
+      "hover:bg-primary-600 active:bg-primary-700",
     ].join(" "),
     outline:
-      "bg-transparent text-content-primary hover:bg-yellow-100 active:bg-surface-active border border-border-brand",
+      "bg-transparent text-content-brand hover:bg-surface-hover active:bg-surface-active border border-border-brand",
     ghost:
-      "bg-transparent text-content-brand hover:bg-yellow-100 active:bg-yellow-200",
-    link: "bg-transparent text-content-brand hover:text-yellow-900 underline-offset-4 hover:underline",
+      "bg-transparent text-content-brand hover:bg-surface-hover active:bg-surface-active",
+    link: "bg-transparent text-content-brand hover:text-accent-secondary underline-offset-4 hover:underline",
   },
   success: {
     solid: [
       solidGlassEffect,
-      "bg-state-success text-content-inverse shadow-sm",
+      "bg-state-success text-white shadow-sm",
       "hover:bg-green-600 active:bg-green-700",
     ].join(" "),
     outline:
-      "bg-transparent text-feedback-positive hover:bg-green-100  active:bg-surface-active border border-state-success",
+      "bg-transparent text-feedback-positive hover:bg-surface-hover active:bg-surface-active border border-state-success",
     ghost:
-      "bg-transparent text-feedback-positive hover:bg-green-100  active:bg-surface-active",
+      "bg-transparent text-feedback-positive hover:bg-surface-hover active:bg-surface-active",
     link: "bg-transparent text-feedback-positive hover:text-green-400 underline-offset-4 hover:underline",
   },
   warning: {
     solid: [
       solidGlassEffect,
-      "bg-state-warning text-content-inverse shadow-sm",
+      "bg-state-warning text-white shadow-sm",
       "hover:bg-orange-600 active:bg-orange-700",
     ].join(" "),
     outline:
-      "bg-transparent text-feedback-caution hover:bg-orange-100 active:bg-surface-active border border-state-warning",
+      "bg-transparent text-feedback-caution hover:bg-surface-hover active:bg-surface-active border border-state-warning",
     ghost:
-      "bg-transparent text-feedback-caution hover:bg-orange-100 active:bg-surface-active",
+      "bg-transparent text-feedback-caution hover:bg-surface-hover active:bg-surface-active",
     link: "bg-transparent text-feedback-caution hover:text-orange-400 underline-offset-4 hover:underline",
   },
   danger: {
     solid: [
       solidGlassEffect,
-      "bg-state-error text-content-inverse shadow-sm",
+      "bg-state-error text-white shadow-sm",
       "hover:bg-red-600 active:bg-red-700",
     ].join(" "),
     outline:
-      "bg-transparent text-feedback-negative hover:bg-red-100 active:bg-surface-active border border-state-error",
+      "bg-transparent text-feedback-negative hover:bg-surface-hover active:bg-surface-active border border-state-error",
     ghost:
-      "bg-transparent text-feedback-negative hover:bg-red-100 active:bg-surface-active",
+      "bg-transparent text-feedback-negative hover:bg-surface-hover active:bg-surface-active",
     link: "bg-transparent text-feedback-negative hover:text-red-400 underline-offset-4 hover:underline",
   },
   neutral: {
@@ -170,55 +170,55 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) {
-    const isDisabled = disabled || loading;
+  const isDisabled = disabled || loading;
 
-    const classes = [
-      // Base styles — leading-none keeps icon + label vertically centered vs text metrics
-      "inline-flex items-center justify-center font-medium leading-none",
-      "cursor-pointer transition-colors duration-150",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary",
-      "disabled:opacity-50 disabled:cursor-not-allowed",
-      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
-      // Size
-      sizeClasses[size],
-      // Variant + Color
-      variantColorClasses[colorScheme][variant],
-      // Full width
-      fullWidth ? "w-full" : "",
-    ]
-      .filter(Boolean)
-      .join(" ");
+  const classes = [
+    // Base styles — leading-none keeps icon + label vertically centered vs text metrics
+    "inline-flex items-center justify-center font-medium leading-none",
+    "cursor-pointer transition-colors duration-150",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary",
+    "disabled:opacity-50 disabled:cursor-not-allowed",
+    "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
+    // Size
+    sizeClasses[size],
+    // Variant + Color
+    variantColorClasses[colorScheme][variant],
+    // Full width
+    fullWidth ? "w-full" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-    return (
-      <BaseButton
-        ref={ref}
-        {...rest}
-        className={[classes, className].filter(Boolean).join(" ")}
-        disabled={isDisabled}
-        focusableWhenDisabled={focusableWhenDisabled}
-        type={type}
-        onClick={onClick}
-        render={render}
-      >
-        {loading ? (
-          <span className={iconSlotClass(size)} aria-hidden="true">
-            <LoadingSpinner className="size-full" />
-          </span>
-        ) : startIcon ? (
-          <span className={iconSlotClass(size)} aria-hidden="true">
-            {startIcon}
-          </span>
-        ) : null}
-        {children ? (
-          <span className="min-w-0 leading-normal">{children}</span>
-        ) : null}
-        {!loading && endIcon ? (
-          <span className={iconSlotClass(size)} aria-hidden="true">
-            {endIcon}
-          </span>
-        ) : null}
-      </BaseButton>
-    );
+  return (
+    <BaseButton
+      ref={ref}
+      {...rest}
+      className={[classes, className].filter(Boolean).join(" ")}
+      disabled={isDisabled}
+      focusableWhenDisabled={focusableWhenDisabled}
+      type={type}
+      onClick={onClick}
+      render={render}
+    >
+      {loading ? (
+        <span className={iconSlotClass(size)} aria-hidden="true">
+          <LoadingSpinner className="size-full" />
+        </span>
+      ) : startIcon ? (
+        <span className={iconSlotClass(size)} aria-hidden="true">
+          {startIcon}
+        </span>
+      ) : null}
+      {children ? (
+        <span className="min-w-0 leading-normal">{children}</span>
+      ) : null}
+      {!loading && endIcon ? (
+        <span className={iconSlotClass(size)} aria-hidden="true">
+          {endIcon}
+        </span>
+      ) : null}
+    </BaseButton>
+  );
   },
 );
 

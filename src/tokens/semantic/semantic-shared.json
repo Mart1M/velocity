@@ -1,19 +1,13 @@
 {
   "velocity": {
-    "surface": {
-      "info":             { "$value": "rgb(59 130 246 / 0.10)", "$type": "color" },
-      "success":          { "$value": "rgb(34 197 94 / 0.10)",  "$type": "color" },
-      "warning":          { "$value": "rgb(249 115 22 / 0.10)", "$type": "color" },
-      "error":            { "$value": "rgb(239 68 68 / 0.10)",  "$type": "color" },
-      "brand-tint":       { "$value": "rgb(208 244 0 / 0.10)",  "$type": "color" },
-      "info-emphasis":    { "$value": "rgb(59 130 246 / 0.15)", "$type": "color" },
-      "success-emphasis": { "$value": "rgb(34 197 94 / 0.15)",  "$type": "color" },
-      "warning-emphasis": { "$value": "rgb(249 115 22 / 0.15)", "$type": "color" },
-      "error-emphasis":   { "$value": "rgb(239 68 68 / 0.15)",  "$type": "color" },
-      "brand-emphasis":   { "$value": "rgb(208 244 0 / 0.20)",  "$type": "color" }
+    "accent": {
+      "primary": { "$value": "{color.primary.500}", "$type": "color" },
+      "secondary": { "$value": "{color.primary.300}", "$type": "color" },
+      "tertiary": { "$value": "{color.primary.200}", "$type": "color" }
     },
     "brand": {
-      "secondary": { "$value": "{color.yellow.300}", "$type": "color" }
+      "primary": { "$value": "{color.primary.500}", "$type": "color" },
+      "secondary": { "$value": "{color.secondary.300}", "$type": "color" }
     },
     "state": {
       "success": { "$value": "{color.green.500}", "$type": "color" },

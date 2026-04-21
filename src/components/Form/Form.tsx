@@ -123,7 +123,7 @@ export function FormLabel({ required, children, className }: FormLabelProps) {
     <Field.Label
       className={[
         'text-sm font-medium text-content-primary',
-        'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
+        'data-disabled:opacity-50 data-disabled:cursor-not-allowed',
         className,
       ]
         .filter(Boolean)

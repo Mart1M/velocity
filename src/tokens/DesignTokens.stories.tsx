@@ -137,7 +137,7 @@ export const SemanticColors: Story = {
       <section className="space-y-4">
         <h3 className="text-heading-4 text-content-tertiary">Accent & brand</h3>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <Swatch label="bg-accent-primary" bgClass="bg-accent-primary" textClass="text-content-primary" />
+          <Swatch label="bg-accent-primary" bgClass="bg-accent-primary" textClass="text-white" />
           <Swatch label="bg-accent-secondary" bgClass="bg-accent-secondary" textClass="text-content-primary" />
           <Swatch label="bg-accent-tertiary" bgClass="bg-accent-tertiary" textClass="text-content-primary" />
           <Swatch label="bg-brand-secondary" bgClass="bg-brand-secondary" textClass="text-content-primary" />
@@ -147,10 +147,10 @@ export const SemanticColors: Story = {
       <section className="space-y-4">
         <h3 className="text-heading-4 text-content-tertiary">State</h3>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <Swatch label="bg-state-success" bgClass="bg-state-success" textClass="text-content-inverse" />
-          <Swatch label="bg-state-warning" bgClass="bg-state-warning" textClass="text-content-inverse" />
-          <Swatch label="bg-state-error" bgClass="bg-state-error" textClass="text-content-inverse" />
-          <Swatch label="bg-state-info" bgClass="bg-state-info" textClass="text-content-inverse" />
+          <Swatch label="bg-state-success" bgClass="bg-state-success" textClass="text-white" />
+          <Swatch label="bg-state-warning" bgClass="bg-state-warning" textClass="text-white" />
+          <Swatch label="bg-state-error" bgClass="bg-state-error" textClass="text-white" />
+          <Swatch label="bg-state-info" bgClass="bg-state-info" textClass="text-white" />
         </div>
       </section>
 

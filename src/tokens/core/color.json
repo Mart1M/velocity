@@ -33,7 +33,7 @@
       "950": { "$value": "#2e0700", "$type": "color" }
     },
 
-    "yellow": {
+    "secondary": {
       "50":  { "$value": "#f6ffd0", "$type": "color" },
       "100": { "$value": "#eaff99", "$type": "color" },
       "200": { "$value": "#dcff55", "$type": "color" },

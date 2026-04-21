@@ -169,7 +169,7 @@ export function Select({
     'transition-[scale,opacity] duration-[200ms]',
     'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
     'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
-    /* Floating UI `size` middleware sets --anchor-width on the positioner (inherited here) */
+    /* Floating UI `size` middleware sets --anchor-width on the positioner; inherit → match trigger */
     'w-[var(--anchor-width)] min-w-[var(--anchor-width)] max-w-[var(--anchor-width)]',
   ].join(' ');
 
@@ -206,13 +206,7 @@ export function Select({
           </BaseSelect.Icon>
         </BaseSelect.Trigger>
         <BaseSelect.Portal>
-          <BaseSelect.Positioner
-            sideOffset={4}
-            align="start"
-            alignItemWithTrigger={false}
-            positionMethod="fixed"
-            className="z-50"
-          >
+          <BaseSelect.Positioner sideOffset={4} align="start" alignItemWithTrigger={false}>
             <BaseSelect.Popup className={popupClasses}>
               {children}
             </BaseSelect.Popup>
