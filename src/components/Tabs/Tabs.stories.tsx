@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Tabs, TabsList, TabsTab, TabsPanel } from "./Tabs";
+import { Tabs, TabsList, TabsTab, TabsPanels, TabsPanel } from "./Tabs";
 
 const meta: Meta<typeof Tabs> = {
   title: "Components/Tabs",
@@ -9,7 +9,7 @@ const meta: Meta<typeof Tabs> = {
     docs: {
       description: {
         component:
-          "Accessible tabs for toggling between related panels. Built on Base UI Tabs.",
+          "Accessible tabs for toggling between related panels. Built on Base UI Tabs. Wrap all `TabsPanel` components in `TabsPanels` so the content area keeps a stable height when switching tabs (no layout jump).",
       },
     },
   },
@@ -36,26 +36,28 @@ export const Default: Story = {
         <TabsTab value="reviews">Reviews</TabsTab>
         <TabsTab value="specs">Specifications</TabsTab>
       </TabsList>
-      <TabsPanel value="description">
-        <p>
-          Premium wireless headphones with active noise cancellation. Enjoy
-          crystal-clear audio and all-day comfort with memory foam ear cushions.
-        </p>
-      </TabsPanel>
-      <TabsPanel value="reviews">
-        <p>
-          ★★★★★ &mdash; &ldquo;Best headphones I&rsquo;ve ever owned. The noise
-          cancellation is incredible.&rdquo;
-        </p>
-      </TabsPanel>
-      <TabsPanel value="specs">
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Driver size: 40mm</li>
-          <li>Frequency response: 20Hz–20kHz</li>
-          <li>Battery life: 30 hours</li>
-          <li>Bluetooth 5.3</li>
-        </ul>
-      </TabsPanel>
+      <TabsPanels>
+        <TabsPanel value="description">
+          <p>
+            Premium wireless headphones with active noise cancellation. Enjoy
+            crystal-clear audio and all-day comfort with memory foam ear cushions.
+          </p>
+        </TabsPanel>
+        <TabsPanel value="reviews">
+          <p>
+            ★★★★★ &mdash; &ldquo;Best headphones I&rsquo;ve ever owned. The noise
+            cancellation is incredible.&rdquo;
+          </p>
+        </TabsPanel>
+        <TabsPanel value="specs">
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Driver size: 40mm</li>
+            <li>Frequency response: 20Hz–20kHz</li>
+            <li>Battery life: 30 hours</li>
+            <li>Bluetooth 5.3</li>
+          </ul>
+        </TabsPanel>
+      </TabsPanels>
     </Tabs>
   ),
 };
@@ -70,15 +72,17 @@ export const WithDisabledTab: Story = {
           Specifications
         </TabsTab>
       </TabsList>
-      <TabsPanel value="description">
-        <p>This product has a detailed description.</p>
-      </TabsPanel>
-      <TabsPanel value="reviews">
-        <p>Customer reviews will appear here.</p>
-      </TabsPanel>
-      <TabsPanel value="specs">
-        <p>Specifications are currently unavailable.</p>
-      </TabsPanel>
+      <TabsPanels>
+        <TabsPanel value="description">
+          <p>This product has a detailed description.</p>
+        </TabsPanel>
+        <TabsPanel value="reviews">
+          <p>Customer reviews will appear here.</p>
+        </TabsPanel>
+        <TabsPanel value="specs">
+          <p>Specifications are currently unavailable.</p>
+        </TabsPanel>
+      </TabsPanels>
     </Tabs>
   ),
 };
@@ -91,28 +95,30 @@ export const Vertical: Story = {
         <TabsTab value="reviews">Reviews</TabsTab>
         <TabsTab value="specs">Specifications</TabsTab>
       </TabsList>
-      <TabsPanel value="description">
-        <div className="pl-4">
-          <p>
-            Premium wireless headphones with active noise cancellation and
-            all-day comfort.
-          </p>
-        </div>
-      </TabsPanel>
-      <TabsPanel value="reviews">
-        <div className="pl-4">
-          <p>★★★★★ &mdash; &ldquo;Incredible sound quality.&rdquo;</p>
-        </div>
-      </TabsPanel>
-      <TabsPanel value="specs">
-        <div className="pl-4">
-          <ul className="list-disc pl-5 space-y-1">
-            <li>40mm drivers</li>
-            <li>30-hour battery</li>
-            <li>Bluetooth 5.3</li>
-          </ul>
-        </div>
-      </TabsPanel>
+      <TabsPanels>
+        <TabsPanel value="description">
+          <div className="pl-4">
+            <p>
+              Premium wireless headphones with active noise cancellation and
+              all-day comfort.
+            </p>
+          </div>
+        </TabsPanel>
+        <TabsPanel value="reviews">
+          <div className="pl-4">
+            <p>★★★★★ &mdash; &ldquo;Incredible sound quality.&rdquo;</p>
+          </div>
+        </TabsPanel>
+        <TabsPanel value="specs">
+          <div className="pl-4">
+            <ul className="list-disc pl-5 space-y-1">
+              <li>40mm drivers</li>
+              <li>30-hour battery</li>
+              <li>Bluetooth 5.3</li>
+            </ul>
+          </div>
+        </TabsPanel>
+      </TabsPanels>
     </Tabs>
   ),
 };
@@ -125,15 +131,17 @@ export const NumericValues: Story = {
         <TabsTab value={1}>Tab 2</TabsTab>
         <TabsTab value={2}>Tab 3</TabsTab>
       </TabsList>
-      <TabsPanel value={0}>
-        <p>Content for Tab 1</p>
-      </TabsPanel>
-      <TabsPanel value={1}>
-        <p>Content for Tab 2</p>
-      </TabsPanel>
-      <TabsPanel value={2}>
-        <p>Content for Tab 3</p>
-      </TabsPanel>
+      <TabsPanels>
+        <TabsPanel value={0}>
+          <p>Content for Tab 1</p>
+        </TabsPanel>
+        <TabsPanel value={1}>
+          <p>Content for Tab 2</p>
+        </TabsPanel>
+        <TabsPanel value={2}>
+          <p>Content for Tab 3</p>
+        </TabsPanel>
+      </TabsPanels>
     </Tabs>
   ),
 };
@@ -152,15 +160,17 @@ export const Overview: Story = {
             <TabsTab value="reviews">Reviews</TabsTab>
             <TabsTab value="specs">Specifications</TabsTab>
           </TabsList>
-          <TabsPanel value="description">
-            <p>Premium wireless headphones with active noise cancellation.</p>
-          </TabsPanel>
-          <TabsPanel value="reviews">
-            <p>★★★★★ &mdash; &ldquo;Best headphones ever.&rdquo;</p>
-          </TabsPanel>
-          <TabsPanel value="specs">
-            <p>40mm drivers · 30h battery · Bluetooth 5.3</p>
-          </TabsPanel>
+          <TabsPanels>
+            <TabsPanel value="description">
+              <p>Premium wireless headphones with active noise cancellation.</p>
+            </TabsPanel>
+            <TabsPanel value="reviews">
+              <p>★★★★★ &mdash; &ldquo;Best headphones ever.&rdquo;</p>
+            </TabsPanel>
+            <TabsPanel value="specs">
+              <p>40mm drivers · 30h battery · Bluetooth 5.3</p>
+            </TabsPanel>
+          </TabsPanels>
         </Tabs>
       </div>
 
@@ -177,15 +187,17 @@ export const Overview: Story = {
               Specifications
             </TabsTab>
           </TabsList>
-          <TabsPanel value="description">
-            <p>The Specifications tab is disabled.</p>
-          </TabsPanel>
-          <TabsPanel value="reviews">
-            <p>Customer reviews appear here.</p>
-          </TabsPanel>
-          <TabsPanel value="specs">
-            <p>Specifications unavailable.</p>
-          </TabsPanel>
+          <TabsPanels>
+            <TabsPanel value="description">
+              <p>The Specifications tab is disabled.</p>
+            </TabsPanel>
+            <TabsPanel value="reviews">
+              <p>Customer reviews appear here.</p>
+            </TabsPanel>
+            <TabsPanel value="specs">
+              <p>Specifications unavailable.</p>
+            </TabsPanel>
+          </TabsPanels>
         </Tabs>
       </div>
 
@@ -200,21 +212,23 @@ export const Overview: Story = {
             <TabsTab value="reviews">Reviews</TabsTab>
             <TabsTab value="specs">Specifications</TabsTab>
           </TabsList>
-          <TabsPanel value="description">
-            <div className="pl-4">
-              <p>Content panel for vertical tabs layout.</p>
-            </div>
-          </TabsPanel>
-          <TabsPanel value="reviews">
-            <div className="pl-4">
-              <p>Reviews panel for vertical layout.</p>
-            </div>
-          </TabsPanel>
-          <TabsPanel value="specs">
-            <div className="pl-4">
-              <p>Specifications panel for vertical layout.</p>
-            </div>
-          </TabsPanel>
+          <TabsPanels>
+            <TabsPanel value="description">
+              <div className="pl-4">
+                <p>Content panel for vertical tabs layout.</p>
+              </div>
+            </TabsPanel>
+            <TabsPanel value="reviews">
+              <div className="pl-4">
+                <p>Reviews panel for vertical layout.</p>
+              </div>
+            </TabsPanel>
+            <TabsPanel value="specs">
+              <div className="pl-4">
+                <p>Specifications panel for vertical layout.</p>
+              </div>
+            </TabsPanel>
+          </TabsPanels>
         </Tabs>
       </div>
     </div>

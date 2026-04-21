@@ -1,4 +1,9 @@
-export { Accordion, AccordionItem, AccordionTrigger, AccordionPanel } from "./Accordion";
+export {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionPanel,
+} from "./Accordion";
 export type {
   AccordionProps,
   AccordionItemProps,

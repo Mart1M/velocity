@@ -10,8 +10,10 @@ export type NotificationBadgeVariant =
 
 export type NotificationBadgeSize = "sm" | "md";
 
-export interface NotificationBadgeProps
-  extends Omit<React.ComponentPropsWithoutRef<"span">, "children"> {
+export interface NotificationBadgeProps extends Omit<
+  React.ComponentPropsWithoutRef<"span">,
+  "children"
+> {
   /**
    * Unread / notification count. When `0` and `showZero` is false, nothing is rendered
    * (unless `dot` is true).
@@ -36,7 +38,7 @@ export interface NotificationBadgeProps
 
 const variantClasses: Record<NotificationBadgeVariant, string> = {
   default: "bg-state-error text-white",
-  brand: "bg-accent-primary text-white",
+  brand: "bg-accent-primary text-content-primary",
   danger: "bg-state-error text-white",
   neutral: "bg-surface-tertiary text-content-primary",
 };
@@ -75,10 +77,7 @@ export const NotificationBadge = React.forwardRef<
   },
   ref,
 ) {
-  const showNumeric =
-    !dot &&
-    count !== undefined &&
-    (showZero || count > 0);
+  const showNumeric = !dot && count !== undefined && (showZero || count > 0);
 
   if (!dot && !showNumeric) {
     return null;

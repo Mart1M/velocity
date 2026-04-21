@@ -48,11 +48,11 @@ export interface AlertBannerProps {
 // ── Style maps ─────────────────────────────────────────────────────────────
 
 const variantBgClasses: Record<AlertBannerVariant, string> = {
-  info: "bg-blue-500/10",
-  success: "bg-green-500/10",
-  warning: "bg-orange-500/10",
-  error: "bg-red-500/10",
-  brand: "bg-primary-500/10",
+  info: "bg-surface-info",
+  success: "bg-surface-success",
+  warning: "bg-surface-warning",
+  error: "bg-surface-error",
+  brand: "bg-surface-brand-tint",
 };
 
 const variantIconClasses: Record<AlertBannerVariant, string> = {
@@ -64,15 +64,15 @@ const variantIconClasses: Record<AlertBannerVariant, string> = {
 };
 
 const variantActionClasses: Record<AlertBannerVariant, string> = {
-  info: "bg-state-info/15 text-content-primary hover:bg-state-info/25 active:bg-state-info/30",
+  info: "bg-surface-info-emphasis text-content-primary hover:bg-state-info/25 active:bg-state-info/30",
   success:
-    "bg-state-success/15 text-content-primary hover:bg-state-success/25 active:bg-state-success/30",
+    "bg-surface-success-emphasis text-content-primary hover:bg-state-success/25 active:bg-state-success/30",
   warning:
-    "bg-state-warning/15 text-content-primary hover:bg-state-warning/25 active:bg-state-warning/30",
+    "bg-surface-warning-emphasis text-content-primary hover:bg-state-warning/25 active:bg-state-warning/30",
   error:
-    "bg-state-error/15 text-content-primary hover:bg-state-error/25 active:bg-state-error/30",
+    "bg-surface-error-emphasis text-content-primary hover:bg-state-error/25 active:bg-state-error/30",
   brand:
-    "bg-accent-primary/20 text-content-primary hover:bg-accent-primary/30 active:bg-accent-primary/35",
+    "bg-surface-brand-emphasis text-content-primary hover:bg-accent-primary/30 active:bg-accent-primary/35",
 };
 
 const defaultIcons: Record<

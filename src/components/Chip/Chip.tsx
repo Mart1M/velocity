@@ -41,7 +41,10 @@ export interface ChipProps {
   pressed?: boolean;
   /** Uncontrolled initial pressed state */
   defaultPressed?: boolean;
-  onPressedChange?: (pressed: boolean, eventDetails: Toggle.ChangeEventDetails) => void;
+  onPressedChange?: (
+    pressed: boolean,
+    eventDetails: Toggle.ChangeEventDetails,
+  ) => void;
 
   /** Shows a remove control; stops propagation so it does not toggle the chip */
   onRemove?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -58,11 +61,11 @@ export interface ChipProps {
 
 const filledVariantClasses: Record<ChipVariant, string> = {
   default: "bg-surface-secondary text-content-secondary",
-  success: "bg-state-success text-white",
-  warning: "bg-state-warning text-white",
-  error: "bg-state-error text-white",
-  info: "bg-state-info text-white",
-  brand: "bg-accent-primary text-white",
+  success: "bg-state-success text-content-primary",
+  warning: "bg-state-warning text-content-primary",
+  error: "bg-state-error text-content-primary",
+  info: "bg-state-info text-content-primary",
+  brand: "bg-accent-primary text-content-primary",
 };
 
 const outlineVariantClasses: Record<ChipVariant, string> = {
@@ -85,10 +88,11 @@ const selectablePressedFilledClasses: Record<ChipVariant, string> = {
     "data-[pressed]:bg-state-success data-[pressed]:text-white data-[pressed]:border-state-success",
   warning:
     "data-[pressed]:bg-state-warning data-[pressed]:text-white data-[pressed]:border-state-warning",
-  error: "data-[pressed]:bg-state-error data-[pressed]:text-white data-[pressed]:border-state-error",
+  error:
+    "data-[pressed]:bg-state-error data-[pressed]:text-white data-[pressed]:border-state-error",
   info: "data-[pressed]:bg-state-info data-[pressed]:text-white data-[pressed]:border-state-info",
   brand:
-    "data-[pressed]:bg-accent-primary data-[pressed]:text-white data-[pressed]:border-accent-primary",
+    "data-[pressed]:bg-accent-primary data-[pressed]:text-content-primary data-[pressed]:border-accent-primary",
 };
 
 const sizeClasses: Record<
@@ -159,7 +163,9 @@ function chipSurface(
     const idle = outlineVariantClasses[variant];
     return [idle, selectablePressedFilledClasses[variant]].join(" ");
   }
-  return outline ? outlineVariantClasses[variant] : filledVariantClasses[variant];
+  return outline
+    ? outlineVariantClasses[variant]
+    : filledVariantClasses[variant];
 }
 
 // ── Remove button ───────────────────────────────────────────────────────────
@@ -380,7 +386,9 @@ export function Chip({
         type="button"
         disabled={disabled}
         onClick={onClick}
-        className={[sharedLayout, "cursor-pointer", focusRing].filter(Boolean).join(" ")}
+        className={[sharedLayout, "cursor-pointer", focusRing]
+          .filter(Boolean)
+          .join(" ")}
       >
         {content}
       </button>
@@ -424,7 +432,11 @@ export function Chip({
   }
 
   // ── Static ────────────────────────────────────────────────────────────────
-  return <span className={[sharedLayout, "cursor-default"].join(" ")}>{content}</span>;
+  return (
+    <span className={[sharedLayout, "cursor-default"].join(" ")}>
+      {content}
+    </span>
+  );
 }
 
 Chip.displayName = "Chip";
