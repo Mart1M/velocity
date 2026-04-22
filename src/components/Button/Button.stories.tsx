@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A flexible button component built on BaseUI, supporting multiple variants, sizes, and color schemes.',
+        component: 'A flexible button component built on BaseUI. Supports **4 variants** (solid, outline, ghost, link), 3 sizes, and **5 color schemes** (primary, success, warning, danger, neutral).',
       },
     },
   },
@@ -81,6 +81,24 @@ export const Success: Story = { args: { colorScheme: 'success' } };
 export const Warning: Story = { args: { colorScheme: 'warning' } };
 export const Danger: Story = { args: { colorScheme: 'danger' } };
 export const Neutral: Story = { args: { colorScheme: 'neutral' } };
+
+// Neutral — all 4 variants side-by-side
+export const NeutralAllVariants: Story = {
+  name: 'Neutral — All Variants',
+  render: () => (
+    <div className="flex flex-col gap-4 p-8 rounded-radius-lg bg-surface-primary">
+      <span className="text-xs font-medium text-content-tertiary uppercase tracking-widest">neutral</span>
+      <div className="flex items-center gap-3 flex-wrap">
+        {(['solid', 'outline', 'ghost', 'link'] as const).map((variant) => (
+          <Button key={variant} colorScheme="neutral" variant={variant} size="md">
+            {variant}
+          </Button>
+        ))}
+      </div>
+    </div>
+  ),
+  parameters: { layout: 'padded' },
+};
 
 // States
 export const Loading: Story = { args: { loading: true } };
