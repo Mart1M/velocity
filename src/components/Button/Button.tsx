@@ -6,6 +6,7 @@ export type ButtonVariant = "solid" | "outline" | "ghost" | "link";
 export type ButtonSize = "sm" | "md" | "lg";
 export type ButtonColorScheme =
   | "primary"
+  | "neutral"
   | "success"
   | "warning"
   | "danger";
@@ -67,6 +68,18 @@ const variantColorClasses: Record<
     ghost:
       "bg-transparent text-content-brand hover:bg-yellow-100 active:bg-yellow-200",
     link: "bg-transparent text-content-brand hover:text-yellow-900 underline-offset-4 hover:underline",
+  },
+  neutral: {
+    solid: [
+      solidGlassEffect,
+      "bg-gray-800 text-content-inverse shadow-sm",
+      "hover:bg-gray-700 active:bg-gray-900",
+    ].join(" "),
+    outline:
+      "bg-transparent text-content-secondary hover:bg-gray-100 active:bg-surface-active border border-border-strong",
+    ghost:
+      "bg-transparent text-content-secondary hover:bg-gray-100 active:bg-surface-active",
+    link: "bg-transparent text-content-secondary hover:text-content-primary underline-offset-4 hover:underline",
   },
   success: {
     solid: [
