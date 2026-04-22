@@ -8,7 +8,8 @@ export type ButtonColorScheme =
   | "primary"
   | "success"
   | "warning"
-  | "danger";
+  | "danger"
+  | "neutral";
 
 export type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
   /** Visual style variant */
@@ -103,6 +104,18 @@ const variantColorClasses: Record<
     ghost:
       "bg-transparent text-feedback-negative hover:bg-red-100 active:bg-surface-active",
     link: "bg-transparent text-feedback-negative hover:text-red-400 underline-offset-4 hover:underline",
+  },
+  neutral: {
+    solid: [
+      solidGlassEffect,
+      "bg-surface-secondary text-content-primary shadow-sm border border-border-default",
+      "hover:bg-surface-tertiary active:bg-surface-active",
+    ].join(" "),
+    outline:
+      "bg-transparent text-content-secondary hover:bg-surface-hover active:bg-surface-active border border-border-strong",
+    ghost:
+      "bg-transparent text-content-secondary hover:bg-surface-hover active:bg-surface-active",
+    link: "bg-transparent text-content-secondary hover:text-content-primary underline-offset-4 hover:underline",
   },
 };
 
