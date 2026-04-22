@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A flexible button component built on BaseUI. Supports **4 variants** (solid, outline, ghost, link), 3 sizes, and 5 color schemes.',
+        component: 'A flexible button component built on BaseUI. Supports **4 variants** (solid, outline, ghost, link), 3 sizes, and 4 color schemes.',
       },
     },
   },
@@ -27,7 +27,7 @@ const meta: Meta<typeof Button> = {
     },
     colorScheme: {
       control: 'select',
-      options: ['primary', 'success', 'warning', 'danger', 'neutral'],
+      options: ['primary', 'success', 'warning', 'danger'],
       description: 'Color scheme',
     },
     loading: {
@@ -80,7 +80,6 @@ export const Primary: Story = { args: { colorScheme: 'primary' } };
 export const Success: Story = { args: { colorScheme: 'success' } };
 export const Warning: Story = { args: { colorScheme: 'warning' } };
 export const Danger: Story = { args: { colorScheme: 'danger' } };
-export const Neutral: Story = { args: { colorScheme: 'neutral' } };
 
 // States
 export const Loading: Story = { args: { loading: true } };
@@ -113,7 +112,7 @@ export const AllVariants: Story = {
         <div key={variant} className="flex flex-col gap-2">
           <span className="text-xs font-medium text-content-tertiary uppercase tracking-widest">{variant}</span>
           <div className="flex items-center gap-3 flex-wrap">
-            {(['primary', 'success', 'warning', 'danger', 'neutral'] as const).map((colorScheme) => (
+            {(['primary', 'success', 'warning', 'danger'] as const).map((colorScheme) => (
               <Button key={colorScheme} variant={variant} colorScheme={colorScheme} size="md">
                 {colorScheme}
               </Button>
