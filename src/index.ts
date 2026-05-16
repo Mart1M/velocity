@@ -210,6 +210,30 @@ export type {
   ProductCardActionsProps,
 } from './components/ecommerce/ProductCard';
 
+export {
+  RaceCard,
+  RaceCardImage,
+  RaceCardBadges,
+  RaceCardContent,
+  RaceCardDate,
+  RaceCardRaceType,
+  RaceCardTitle,
+  RaceCardLocation,
+  RaceCardDistances,
+} from './components/RaceCard';
+export type {
+  RaceCardProps,
+  RaceCardSize,
+  RaceCardImageProps,
+  RaceCardBadgesProps,
+  RaceCardContentProps,
+  RaceCardDateProps,
+  RaceCardRaceTypeProps,
+  RaceCardTitleProps,
+  RaceCardLocationProps,
+  RaceCardDistancesProps,
+} from './components/RaceCard';
+
 export { EcommerceSearchInput } from './components/ecommerce/EcommerceSearchInput';
 export type { EcommerceSearchInputProps } from './components/ecommerce/EcommerceSearchInput';
 
@@ -278,6 +302,53 @@ export type {
   FooterLinkProps,
   FooterBottomProps,
 } from './components/Footer';
+
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+  useIsMobile,
+} from './components/Sidebar';
+export type {
+  SidebarCollapsible,
+  SidebarContextValue,
+  SidebarGroupActionProps,
+  SidebarGroupLabelProps,
+  SidebarMenuActionProps,
+  SidebarMenuButtonProps,
+  SidebarMenuButtonSize,
+  SidebarMenuButtonVariant,
+  SidebarMenuSkeletonProps,
+  SidebarMenuSubButtonProps,
+  SidebarMenuSubButtonSize,
+  SidebarProps,
+  SidebarProviderProps,
+  SidebarSide,
+  SidebarState,
+  SidebarTriggerProps,
+  SidebarVariant,
+} from './components/Sidebar';
 
 // Tokens
 export * from './tokens';

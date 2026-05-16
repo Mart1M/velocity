@@ -1,0 +1,77 @@
+:root {
+  /* Velocity light tokens (resolved values from src/styles/tokens.css) */
+  --velocity-bg-primary: #ffffff;
+  --velocity-surface-primary: #ffffff;
+  --velocity-surface-secondary: #f9f9f9;
+  --velocity-content-primary: #0d0d0d;
+  --velocity-content-secondary: #4e4e4e;
+  --velocity-border-default: #e5e5e5;
+  --velocity-brand-primary: #d0f400;
+}
+
+/* Left sidebar shell */
+.sidebar-container,
+[data-testid="sidebar"] {
+  background: var(--velocity-bg-primary) !important;
+  padding: 14px 12px !important;
+}
+
+/* Section headings like "Overview", "Concepts", etc. */
+.sidebar-subheading,
+.sidebar-subheading button,
+[data-testid="sidebar-subheading"] {
+  color: var(--velocity-content-secondary) !important;
+  font-size: 20px !important;
+  line-height: 28px !important;
+  font-weight: 500 !important;
+  margin: 10px 0 8px !important;
+}
+
+/* Navigation items */
+.sidebar-item,
+.sidebar-item button,
+a.sidebar-item,
+[data-testid="sidebar-item"] {
+  color: var(--velocity-content-primary) !important;
+  font-size: 20px !important;
+  font-weight: 600 !important;
+  line-height: 1.25 !important;
+  border-radius: 12px !important;
+  min-height: 56px !important;
+  padding: 10px 14px !important;
+}
+
+/* Storybook explorer rows (e.g. #components-accordion--docs) */
+#storybook-explorer-tree a[href*="path="][id] {
+  min-height: 48px !important;
+  height: auto !important;
+  padding: 12px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+  line-height: 1.35 !important;
+}
+
+/* Some Storybook versions constrain row height on the parent wrapper */
+#storybook-explorer-tree div:has(> a[href*="path="][id]) {
+  min-height: 48px !important;
+  height: auto !important;
+}
+
+/* Selected item pill */
+.sidebar-item[data-selected="true"],
+.sidebar-item[aria-current="page"],
+.sidebar-item[aria-selected="true"],
+[data-testid="sidebar-item"][aria-current="page"] {
+  background: var(--velocity-surface-secondary) !important;
+  border: 1px solid var(--velocity-border-default) !important;
+  color: var(--velocity-content-primary) !important;
+}
+
+/* Hover/focus interactions */
+.sidebar-item:hover,
+.sidebar-item:focus-visible {
+  background: var(--velocity-surface-secondary) !important;
+  outline: none !important;
+}
+

@@ -121,6 +121,17 @@ const SEMANTIC_MAPPINGS: Mapping[] = [
   { tokenPath: 'velocity.motion.easing', cssPrefix: 'ease', label: 'Semantic — Easing' },
 ];
 
+const DEFAULT_BRAND = 'velocity';
+const EXTRA_BRANDS = ['runspot'] as const;
+
+function buildSemanticMappings(brand: string): Mapping[] {
+  return SEMANTIC_MAPPINGS.map(({ tokenPath, cssPrefix, label }) => ({
+    tokenPath: tokenPath.replace(/^velocity\b/, brand),
+    cssPrefix,
+    label,
+  }));
+}
+
 // ── Build variable block from tokens + mappings ───────────────────────────────
 
 function buildVariableBlock(
@@ -224,7 +235,7 @@ function buildTypographyUtilities(tokens: Record<string, string>): string {
 function buildThemeBlock(): string {
   const allDefault = { ...coreTokens, ...sharedTokens, ...typoTokens, ...lightTokens };
   const coreAndShared = buildVariableBlock(allDefault, CORE_MAPPINGS);
-  const semantic = buildVariableBlock(allDefault, SEMANTIC_MAPPINGS);
+  const semantic = buildVariableBlock(allDefault, buildSemanticMappings(DEFAULT_BRAND));
   const typography = buildTypographyThemeSection(allDefault);
 
   return [
@@ -238,8 +249,12 @@ function buildThemeBlock(): string {
 
 // ── Build [data-theme="dark"] overrides ────────────────────────────────────────
 
-function buildDarkOverrides(): string {
-  return buildVariableBlock(darkTokens, SEMANTIC_MAPPINGS, '  ');
+function buildDarkOverrides(brand = DEFAULT_BRAND): string {
+  return buildVariableBlock(darkTokens, buildSemanticMappings(brand), '  ');
+}
+
+function buildBrandLightOverrides(brand: string): string {
+  return buildVariableBlock(lightTokens, buildSemanticMappings(brand), '  ');
 }
 
 // ── Compose CSS ───────────────────────────────────────────────────────────────
@@ -249,6 +264,7 @@ const css = `/* ================================================================
  * Do not edit manually. Run \`npm run build:tokens\` to regenerate.
  *
  * Themes: light (default), dark (via data-theme="dark" on html/body)
+ * Brands: default velocity + per-brand overrides via data-brand="<brand>"
  * ============================================================================= */
 
 @import "tailwindcss";
@@ -268,8 +284,14 @@ ${buildTypographyUtilities({ ...coreTokens, ...sharedTokens, ...typoTokens, ...l
 
 /* Dark theme overrides */
 [data-theme="dark"] {
-${buildDarkOverrides()}
+${buildDarkOverrides(DEFAULT_BRAND)}
 }
+
+/* Brand overrides (light) */
+${EXTRA_BRANDS.map((brand) => `[data-brand="${brand}"] {\n${buildBrandLightOverrides(brand)}\n}`).join('\n\n')}
+
+/* Brand overrides (dark) */
+${EXTRA_BRANDS.map((brand) => `[data-brand="${brand}"][data-theme="dark"], [data-theme="dark"][data-brand="${brand}"] {\n${buildDarkOverrides(brand)}\n}`).join('\n\n')}
 `;
 
 // ── Write output ──────────────────────────────────────────────────────────────
