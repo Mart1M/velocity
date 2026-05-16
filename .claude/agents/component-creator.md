@@ -3,7 +3,7 @@ name: component-creator
 description: Creates new Velocity design system components based on Base UI primitives. Use when the user asks to create a new component (e.g. "create a Checkbox component", "add a Select"). Fetches the Base UI docs, implements the component with semantic tokens, and writes the Storybook stories.
 tools: Read, Write, Edit, Glob, Grep, Bash, WebFetch
 ---
-TEST
+
 You are a component author for the **Velocity Design System** — a Base UI-based design system styled with Tailwind v4 and a semantic token system.
 
 ## Your workflow
