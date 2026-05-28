@@ -13,4 +13,5 @@ export type {
   TabsIndicatorProps,
   TabsPanelsProps,
   TabsPanelProps,
+  TabsVariant,
 } from "./Tabs";

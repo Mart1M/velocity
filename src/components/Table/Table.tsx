@@ -49,17 +49,19 @@ function useTableContext() {
 const sizeClasses: Record<TableSize, string> = {
   sm: "px-3 py-2 text-sm",
   md: "px-4 py-3 text-sm",
-  lg: "px-5 py-4 text-base",
+  lg: "px-5 py-4 text-sm",
 };
 
 const tableShell = [
-  "w-full min-w-0 border-collapse",
+  "mx-2 mb-2 w-[calc(100%-1rem)] min-w-[624px] border-separate border-spacing-0",
+  "bg-surface-secondary",
   "text-left text-content-primary",
 ].join(" ");
 
-const headCellClasses = "font-semibold text-content-primary";
+const headCellClasses =
+  "bg-surface-secondary text-xs font-semibold leading-6 text-content-primary";
 
-const bodyRowClasses = "border-b border-border-subtle last:border-b-0";
+const bodyRowClasses = "";
 
 // ── Table (root) ───────────────────────────────────────────────────────────
 
@@ -69,101 +71,126 @@ const bodyRowClasses = "border-b border-border-subtle last:border-b-0";
  * > **Note:** [Base UI](https://base-ui.com) does not provide a Table primitive; this component
  * > uses native accessible markup (`<th scope>`, optional `<caption>` via children).
  */
-export const Table = React.forwardRef<HTMLTableElement, TableProps>(function Table(
-  { size = "md", striped = false, scrollable = true, className, children, ...props },
-  ref,
-) {
-  const ctx = React.useMemo<TableContextValue>(() => ({ size, striped }), [size, striped]);
+export const Table = React.forwardRef<HTMLTableElement, TableProps>(
+  function Table(
+    {
+      size = "md",
+      striped = false,
+      scrollable = true,
+      className,
+      children,
+      ...props
+    },
+    ref,
+  ) {
+    const ctx = React.useMemo<TableContextValue>(
+      () => ({ size, striped }),
+      [size, striped],
+    );
 
-  const table = (
-    <table
-      ref={ref}
-      className={[tableShell, className].filter(Boolean).join(" ")}
-      {...props}
-    >
-      <TableContext.Provider value={ctx}>{children}</TableContext.Provider>
-    </table>
-  );
+    const table = (
+      <table
+        ref={ref}
+        className={[tableShell, className].filter(Boolean).join(" ")}
+        {...props}
+      >
+        <TableContext.Provider value={ctx}>{children}</TableContext.Provider>
+      </table>
+    );
 
-  if (!scrollable) {
-    return table;
-  }
+    if (!scrollable) {
+      return table;
+    }
 
-  return (
-    <div className="w-full overflow-x-auto rounded-xl border border-border-default bg-surface-primary">
-      {table}
-    </div>
-  );
-});
+    return (
+      <div className="w-full overflow-x-auto rounded-xl border border-border-default bg-surface-secondary">
+        {table}
+      </div>
+    );
+  },
+);
 
 Table.displayName = "Table";
 
 // ── Sections ───────────────────────────────────────────────────────────────
 
-export const TableHeader = React.forwardRef<HTMLTableSectionElement, TableHeaderProps>(
-  function TableHeader({ className, children, ...props }, ref) {
-    return (
-      <thead
-        ref={ref}
-        className={[
-          "border-b border-border-default bg-surface-secondary",
-          "[&_tr]:border-b-0",
-          "[&_tr:hover]:bg-transparent",
-          className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        {...props}
-      >
-        {children}
-      </thead>
-    );
-  },
-);
+export const TableHeader = React.forwardRef<
+  HTMLTableSectionElement,
+  TableHeaderProps
+>(function TableHeader({ className, children, ...props }, ref) {
+  return (
+    <thead
+      ref={ref}
+      className={[
+        "bg-surface-secondary",
+        "[&_th]:bg-surface-secondary",
+        "[&_tr]:border-b-0",
+        "[&_tr:hover]:bg-transparent",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    >
+      {children}
+    </thead>
+  );
+});
 
 TableHeader.displayName = "TableHeader";
 
-export const TableBody = React.forwardRef<HTMLTableSectionElement, TableBodyProps>(
-  function TableBody({ className, children, ...props }, ref) {
-    const { striped } = useTableContext();
-    return (
-      <tbody
-        ref={ref}
-        className={[
-          striped ? "[&_tr:nth-child(even)]:bg-surface-secondary/60" : "",
-          className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        {...props}
-      >
-        {children}
-      </tbody>
-    );
-  },
-);
+export const TableBody = React.forwardRef<
+  HTMLTableSectionElement,
+  TableBodyProps
+>(function TableBody({ className, children, ...props }, ref) {
+  const { striped } = useTableContext();
+  return (
+    <tbody
+      ref={ref}
+      className={[
+        "[&_td]:bg-surface-primary",
+        "[&_tr:not(:last-child)>td]:border-b [&_tr:not(:last-child)>td]:border-border-subtle",
+        "[&_tr:first-child>td:first-child]:rounded-tl-lg",
+        "[&_tr:first-child>td:last-child]:rounded-tr-lg",
+        "[&_tr:last-child>td:first-child]:rounded-bl-lg",
+        "[&_tr:last-child>td:last-child]:rounded-br-lg",
+        striped ? "[&_tr:nth-child(even)]:bg-surface-secondary" : "",
+        striped ? "[&_tr:nth-child(even)>td]:bg-surface-secondary" : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    >
+      {children}
+    </tbody>
+  );
+});
 
 TableBody.displayName = "TableBody";
 
-export const TableFooter = React.forwardRef<HTMLTableSectionElement, TableFooterProps>(
-  function TableFooter({ className, children, ...props }, ref) {
-    return (
-      <tfoot
-        ref={ref}
-        className={[
-          "border-t border-border-default bg-surface-secondary/80 font-medium",
-          "[&_tr:hover]:bg-transparent",
-          className,
-        ]
-          .filter(Boolean)
-          .join(" ")}
-        {...props}
-      >
-        {children}
-      </tfoot>
-    );
-  },
-);
+export const TableFooter = React.forwardRef<
+  HTMLTableSectionElement,
+  TableFooterProps
+>(function TableFooter({ className, children, ...props }, ref) {
+  return (
+    <tfoot
+      ref={ref}
+      className={[
+        "bg-surface-secondary font-semibold",
+        "[&_td]:bg-surface-secondary",
+        "[&_tr:hover]:bg-transparent",
+        "[&_td]:text-xs [&_td]:leading-6",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      {...props}
+    >
+      {children}
+    </tfoot>
+  );
+});
 
 TableFooter.displayName = "TableFooter";
 
@@ -176,7 +203,7 @@ export const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
         ref={ref}
         className={[
           bodyRowClasses,
-          "transition-colors duration-200 hover:bg-surface-hover/80",
+          "transition-colors duration-200 hover:[&>td]:bg-surface-hover",
           className,
         ]
           .filter(Boolean)
@@ -197,7 +224,9 @@ export const TableHead = React.forwardRef<HTMLTableCellElement, TableHeadProps>(
       <th
         ref={ref}
         scope={scope}
-        className={[sizeClasses[size], headCellClasses, className].filter(Boolean).join(" ")}
+        className={[sizeClasses[size], headCellClasses, className]
+          .filter(Boolean)
+          .join(" ")}
         {...props}
       />
     );
@@ -213,7 +242,11 @@ export const TableCell = React.forwardRef<HTMLTableCellElement, TableCellProps>(
     return (
       <td
         ref={ref}
-        className={[sizeClasses[size], "text-content-primary align-middle", className]
+        className={[
+          sizeClasses[size],
+          "text-content-primary align-middle",
+          className,
+        ]
           .filter(Boolean)
           .join(" ")}
         {...props}
