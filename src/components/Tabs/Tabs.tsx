@@ -1,8 +1,14 @@
 import * as React from "react";
 import { Tabs as BaseTabs } from "@base-ui-components/react/tabs";
 
-const TabsChromeContext = React.createContext<{ orientation: "horizontal" | "vertical" }>({
+export type TabsVariant = "line" | "pill";
+
+const TabsChromeContext = React.createContext<{
+  orientation: "horizontal" | "vertical";
+  variant: TabsVariant;
+}>({
   orientation: "horizontal",
+  variant: "line",
 });
 
 function useTabsChromeContext() {
@@ -25,6 +31,8 @@ export interface TabsProps {
 }
 
 export interface TabsListProps {
+  /** Visual style for the tab list */
+  variant?: TabsVariant;
   /** Whether arrow-key focus immediately activates the tab */
   activateOnFocus?: boolean;
   /** Whether keyboard focus loops at the list boundaries */
@@ -74,7 +82,10 @@ export function Tabs({
   children,
   className,
 }: TabsProps) {
-  const chrome = React.useMemo(() => ({ orientation }), [orientation]);
+  const chrome = React.useMemo(
+    () => ({ orientation, variant: "line" as const }),
+    [orientation],
+  );
   return (
     <BaseTabs.Root
       value={value}
@@ -88,7 +99,9 @@ export function Tabs({
         .filter(Boolean)
         .join(" ")}
     >
-      <TabsChromeContext.Provider value={chrome}>{children}</TabsChromeContext.Provider>
+      <TabsChromeContext.Provider value={chrome}>
+        {children}
+      </TabsChromeContext.Provider>
     </BaseTabs.Root>
   );
 }
@@ -98,26 +111,37 @@ Tabs.displayName = "Tabs";
 // ── TabsList ───────────────────────────────────────────────────────────────
 
 export function TabsList({
+  variant = "line",
   activateOnFocus = true,
   loopFocus = true,
   children,
   className,
 }: TabsListProps) {
+  const { orientation } = useTabsChromeContext();
+  const chrome = React.useMemo(
+    () => ({ orientation, variant }),
+    [orientation, variant],
+  );
+
   return (
     <BaseTabs.List
       activateOnFocus={activateOnFocus}
       loopFocus={loopFocus}
       className={[
-        "relative flex items-stretch",
-        "border-b border-border-default",
-        "data-[orientation=vertical]:flex-col data-[orientation=vertical]:border-b-0 data-[orientation=vertical]:border-r",
+        "relative isolate flex items-stretch",
+        variant === "line"
+          ? "border-b border-border-default data-[orientation=vertical]:border-b-0 data-[orientation=vertical]:border-r"
+          : "gap-1 rounded-full bg-surface-secondary p-1 data-[orientation=vertical]:rounded-2xl",
+        "data-[orientation=vertical]:flex-col",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      {children}
-      <TabsIndicator />
+      <TabsChromeContext.Provider value={chrome}>
+        {children}
+        <TabsIndicator />
+      </TabsChromeContext.Provider>
     </BaseTabs.List>
   );
 }
@@ -132,20 +156,26 @@ export function TabsTab({
   children,
   className,
 }: TabsTabProps) {
+  const { variant } = useTabsChromeContext();
+
   return (
     <BaseTabs.Tab
       value={value}
       disabled={disabled}
       className={[
-        "relative px-3 py-1.5 text-sm font-medium mb-1 rounded-xl cursor-pointer",
-        "data-[orientation=vertical]:mb-0 data-[orientation=vertical]:mr-1",
+        "relative z-10 cursor-pointer rounded-full px-3 py-1.5 text-sm font-medium",
+        variant === "line"
+          ? "mb-1 data-[orientation=vertical]:mb-0 data-[orientation=vertical]:mr-1"
+          : "",
         "cursor-pointer select-none",
         "text-content-secondary",
         "transition-all duration-[200ms]",
         // hover
-        "hover:text-content-primary hover:bg-surface-hover",
+        "hover:text-content-primary",
         // selected
-        "data-active:text-content-primary data-active:bg-surface-secondary",
+        variant === "line"
+          ? "data-active:bg-surface-secondary data-active:text-content-primary"
+          : "data-active:text-content-primary",
         // focus
         "focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-border-focus focus-visible:ring-offset-2",
@@ -168,16 +198,18 @@ TabsTab.displayName = "TabsTab";
 // ── TabsIndicator ──────────────────────────────────────────────────────────
 
 export function TabsIndicator({ className }: TabsIndicatorProps) {
+  const { variant } = useTabsChromeContext();
+
   return (
     <BaseTabs.Indicator
       className={[
-        "absolute -bottom-0.25 h-[3px] bg-accent-primary",
-        "left-[var(--active-tab-left)] w-[var(--active-tab-width)]",
+        "absolute pointer-events-none",
+        "left-[var(--active-tab-left)] top-[var(--active-tab-top)]",
+        "h-[var(--active-tab-height)] w-[var(--active-tab-width)]",
         "[transition:left_250ms_cubic-bezier(0.4,0,0.2,1),width_250ms_cubic-bezier(0.4,0,0.2,1),top_250ms_cubic-bezier(0.4,0,0.2,1),height_250ms_cubic-bezier(0.4,0,0.2,1)]",
-        "data-[orientation=vertical]:top-[var(--active-tab-top)] data-[orientation=vertical]:h-[var(--active-tab-height)]",
-        "data-[orientation=vertical]:left-auto data-[orientation=vertical]:right-0 data-[orientation=vertical]:w-[3px]",
-        "data-[orientation=vertical]:rounded-tl-sm data-[orientation=vertical]:rounded-bl-sm",
-        "data-[orientation=horizontal]:rounded-t-sm ",
+        variant === "line"
+          ? "-bottom-0.25 top-auto h-[3px] rounded-t-sm bg-accent-primary data-[orientation=vertical]:top-[var(--active-tab-top)] data-[orientation=vertical]:right-0 data-[orientation=vertical]:left-auto data-[orientation=vertical]:h-[var(--active-tab-height)] data-[orientation=vertical]:w-[3px] data-[orientation=vertical]:rounded-tl-sm data-[orientation=vertical]:rounded-bl-sm"
+          : "z-0 rounded-full bg-surface-primary shadow-sm data-[orientation=vertical]:rounded-xl",
         className,
       ]
         .filter(Boolean)

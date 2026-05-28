@@ -209,7 +209,7 @@ export function PaginationItem({
           focusClasses,
           sizeClasses[size].item,
           isActive
-            ? "bg-accent-primary text-white"
+            ? "bg-accent-primary text-content-on-brand"
             : "text-content-secondary hover:bg-surface-hover hover:text-content-primary",
           disabled ? "opacity-50 cursor-not-allowed" : "",
           className,

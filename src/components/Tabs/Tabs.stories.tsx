@@ -87,6 +87,32 @@ export const WithDisabledTab: Story = {
   ),
 };
 
+export const Pill: Story = {
+  render: (args) => (
+    <Tabs defaultValue="description" {...args}>
+      <TabsList variant="pill">
+        <TabsTab value="description">Description</TabsTab>
+        <TabsTab value="reviews">Reviews</TabsTab>
+        <TabsTab value="specs">Specifications</TabsTab>
+      </TabsList>
+      <TabsPanels>
+        <TabsPanel value="description">
+          <p>
+            A segmented-control style tab list for compact filtering or mode
+            switching.
+          </p>
+        </TabsPanel>
+        <TabsPanel value="reviews">
+          <p>Customer reviews appear here.</p>
+        </TabsPanel>
+        <TabsPanel value="specs">
+          <p>Technical specifications appear here.</p>
+        </TabsPanel>
+      </TabsPanels>
+    </Tabs>
+  ),
+};
+
 export const Vertical: Story = {
   render: () => (
     <Tabs defaultValue="description" orientation="vertical">
@@ -169,6 +195,31 @@ export const Overview: Story = {
             </TabsPanel>
             <TabsPanel value="specs">
               <p>40mm drivers · 30h battery · Bluetooth 5.3</p>
+            </TabsPanel>
+          </TabsPanels>
+        </Tabs>
+      </div>
+
+      {/* Pill */}
+      <div className="flex flex-col gap-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-content-tertiary">
+          Pill / segmented
+        </p>
+        <Tabs defaultValue="description">
+          <TabsList variant="pill">
+            <TabsTab value="description">Description</TabsTab>
+            <TabsTab value="reviews">Reviews</TabsTab>
+            <TabsTab value="specs">Specifications</TabsTab>
+          </TabsList>
+          <TabsPanels>
+            <TabsPanel value="description">
+              <p>Segmented control style with a filled active pill.</p>
+            </TabsPanel>
+            <TabsPanel value="reviews">
+              <p>Reviews panel for pill tabs.</p>
+            </TabsPanel>
+            <TabsPanel value="specs">
+              <p>Specs panel for pill tabs.</p>
             </TabsPanel>
           </TabsPanels>
         </Tabs>

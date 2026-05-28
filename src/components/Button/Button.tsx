@@ -39,6 +39,8 @@ export type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
 // after:  inner white gloss overlay, brightens on hover
 const solidGlassEffect = [
   "relative group",
+  // darken via overlay-like filter while preserving base brand color token mapping
+  "hover:brightness-95 active:brightness-90",
   // border gradient via mask trick
   "before:pointer-events-none before:absolute before:inset-0 before:z-10 before:rounded-[inherit]",
   "before:bg-gradient-to-b before:p-px before:from-white/[.12] before:to-transparent",
@@ -61,19 +63,17 @@ const variantColorClasses: Record<
     solid: [
       solidGlassEffect,
       "bg-accent-primary text-content-on-brand shadow-sm",
-      "hover:bg-yellow-500 active:bg-yellow-600",
     ].join(" "),
     outline:
-      "bg-transparent text-content-primary hover:bg-yellow-100 active:bg-surface-active border border-border-brand",
+      "bg-transparent text-content-primary hover:bg-accent-primary/20 active:bg-accent-primary/30 border border-border-brand",
     ghost:
-      "bg-transparent text-content-brand hover:bg-yellow-100 active:bg-yellow-200",
-    link: "bg-transparent text-content-brand hover:text-yellow-900 underline-offset-4 hover:underline",
+      "bg-transparent text-content-brand hover:bg-accent-primary/20 active:bg-accent-primary/30",
+    link: "bg-transparent text-content-brand hover:text-content-on-brand underline-offset-4 hover:underline",
   },
   success: {
     solid: [
       solidGlassEffect,
       "bg-state-success text-content-inverse shadow-sm",
-      "hover:bg-green-600 active:bg-green-700",
     ].join(" "),
     outline:
       "bg-transparent text-feedback-positive hover:bg-green-100  active:bg-surface-active border border-state-success",
@@ -85,7 +85,6 @@ const variantColorClasses: Record<
     solid: [
       solidGlassEffect,
       "bg-state-warning text-content-inverse shadow-sm",
-      "hover:bg-orange-600 active:bg-orange-700",
     ].join(" "),
     outline:
       "bg-transparent text-feedback-caution hover:bg-orange-100 active:bg-surface-active border border-state-warning",
@@ -97,7 +96,6 @@ const variantColorClasses: Record<
     solid: [
       solidGlassEffect,
       "bg-state-error text-content-inverse shadow-sm",
-      "hover:bg-red-600 active:bg-red-700",
     ].join(" "),
     outline:
       "bg-transparent text-feedback-negative hover:bg-red-100 active:bg-surface-active border border-state-error",
@@ -109,7 +107,6 @@ const variantColorClasses: Record<
     solid: [
       solidGlassEffect,
       "bg-surface-secondary text-content-primary shadow-sm border border-border-default",
-      "hover:bg-surface-tertiary active:bg-surface-active",
     ].join(" "),
     outline:
       "bg-transparent text-content-secondary hover:bg-surface-hover active:bg-surface-active border border-border-strong",

@@ -3,6 +3,7 @@
  * Do not edit manually. Run `npm run build:tokens` to regenerate.
  *
  * Themes: light (default), dark (via data-theme="dark" on html/body)
+ * Brands: default velocity + per-brand overrides via data-brand="<brand>"
  * ============================================================================= */
 
 @import "tailwindcss";
@@ -62,6 +63,15 @@
   --color-blue-400: #60a5fa;
   --color-blue-500: #3b82f6;
   --color-blue-600: #2563eb;
+  --color-mint-100: #E5FFF6;
+  --color-mint-200: #D5FFF0;
+  --color-mint-300: #55FFC3;
+  --color-mint-400: #2DF9B1;
+  --color-mint-500: #0DEB9D;
+  --color-mint-600: #10BA7E;
+  --color-mint-700: #118C60;
+  --color-mint-800: #0F6043;
+  --color-mint-900: #0A3627;
 
   /* Core — Font families */
   --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
@@ -340,6 +350,102 @@
 
   /* Semantic — Brand */
   --color-brand-primary: var(--color-yellow-400);
+
+  /* Semantic — Elevation */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.6);
+}
+
+/* Brand overrides (light) */
+[data-brand="runspot"] {
+  /* Semantic — Background */
+  --color-background-primary: var(--color-white);
+  --color-background-secondary: var(--color-gray-50);
+  --color-background-tertiary: var(--color-gray-100);
+  --color-background-brand: var(--color-mint-500);
+  --color-background-inverse: var(--color-gray-950);
+
+  /* Semantic — Surface */
+  --color-surface-primary: var(--color-white);
+  --color-surface-secondary: var(--color-gray-50);
+  --color-surface-tertiary: var(--color-gray-100);
+  --color-surface-hover: var(--color-gray-100);
+  --color-surface-active: var(--color-gray-200);
+  --color-surface-elevated: var(--color-white);
+  --color-surface-overlay: rgb(0 0 0 / 0.4);
+
+  /* Semantic — Content */
+  --color-content-primary: var(--color-gray-950);
+  --color-content-secondary: var(--color-gray-600);
+  --color-content-tertiary: var(--color-gray-500);
+  --color-content-brand: var(--color-mint-700);
+  --color-content-inverse: var(--color-white);
+  --color-content-disabled: var(--color-gray-400);
+  --color-content-on-brand: var(--color-gray-950);
+
+  /* Semantic — Border */
+  --color-border-default: var(--color-gray-200);
+  --color-border-subtle: var(--color-gray-100);
+  --color-border-strong: var(--color-gray-300);
+  --color-border-brand: var(--color-mint-500);
+  --color-border-focus: var(--color-mint-500);
+
+  /* Semantic — Accent */
+  --color-accent-primary: var(--color-mint-500);
+  --color-accent-secondary: var(--color-mint-400);
+  --color-accent-tertiary: var(--color-mint-200);
+
+  /* Semantic — Brand */
+  --color-brand-primary: var(--color-mint-500);
+
+  /* Semantic — Elevation */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* Brand overrides (dark) */
+[data-brand="runspot"][data-theme="dark"], [data-theme="dark"][data-brand="runspot"] {
+  /* Semantic — Background */
+  --color-background-primary: var(--color-gray-950);
+  --color-background-secondary: var(--color-gray-900);
+  --color-background-tertiary: var(--color-gray-800);
+  --color-background-brand: var(--color-mint-400);
+  --color-background-inverse: var(--color-white);
+
+  /* Semantic — Surface */
+  --color-surface-primary: var(--color-gray-900);
+  --color-surface-secondary: var(--color-gray-850);
+  --color-surface-tertiary: var(--color-gray-800);
+  --color-surface-hover: var(--color-gray-800);
+  --color-surface-active: var(--color-gray-750);
+  --color-surface-elevated: var(--color-gray-900);
+  --color-surface-overlay: rgb(0 0 0 / 0.6);
+
+  /* Semantic — Content */
+  --color-content-primary: var(--color-white);
+  --color-content-secondary: var(--color-gray-300);
+  --color-content-tertiary: var(--color-gray-500);
+  --color-content-brand: var(--color-mint-400);
+  --color-content-inverse: var(--color-gray-900);
+  --color-content-disabled: var(--color-gray-600);
+  --color-content-on-brand: var(--color-gray-950);
+
+  /* Semantic — Border */
+  --color-border-default: var(--color-gray-800);
+  --color-border-subtle: var(--color-gray-850);
+  --color-border-strong: var(--color-gray-700);
+  --color-border-brand: var(--color-mint-400);
+  --color-border-focus: var(--color-mint-400);
+
+  /* Semantic — Accent */
+  --color-accent-primary: var(--color-mint-400);
+  --color-accent-secondary: var(--color-mint-500);
+  --color-accent-tertiary: var(--color-mint-600);
+
+  /* Semantic — Brand */
+  --color-brand-primary: var(--color-mint-400);
 
   /* Semantic — Elevation */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.4);
