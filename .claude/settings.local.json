@@ -3,11 +3,12 @@
     "allow": [
       "WebFetch(domain:base-ui.com)",
       "Bash(npx tsc:*)",
-      "WebFetch(domain:stitch.withgoogle.com)"
+      "WebFetch(domain:stitch.withgoogle.com)",
+      "Bash(git push *)"
     ]
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "Figma"
-  ],
-  "enableAllProjectMcpServers": true
+  ]
 }
