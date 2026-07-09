@@ -7,3 +7,4 @@ storybook-static/
 .env.local
 .npmrc
 .agenture/
+package-lock.json

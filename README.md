@@ -88,7 +88,7 @@ Primitives are also in `@theme`: `font-size-*`, `leading-*`, `font-weight-*`, `t
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Build the library
 npm run build
@@ -106,7 +106,7 @@ This repo applies a **`patch-package`** fix to `@base-ui-components/react`: upst
 
 The patch sets `restMs: 0` and puts the **open** delay on `delay.open` (and **close** on `delay.close`), matching what `useHoverReferenceInteraction` expects.
 
-- Applied automatically via **`npm install`** (`postinstall`: `patch-package`), from `patches/@base-ui-components+react+*.patch`.
+- Applied automatically via **`pnpm install`** (`postinstall`: `patch-package`), from `patches/@base-ui-components+react+*.patch`.
 - **Storybook:** Vite is configured to **exclude** `@base-ui-components/react` from `optimizeDeps` so a cached pre-bundle does not ignore your patched files. If hover still looks wrong, delete `node_modules/.vite` and restart Storybook.
 - **Apps using Velocity** should either use the same patch (copy `patches/` + `patch-package` + `postinstall` + similar Vite `optimizeDeps.exclude`) or upgrade Base UI once the issue is fixed upstream.
 
