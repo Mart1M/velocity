@@ -45,7 +45,7 @@ Example:
 
 Each utility bundles: `font-family`, `font-size`, `line-height`, `font-weight`, `letter-spacing`.
 
-Headings use the **`Sora`** font family. Body/UI/caption/overline use **`Inter`**.
+Headings use the **`Stack Sans Headline`** font family. Body/UI/caption/overline use **`Inter`**.
 
 ---
 

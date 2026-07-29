@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Popover as BasePopover } from "@base-ui-components/react/popover";
-import { RiCloseLine } from "react-icons/ri";
+import { CloseIcon } from "../../icons";
 
 type BasePopoverPopupProps = React.ComponentPropsWithoutRef<
   typeof BasePopover.Popup
@@ -290,7 +290,7 @@ export function PopoverClose({ className, children }: PopoverCloseProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      {children ?? <RiCloseLine className="size-4" aria-hidden />}
+      {children ?? <CloseIcon className="size-4" aria-hidden />}
     </BasePopover.Close>
   );
 }

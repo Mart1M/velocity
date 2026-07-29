@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavigationMenu as NM } from "@base-ui-components/react/navigation-menu";
-import { RiArrowDownSLine, RiMenuLine } from "react-icons/ri";
+import { ArrowDownIcon, MenuIcon } from "../../../icons";
 import {
   Drawer,
   DrawerBackdrop,
@@ -121,7 +121,7 @@ export function EcommerceNavigation({
                         colorScheme="neutral"
                         size="sm"
                       >
-                        <RiMenuLine className="h-5 w-5" />
+                        <MenuIcon className="h-5 w-5" />
                       </IconButton>
                     }
                   />
@@ -256,7 +256,7 @@ export const EcommerceNavigationMenuTrigger = React.forwardRef<
       {children}
       {showChevron ? (
         <NM.Icon className="text-content-tertiary transition-transform duration-200 ease-out data-popup-open:rotate-180">
-          <RiArrowDownSLine className="h-4 w-4" aria-hidden />
+          <ArrowDownIcon className="h-4 w-4" aria-hidden />
         </NM.Icon>
       ) : null}
     </NM.Trigger>

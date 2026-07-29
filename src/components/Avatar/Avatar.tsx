@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Avatar as BaseAvatar } from "@base-ui-components/react/avatar";
-import { RiUser3Line } from "react-icons/ri";
+import { UserIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -101,7 +101,7 @@ export function Avatar({
     ) : alt.trim().length > 0 ? (
       initialsFromLabel(alt)
     ) : (
-      <RiUser3Line
+      <UserIcon
         className={[fallbackIconClasses[size], "shrink-0 opacity-90"].join(" ")}
         aria-hidden
       />

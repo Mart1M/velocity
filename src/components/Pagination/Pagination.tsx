@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri";
+import { ArrowLeftIcon, ArrowRightIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -210,7 +210,7 @@ export function PaginationItem({
           sizeClasses[size].item,
           isActive
             ? "bg-accent-primary text-content-on-brand"
-            : "text-content-secondary hover:bg-surface-hover hover:text-content-primary",
+            : "text-content-tertiary hover:bg-surface-hover hover:text-content-primary",
           disabled ? "opacity-50 cursor-not-allowed" : "",
           className,
         ]
@@ -254,7 +254,7 @@ export function PaginationPrevious({
           .filter(Boolean)
           .join(" ")}
       >
-        <RiArrowLeftSLine className={sizeClasses[size].icon} aria-hidden />
+        <ArrowLeftIcon className={sizeClasses[size].icon} aria-hidden />
         {children ?? <span className="sr-only">Previous</span>}
       </button>
     </li>
@@ -293,7 +293,7 @@ export function PaginationNext({
           .join(" ")}
       >
         {children ?? <span className="sr-only">Next</span>}
-        <RiArrowRightSLine className={sizeClasses[size].icon} aria-hidden />
+        <ArrowRightIcon className={sizeClasses[size].icon} aria-hidden />
       </button>
     </li>
   );

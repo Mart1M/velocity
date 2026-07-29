@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { RiArrowRightSLine } from "react-icons/ri";
+import { ArrowRightIcon } from "../../icons";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -78,7 +78,7 @@ export const CustomSeparator: Story = {
   render: (args) => (
     <Breadcrumb
       {...args}
-      separator={<RiArrowRightSLine className="size-4" aria-hidden />}
+      separator={<ArrowRightIcon className="size-4" aria-hidden />}
     >
       <BreadcrumbItem>
         <BreadcrumbLink href="#">Home</BreadcrumbLink>

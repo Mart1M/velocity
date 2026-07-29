@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
-import { RiRunLine, RiMapPinLine } from "react-icons/ri";
+import { RunIcon, MapPinIcon } from "../../icons";
 import { Chip } from "./Chip";
 
 const meta: Meta<typeof Chip> = {
@@ -11,7 +11,7 @@ const meta: Meta<typeof Chip> = {
     docs: {
       description: {
         component:
-          "Compact label for **filters**, **tags**, and **dismissible** values. **Selectable** chips use [Base UI Toggle](https://base-ui.com/react/components/toggle) (`data-[pressed]`). For static status labels without interaction, prefer **Badge**. Icons: [Remix Icon](https://remixicon.com/) (`react-icons/ri`).",
+          "Compact label for **filters**, **tags**, and **dismissible** values. **Selectable** chips use [Base UI Toggle](https://base-ui.com/react/components/toggle) (`data-[pressed]`). For static status labels without interaction, prefer **Badge**. Icons: [Hugeicons](https://hugeicons.com/) via `velocity-ds/icons`.",
       },
     },
   },
@@ -46,7 +46,7 @@ export const Default: Story = {};
 export const WithIcon: Story = {
   args: {
     children: "5 km",
-    startIcon: <RiRunLine className="size-4" aria-hidden />,
+    startIcon: <RunIcon className="size-4" aria-hidden />,
     variant: "brand",
   },
 };
@@ -83,7 +83,7 @@ export const Removable: Story = {
   args: {
     children: "Amsterdam",
     onRemove: () => {},
-    startIcon: <RiMapPinLine className="size-4" aria-hidden />,
+    startIcon: <MapPinIcon className="size-4" aria-hidden />,
     variant: "default",
     outline: true,
   },
@@ -135,7 +135,7 @@ export const Overview: Story = {
           <Chip variant="default" outline>
             Outline
           </Chip>
-          <Chip variant="brand" startIcon={<RiRunLine className="size-4" aria-hidden />}>
+          <Chip variant="brand" startIcon={<RunIcon className="size-4" aria-hidden />}>
             With icon
           </Chip>
         </div>

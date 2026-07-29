@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as React from "react";
-import { RiBox3Line, RiStore2Line, RiTruckLine } from "react-icons/ri";
+import { PackageBoxIcon, StoreIcon, TruckIcon } from "../../icons";
 import { SelectBox, SelectBoxGroup } from "./index";
 
 const meta: Meta = {
@@ -10,7 +10,7 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          "Selectable card with icon, title, and description. **`SelectBoxGroup`** controls **radio** (single) or **checkbox** (multiple) behavior. Selected state updates **border** and **background**. Icons use [Remix Icon](https://remixicon.com/) (`react-icons/ri`).",
+          "Selectable card with icon, title, and description. **`SelectBoxGroup`** controls **radio** (single) or **checkbox** (multiple) behavior. Selected state updates **border** and **background**. Icons use [Hugeicons](https://hugeicons.com/) via `velocity-ds/icons`.",
       },
     },
   },
@@ -29,19 +29,19 @@ export const RadioSingleChoice: Story = {
         <SelectBoxGroup mode="radio" value={v} onValueChange={setV} name="delivery">
           <SelectBox
             value="ship"
-            icon={<RiTruckLine />}
+            icon={<TruckIcon />}
             title="Standard shipping"
             description="Arrives in 3–5 business days."
           />
           <SelectBox
             value="express"
-            icon={<RiBox3Line />}
+            icon={<PackageBoxIcon />}
             title="Express"
             description="Next-day delivery where available."
           />
           <SelectBox
             value="pickup"
-            icon={<RiStore2Line />}
+            icon={<StoreIcon />}
             title="Store pickup"
             description="Collect from a partner store."
           />
@@ -61,19 +61,19 @@ export const CheckboxMultiple: Story = {
         <SelectBoxGroup mode="checkbox" value={v} onValueChange={setV}>
           <SelectBox
             value="news"
-            icon={<RiBox3Line />}
+            icon={<PackageBoxIcon />}
             title="Product updates"
             description="New features and changelog."
           />
           <SelectBox
             value="tips"
-            icon={<RiTruckLine />}
+            icon={<TruckIcon />}
             title="Training tips"
             description="Weekly running advice."
           />
           <SelectBox
             value="partner"
-            icon={<RiStore2Line />}
+            icon={<StoreIcon />}
             title="Partner offers"
             description="Deals from selected brands."
           />

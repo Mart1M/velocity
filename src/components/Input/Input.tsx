@@ -1,4 +1,10 @@
 import * as React from 'react';
+import {
+  fieldBorderClass,
+  fieldFocusWithinDefault,
+  fieldFocusWithinError,
+  fieldShellTransition,
+} from '../fieldStyles';
 
 export type InputSize = 'sm' | 'md' | 'lg';
 
@@ -91,12 +97,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
     'flex items-center overflow-hidden',
     'bg-surface-primary',
     'border',
-    error ? 'border-state-error' : 'border-border-default',
+    fieldBorderClass(error),
     'rounded-xl',
-    'transition-[border-color,box-shadow] duration-[200ms]',
-    error
-      ? 'focus-within:ring-2 focus-within:ring-state-error/40 focus-within:border-state-error'
-      : 'focus-within:ring-2 focus-within:ring-border-focus focus-within:border-border-brand',
+    fieldShellTransition,
+    error ? fieldFocusWithinError : fieldFocusWithinDefault,
     sc.wrapper,
     disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : '',
   ]
@@ -155,7 +159,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
           {...props}
         />
         {trailingIcon && (
-          <span className={iconWrapperClasses} aria-hidden="true">
+          <span className={iconWrapperClasses}>
             <span className={sc.iconSize}>{trailingIcon}</span>
           </span>
         )}

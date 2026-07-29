@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Checkbox as BaseCheckbox } from "@base-ui-components/react/checkbox";
-import { RiCheckLine, RiSubtractLine } from "react-icons/ri";
+import { CheckIcon, SubtractIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -129,9 +129,9 @@ export function Checkbox({
             .join(" ")}
         >
           {indeterminate ? (
-            <RiSubtractLine className="size-full" aria-hidden />
+            <SubtractIcon className="size-full" aria-hidden />
           ) : (
-            <RiCheckLine className="size-full" aria-hidden />
+            <CheckIcon className="size-full" aria-hidden />
           )}
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>

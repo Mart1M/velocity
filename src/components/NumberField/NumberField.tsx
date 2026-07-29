@@ -3,7 +3,14 @@ import {
   NumberField as BaseNumberField,
   type NumberFieldRoot,
 } from "@base-ui-components/react/number-field";
-import { RiAddLine, RiDragMove2Line, RiSubtractLine } from "react-icons/ri";
+import { AddIcon, DragMoveIcon, SubtractIcon } from "../../icons";
+import {
+  fieldBorderClass,
+  fieldFocusWithinDefault,
+  fieldFocusWithinError,
+  fieldShellTransition,
+  fieldStepperButtonMotion,
+} from "../fieldStyles";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -97,9 +104,9 @@ const focusRing =
 const stepperBtn = [
   "inline-flex shrink-0 items-center justify-center",
   "border-border-default bg-surface-secondary text-content-primary",
-  "cursor-pointer transition-colors duration-150",
-  "hover:bg-surface-hover active:bg-surface-active",
-  "disabled:cursor-not-allowed disabled:opacity-50",
+  "cursor-pointer",
+  fieldStepperButtonMotion,
+  "disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100",
   focusRing,
 ].join(" ");
 
@@ -138,16 +145,11 @@ export function NumberField({
   const id = idProp ?? generatedId;
   const sc = sizeClasses[size];
 
-  const borderError = error ? "border-state-error" : "border-border-default";
-  const ringError = error
-    ? "focus-within:ring-2 focus-within:ring-state-error/40 focus-within:border-state-error"
-    : "focus-within:ring-2 focus-within:ring-border-focus focus-within:border-border-brand";
-
   const groupShell = [
     "flex overflow-hidden rounded-xl border bg-surface-primary",
-    "transition-[border-color,box-shadow] duration-200",
-    borderError,
-    ringError,
+    fieldShellTransition,
+    fieldBorderClass(error),
+    error ? fieldFocusWithinError : fieldFocusWithinDefault,
     rootProps.disabled ? "opacity-50 pointer-events-none" : "",
     sc.group,
     groupClassName,
@@ -173,7 +175,7 @@ export function NumberField({
         >
           <span className="min-w-0 flex-1 truncate">{scrubLabel}</span>
           <BaseNumberField.ScrubAreaCursor className="inline-flex text-content-brand">
-            <RiDragMove2Line className={sc.icon} aria-hidden />
+            <DragMoveIcon className={sc.icon} aria-hidden />
           </BaseNumberField.ScrubAreaCursor>
         </BaseNumberField.ScrubArea>
       )}
@@ -184,7 +186,7 @@ export function NumberField({
           className={[stepperBtn, "border-r", sc.btn].join(" ")}
           aria-label="Decrease value"
         >
-          <RiSubtractLine className={sc.icon} aria-hidden />
+          <SubtractIcon className={sc.icon} aria-hidden />
         </BaseNumberField.Decrement>
 
         <BaseNumberField.Input
@@ -202,7 +204,7 @@ export function NumberField({
           className={[stepperBtn, "border-l", sc.btn].join(" ")}
           aria-label="Increase value"
         >
-          <RiAddLine className={sc.icon} aria-hidden />
+          <AddIcon className={sc.icon} aria-hidden />
         </BaseNumberField.Increment>
       </BaseNumberField.Group>
 

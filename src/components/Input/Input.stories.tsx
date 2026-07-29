@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
-  RiCloseLine,
-  RiLockLine,
-  RiMailLine,
-  RiPriceTag3Line,
-  RiSearchLine,
-} from 'react-icons/ri';
+  CloseIcon,
+  LockIcon,
+  MailIcon,
+  SearchIcon,
+  TagIcon,
+} from '../../icons';
 import { Input } from './Input';
 
-const searchIcon = <RiSearchLine className="size-full" aria-hidden />;
-const clearIcon = <RiCloseLine className="size-full" aria-hidden />;
-const lockIcon = <RiLockLine className="size-full" aria-hidden />;
-const tagIcon = <RiPriceTag3Line className="size-full" aria-hidden />;
-const mailIcon = <RiMailLine className="size-full" aria-hidden />;
+const searchIcon = <SearchIcon className="size-full" aria-hidden />;
+const clearIcon = <CloseIcon className="size-full" aria-hidden />;
+const lockIcon = <LockIcon className="size-full" aria-hidden />;
+const tagIcon = <TagIcon className="size-full" aria-hidden />;
+const mailIcon = <MailIcon className="size-full" aria-hidden />;
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Input',

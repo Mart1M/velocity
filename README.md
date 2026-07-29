@@ -1,4 +1,4 @@
-# @runswap/velocity
+# velocity-ds
 
 Velocity is the Runswap design system — a collection of accessible, themeable UI components built on [Base UI](https://base-ui.com) and styled with [Tailwind CSS v4](https://tailwindcss.com).
 
@@ -9,7 +9,7 @@ Velocity is the Runswap design system — a collection of accessible, themeable 
 | `react` | `^19.0.0` |
 | `react-dom` | `^19.0.0` |
 | `@base-ui-components/react` | `^1.0.0-alpha.8` |
-| `react-icons` | `^5` (Remix Icon set: `react-icons/ri`) |
+| `@hugeicons/react` + `@hugeicons/core-free-icons` | bundled with `velocity-ds` |
 | Tailwind CSS | v4 |
 
 > **Tailwind v4 is required.** The design tokens are shipped as a CSS file that uses Tailwind v4 `@theme` variables. It will not work with Tailwind v3.
@@ -17,13 +17,13 @@ Velocity is the Runswap design system — a collection of accessible, themeable 
 ## Installation
 
 ```bash
-npm install @runswap/velocity
+npm install velocity-ds
 ```
 
 Install peer dependencies if not already present:
 
 ```bash
-npm install react react-dom @base-ui-components/react react-icons
+npm install react react-dom @base-ui-components/react velocity-ds
 ```
 
 ## Setup
@@ -34,13 +34,13 @@ In your global CSS entry point (e.g. `src/index.css`), import the Velocity token
 
 ```css
 @import "tailwindcss";
-@import "@runswap/velocity/styles";
+@import "velocity-ds/styles";
 ```
 
 ### 2. Use components
 
 ```tsx
-import { Button } from '@runswap/velocity';
+import { Button } from 'velocity-ds';
 
 export function App() {
   return <Button variant="solid" colorScheme="primary">Click me</Button>;
@@ -66,14 +66,14 @@ export function App() {
 Design tokens are available as a separate sub-path import for tooling that needs raw token values:
 
 ```ts
-import { coreColors, coreTypography, semanticTypography } from '@runswap/velocity/tokens';
+import { coreColors, coreTypography, semanticTypography } from 'velocity-ds/tokens';
 ```
 
-The full set of CSS custom properties (semantic tokens) is exposed via `@runswap/velocity/styles`.
+The full set of CSS custom properties (semantic tokens) is exposed via `velocity-ds/styles`.
 
 ### Semantic text styles (Tailwind)
 
-After importing Velocity styles, use composite typography utilities (font family + size + line-height + weight + tracking). **Headings** (`text-heading-1` … `4`) use **Sora**; body styles use **Inter** — load Sora in your app (e.g. [Google Fonts](https://fonts.google.com/specimen/Sora)) like the Storybook `preview.css` does.
+After importing Velocity styles, use composite typography utilities (font family + size + line-height + weight + tracking). **Headings** (`text-heading-1` … `4`) use **Stack Sans Headline**; body styles use **Inter** — load Stack Sans Headline in your app (e.g. [Google Fonts](https://fonts.google.com/specimen/Stack Sans Headline)) like the Storybook `preview.css` does.
 
 | Class | Role |
 |-------|------|

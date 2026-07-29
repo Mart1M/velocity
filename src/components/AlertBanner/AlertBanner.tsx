@@ -1,12 +1,12 @@
 import * as React from "react";
 import {
-  RiAlertLine,
-  RiCheckboxCircleLine,
-  RiCloseCircleLine,
-  RiCloseLine,
-  RiInformationLine,
-  RiStarLine,
-} from "react-icons/ri";
+  AlertIcon,
+  CheckCircleIcon,
+  CloseCircleIcon,
+  CloseIcon,
+  InformationIcon,
+  StarOutlineIcon,
+} from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -79,11 +79,11 @@ const defaultIcons: Record<
   AlertBannerVariant,
   React.ComponentType<{ className?: string }>
 > = {
-  info: RiInformationLine,
-  success: RiCheckboxCircleLine,
-  warning: RiAlertLine,
-  error: RiCloseCircleLine,
-  brand: RiStarLine,
+  info: InformationIcon,
+  success: CheckCircleIcon,
+  warning: AlertIcon,
+  error: CloseCircleIcon,
+  brand: StarOutlineIcon,
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
@@ -185,7 +185,7 @@ export function AlertBanner({
             "focus-visible:ring-offset-background-primary",
           ].join(" ")}
         >
-          <RiCloseLine className="h-4 w-4" aria-hidden />
+          <CloseIcon className="h-4 w-4" aria-hidden />
         </button>
       )}
     </div>

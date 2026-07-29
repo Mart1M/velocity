@@ -63,6 +63,15 @@ const sizeClasses: Record<BreadcrumbSize, string> = {
 
 // ── Breadcrumb (root) ──────────────────────────────────────────────────────
 
+function isBreadcrumbSeparatorElement(child: React.ReactNode): boolean {
+  return (
+    React.isValidElement(child) &&
+    (child.type === BreadcrumbSeparator ||
+      (child.type as { displayName?: string }).displayName ===
+        "BreadcrumbSeparator")
+  );
+}
+
 export function Breadcrumb({
   size = "md",
   separator = "›",
@@ -75,16 +84,20 @@ export function Breadcrumb({
   );
 
   const items = React.Children.toArray(children);
-  const withSeparators: React.ReactNode[] = [];
+  const hasManualSeparators = items.some(isBreadcrumbSeparatorElement);
+  const trailItems = items.filter(
+    (child) =>
+      React.isValidElement(child) &&
+      !isBreadcrumbSeparatorElement(child),
+  );
 
-  items.forEach((child, index) => {
-    withSeparators.push(child);
-    if (index < items.length - 1) {
-      withSeparators.push(
-        <BreadcrumbSeparator key={`sep-${index}`} />,
+  const listChildren: React.ReactNode[] = hasManualSeparators
+    ? items
+    : trailItems.flatMap((child, index) =>
+        index < trailItems.length - 1
+          ? [child, <BreadcrumbSeparator key={`sep-${index}`} />]
+          : [child],
       );
-    }
-  });
 
   return (
     <BreadcrumbContext.Provider value={ctx}>
@@ -99,7 +112,7 @@ export function Breadcrumb({
             sizeClasses[size],
           ].join(" ")}
         >
-          {withSeparators}
+          {listChildren}
         </ol>
       </nav>
     </BreadcrumbContext.Provider>

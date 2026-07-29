@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { RiMapPinLine } from "react-icons/ri";
+import { MapPinIcon } from "../../../icons";
 import { EcommerceSearchInput } from "./EcommerceSearchInput";
 
 const meta: Meta<typeof EcommerceSearchInput> = {
@@ -10,7 +10,7 @@ const meta: Meta<typeof EcommerceSearchInput> = {
     docs: {
       description: {
         component: [
-          "Header / catalog **product search** field. Wraps `Input` with a default magnifier and `type` fixed to search.",
+          "Header / catalog **product search** field. Wraps `Input` with a default magnifier, `role='searchbox'`, and a **Hugeicons** clear control when the field has a value.",
           "Override `placeholder` and `aria-label` for your locale.",
         ].join(" "),
       },
@@ -41,6 +41,7 @@ export const FrenchLocale: Story = {
   args: {
     placeholder: "Rechercher un produit…",
     "aria-label": "Rechercher sur le site",
+    clearLabel: "Effacer la recherche",
   },
 };
 
@@ -71,9 +72,16 @@ export const WithError: Story = {
   },
 };
 
+export const WithValue: Story = {
+  args: {
+    defaultValue: "Nike Pegasus",
+    clearLabel: "Clear search",
+  },
+};
+
 export const CustomLeadingIcon: Story = {
   args: {
-    leadingIcon: <RiMapPinLine className="size-full" aria-hidden />,
+    leadingIcon: <MapPinIcon className="size-full" aria-hidden />,
     placeholder: "City or postcode…",
     "aria-label": "Search by location",
   },

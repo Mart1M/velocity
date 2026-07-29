@@ -1,23 +1,23 @@
 ---
 name: runswap-velocity
-description: Use the Runswap Velocity design system (@runswap/velocity) — Base UI + Tailwind v4 semantic tokens, component inventory, e-commerce patterns. Apply when building or styling UI in apps that depend on packages/velocity.
+description: Use the Runswap Velocity design system (velocity-ds) — Base UI + Tailwind v4 semantic tokens, component inventory, e-commerce patterns. Apply when building or styling UI in apps that depend on packages/velocity.
 ---
 
 # Runswap Velocity design system
 
-Monorepo package: **`packages/velocity`**. Public import: **`@runswap/velocity`**.
+Monorepo package: **`packages/velocity`**. Public import: **`velocity-ds`**.
 
 ## Before implementing UI
 
 1. Read **`packages/velocity/COMPONENTS.md`** for the component matrix (done vs todo, Base UI mapping, e-commerce usage).
-2. Prefer **existing components** from `@runswap/velocity` before writing custom markup.
+2. Prefer **existing components** from `velocity-ds` before writing custom markup.
 3. Style with **semantic Tailwind tokens** from the design system (`bg-surface-*`, `text-content-*`, `border-border-*`, etc.) — see `packages/velocity` tokens under `src/tokens/` and app `globals.css` where wired.
 
 ## Stack facts
 
 - **Base UI** primitives under `@base-ui-components/react/*` wrapped by Velocity components.
 - **Tailwind CSS v4** with project token conventions.
-- E-commerce-specific pieces live under **`src/components/ecommerce/`** in the package; imports remain **`@runswap/velocity`**.
+- E-commerce-specific pieces live under **`src/components/ecommerce/`** in the package; imports remain **`velocity-ds`**.
 
 ## Do / don’t
 

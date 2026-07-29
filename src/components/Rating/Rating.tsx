@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RiStarFill, RiStarLine } from "react-icons/ri";
+import { StarFilledIcon, StarOutlineIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -62,7 +62,7 @@ const labelPositionLayout: Record<
 
 /**
  * **Star** rating (1…`max`). **Base UI** does not ship a Rating primitive —
- * native buttons + Velocity tokens + [Remix Icon](https://remixicon.com/) (`RiStarFill` / `RiStarLine`).
+ * native buttons + Velocity tokens + [Hugeicons](https://hugeicons.com/).
  */
 export function Rating({
   value: valueProp,
@@ -105,8 +105,10 @@ export function Rating({
 
   const starElements = stars.map((star) => {
     const filled = star <= preview;
-    const Icon = filled ? RiStarFill : RiStarLine;
-    const starClass = filled ? "text-state-warning" : "text-content-tertiary";
+    const Icon = filled ? StarFilledIcon : StarOutlineIcon;
+    const starClass = filled
+      ? "fill-current text-state-warning"
+      : "text-content-tertiary";
 
     if (readOnly) {
       return <Icon key={star} className={[ic, starClass].join(" ")} aria-hidden />;

@@ -165,7 +165,7 @@ export function TabsTab({
       className={[
         "relative z-10 cursor-pointer rounded-full px-3 py-1.5 text-sm font-medium",
         variant === "line"
-          ? "mb-1 data-[orientation=vertical]:mb-0 data-[orientation=vertical]:mr-1"
+          ? "mb-2 data-[orientation=vertical]:mb-0 data-[orientation=vertical]:mr-2"
           : "",
         "cursor-pointer select-none",
         "text-content-secondary",
@@ -198,18 +198,37 @@ TabsTab.displayName = "TabsTab";
 // ── TabsIndicator ──────────────────────────────────────────────────────────
 
 export function TabsIndicator({ className }: TabsIndicatorProps) {
-  const { variant } = useTabsChromeContext();
+  const { variant, orientation } = useTabsChromeContext();
+
+  const transition =
+    "[transition:left_250ms_cubic-bezier(0.4,0,0.2,1),width_250ms_cubic-bezier(0.4,0,0.2,1),top_250ms_cubic-bezier(0.4,0,0.2,1),height_250ms_cubic-bezier(0.4,0,0.2,1)]";
+
+  if (variant === "line") {
+    return (
+      <BaseTabs.Indicator
+        className={[
+          "absolute pointer-events-none",
+          transition,
+          orientation === "vertical"
+            ? "top-[var(--active-tab-top)] right-0 left-auto h-[var(--active-tab-height)] w-[3px] rounded-tl-sm rounded-bl-sm bg-accent-primary"
+            : "bottom-0 left-[var(--active-tab-left)] w-[var(--active-tab-width)] h-[3px] rounded-t-sm bg-accent-primary",
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      />
+    );
+  }
 
   return (
     <BaseTabs.Indicator
       className={[
-        "absolute pointer-events-none",
+        "absolute pointer-events-none z-0",
         "left-[var(--active-tab-left)] top-[var(--active-tab-top)]",
         "h-[var(--active-tab-height)] w-[var(--active-tab-width)]",
-        "[transition:left_250ms_cubic-bezier(0.4,0,0.2,1),width_250ms_cubic-bezier(0.4,0,0.2,1),top_250ms_cubic-bezier(0.4,0,0.2,1),height_250ms_cubic-bezier(0.4,0,0.2,1)]",
-        variant === "line"
-          ? "-bottom-0.25 top-auto h-[3px] rounded-t-sm bg-accent-primary data-[orientation=vertical]:top-[var(--active-tab-top)] data-[orientation=vertical]:right-0 data-[orientation=vertical]:left-auto data-[orientation=vertical]:h-[var(--active-tab-height)] data-[orientation=vertical]:w-[3px] data-[orientation=vertical]:rounded-tl-sm data-[orientation=vertical]:rounded-bl-sm"
-          : "z-0 rounded-full bg-surface-primary shadow-sm data-[orientation=vertical]:rounded-xl",
+        transition,
+        "rounded-full bg-surface-primary shadow-sm",
+        orientation === "vertical" ? "rounded-xl" : "",
         className,
       ]
         .filter(Boolean)

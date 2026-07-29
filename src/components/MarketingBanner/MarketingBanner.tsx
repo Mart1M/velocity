@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RiCloseLine } from "react-icons/ri";
+import { CloseIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -208,7 +208,7 @@ export const MarketingBanner = React.forwardRef<
               dismissClasses[variant],
             ].join(" ")}
           >
-            <RiCloseLine className="h-4 w-4" aria-hidden />
+            <CloseIcon className="h-4 w-4" aria-hidden />
           </button>
         ) : null}
       </div>

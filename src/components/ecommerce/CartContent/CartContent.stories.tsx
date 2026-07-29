@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { RiDeleteBinLine } from "react-icons/ri";
+import { DeleteIcon } from "../../../icons";
 import { Button } from "../../Button/Button";
 import { IconButton } from "../../IconButton/IconButton";
 import { NumberField } from "../../NumberField/NumberField";
@@ -71,7 +71,7 @@ function CartLineCard({
             </div>
             <div className="flex justify-end">
               <IconButton label="Remove from cart" variant="ghost" colorScheme="neutral" size="sm">
-                <RiDeleteBinLine className="h-5 w-5" />
+                <DeleteIcon className="h-5 w-5" />
               </IconButton>
             </div>
           </div>

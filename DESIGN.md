@@ -96,25 +96,25 @@ colors:
 
 typography:
   heading-1:
-    fontFamily: Sora
+    fontFamily: Stack Sans Headline
     fontSize: 36px
     fontWeight: "700"
     lineHeight: 1.25
     letterSpacing: -0.02em
   heading-2:
-    fontFamily: Sora
+    fontFamily: Stack Sans Headline
     fontSize: 30px
     fontWeight: "700"
     lineHeight: 1.25
     letterSpacing: -0.02em
   heading-3:
-    fontFamily: Sora
+    fontFamily: Stack Sans Headline
     fontSize: 24px
     fontWeight: "600"
     lineHeight: 1.375
     letterSpacing: 0
   heading-4:
-    fontFamily: Sora
+    fontFamily: Stack Sans Headline
     fontSize: 20px
     fontWeight: "600"
     lineHeight: 1.375
@@ -467,7 +467,7 @@ components:
 
 Two families define the Velocity hierarchy:
 
-- **Sora** — geometric display family. Used **exclusively** for headings (`heading-1` through `heading-4`) and hero text. Tight letter-spacing (`-0.02em`) at large sizes gives an editorial, premium feel.
+- **Stack Sans Headline** — geometric display family. Used **exclusively** for headings (`heading-1` through `heading-4`) and hero text. Tight letter-spacing (`-0.02em`) at large sizes gives an editorial, premium feel.
 - **Inter** — UI & body family. Used for `body-lg`, `body`, `body-sm`, `caption`, `overline`, plus every form field, button label, table cell, and piece of metadata.
 - **JetBrains Mono** — code / data (prices in specs, SKUs, hashes). Not used in product UI.
 
@@ -475,17 +475,17 @@ Levels:
 
 | Token        | Family | Size | Weight | Line-height | Tracking | Usage                         |
 | ------------ | ------ | ---- | ------ | ----------- | -------- | ----------------------------- |
-| `heading-1`  | Sora   | 36px | 700    | 1.25        | -0.02em  | Hero titles                   |
-| `heading-2`  | Sora   | 30px | 700    | 1.25        | -0.02em  | Page titles                   |
-| `heading-3`  | Sora   | 24px | 600    | 1.375       | 0        | Section headings              |
-| `heading-4`  | Sora   | 20px | 600    | 1.375       | 0        | Card titles, accordion trigger|
+| `heading-1`  | Stack Sans Headline   | 36px | 700    | 1.25        | -0.02em  | Hero titles                   |
+| `heading-2`  | Stack Sans Headline   | 30px | 700    | 1.25        | -0.02em  | Page titles                   |
+| `heading-3`  | Stack Sans Headline   | 24px | 600    | 1.375       | 0        | Section headings              |
+| `heading-4`  | Stack Sans Headline   | 20px | 600    | 1.375       | 0        | Card titles, accordion trigger|
 | `body-lg`    | Inter  | 18px | 400    | 1.625       | 0        | Hero paragraphs               |
 | `body`       | Inter  | 16px | 400    | 1.5         | 0        | Default paragraph             |
 | `body-sm`    | Inter  | 14px | 400    | 1.5         | 0        | Metadata, dense tables        |
 | `caption`    | Inter  | 12px | 500    | 1.5         | 0        | Labels, buttons, chips        |
 | `overline`   | Inter  | 12px | 600    | 1.25        | 0.06em   | Category labels (UPPERCASE)   |
 
-All text colours go through `content-*` tokens. Never pair Sora with small sizes (< 20px) — it's a display face.
+All text colours go through `content-*` tokens. Never pair Stack Sans Headline with small sizes (< 20px) — it's a display face.
 
 ## Color
 
@@ -594,7 +594,7 @@ Every component is exported from the top-level `velocity-ds` entry point and bui
 - **Accordion** — `heading-4` trigger, 300ms slide on expand.
 - **Breadcrumb** — secondary → current content colour progression.
 - **Pagination** — active page fills with `brand-primary`.
-- **Logo** — wordmark, uses Sora.
+- **Logo** — wordmark, uses Stack Sans Headline.
 
 ### Overlays
 - **Dialog**, **Drawer** — `rounded-2xl`, `shadow-lg`. On mobile, prefer Drawer.
@@ -638,7 +638,7 @@ NEVER write `dark:` variants against raw hex. Use semantic tokens and the theme 
 
 - Don't apply `bg-brand-primary` or `bg-background-brand` to large surfaces — yellow overwhelms.
 - Don't use raw Tailwind color scales (`bg-orange-500`, `text-gray-700`) in product code.
-- Don't use fonts other than **Sora** (headings) and **Inter** (body/UI).
+- Don't use fonts other than **Stack Sans Headline** (headings) and **Inter** (body/UI).
 - Don't stack two solid primary buttons in the same view.
 - Don't skip labels on form inputs — `aria-label` or `<FormLabel>` is mandatory.
 - Don't write `dark:` variants with raw colors.

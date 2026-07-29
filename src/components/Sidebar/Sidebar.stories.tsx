@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import {
-  RiDashboardLine,
-  RiFileListLine,
-  RiSettings3Line,
-  RiShoppingBag3Line,
-} from "react-icons/ri";
+  DashboardIcon,
+  FileListIcon,
+  SettingsIcon,
+  ShoppingBagIcon,
+} from "../../icons";
 import {
   Sidebar,
   SidebarContent,
@@ -48,7 +48,7 @@ function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" isActive>
-              <RiShoppingBag3Line aria-hidden />
+              <ShoppingBagIcon aria-hidden />
               <span>Runswap Admin</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -61,19 +61,19 @@ function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton isActive tooltip="Tableau de bord">
-                  <RiDashboardLine aria-hidden />
+                  <DashboardIcon aria-hidden />
                   <span>Tableau de bord</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Annonces">
-                  <RiFileListLine aria-hidden />
+                  <FileListIcon aria-hidden />
                   <span>Annonces</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton tooltip="Paramètres">
-                  <RiSettings3Line aria-hidden />
+                  <SettingsIcon aria-hidden />
                   <span>Paramètres</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -147,7 +147,7 @@ export const WithSearch: Story = {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton size="lg">
-                <RiShoppingBag3Line aria-hidden />
+                <ShoppingBagIcon aria-hidden />
                 <span>Runswap</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -170,7 +170,7 @@ export const WithSearch: Story = {
               <SidebarMenu>
                 <SidebarMenuItem>
                   <SidebarMenuButton isActive>
-                    <RiDashboardLine aria-hidden />
+                    <DashboardIcon aria-hidden />
                     <span>Accueil</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

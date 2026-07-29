@@ -8,6 +8,21 @@ export type { IconButtonProps } from './components/IconButton';
 export { Logo } from './components/Logo';
 export type { LogoProps, LogoSize, LogoVariant } from './components/Logo';
 
+export {
+  BrandLogo,
+  hasBrandLogo,
+  BRAND_CATALOG,
+  BRAND_IDS,
+  getBrandCatalogEntry,
+} from './components/BrandLogo';
+export type {
+  BrandLogoProps,
+  BrandLogoSize,
+  BrandId,
+  BrandCategory,
+  BrandCatalogEntry,
+} from './components/BrandLogo';
+
 export { Input } from './components/Input';
 export type { InputProps, InputSize } from './components/Input';
 
@@ -34,6 +49,27 @@ export type { RadioGroupProps, RadioItemProps, RadioSize } from './components/Ra
 
 export { Switch } from './components/Switch';
 export type { SwitchProps, SwitchSize } from './components/Switch';
+
+export {
+  Slider,
+  SliderRoot,
+  SliderLabel,
+  SliderValue,
+  SliderControl,
+  SliderTrack,
+  SliderIndicator,
+  SliderThumb,
+} from './components/Slider';
+export type {
+  SliderSize,
+  SliderRootProps,
+  SliderLabelProps,
+  SliderValueProps,
+  SliderControlProps,
+  SliderTrackProps,
+  SliderIndicatorProps,
+  SliderThumbProps,
+} from './components/Slider';
 
 export { Textarea } from './components/Textarea';
 export type { TextareaProps, TextareaSize, TextareaResize } from './components/Textarea';
@@ -70,6 +106,9 @@ export type { SeparatorProps, SeparatorOrientation } from './components/Separato
 
 export { Badge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
+
+export { Price, formatPrice, formatDiscountPercent } from './components/Price';
+export type { PriceProps, PriceSize, PriceLayout } from './components/Price';
 
 export { NotificationBadge } from './components/NotificationBadge';
 export type {
@@ -200,6 +239,7 @@ export type {
   ProductCardProps,
   ProductCardLayout,
   ProductCardSize,
+  ProductCardVariant,
   ProductCardImageProps,
   ProductCardBadgesProps,
   ProductCardFavoriteProps,
@@ -234,8 +274,12 @@ export type {
   RaceCardDistancesProps,
 } from './components/RaceCard';
 
-export { EcommerceSearchInput } from './components/ecommerce/EcommerceSearchInput';
-export type { EcommerceSearchInputProps } from './components/ecommerce/EcommerceSearchInput';
+export { EcommerceSearchInput, EcommerceNavigationSearch } from './components/ecommerce/EcommerceSearchInput';
+export type {
+  EcommerceSearchInputProps,
+  EcommerceNavigationSearchProps,
+  EcommerceSearchResultItem,
+} from './components/ecommerce/EcommerceSearchInput';
 
 export {
   EcommerceNavigation,
@@ -284,6 +328,46 @@ export type {
   CartContentTotalRowProps,
   CartContentOrderSummaryProps,
 } from './components/ecommerce/CartContent';
+
+export {
+  PdpContent,
+  PdpContentBreadcrumb,
+  PdpContentGalleryColumn,
+  PdpContentBuyBox,
+  PdpContentBelow,
+  PdpContentDetails,
+  PdpContentSuggestions,
+  PdpContentStickyRegion,
+  PdpContentSection,
+  PdpContentGallery,
+  PdpContentBuyPanel,
+  PdpContentTitle,
+  PdpContentAttribute,
+  PdpContentAttributes,
+  PdpContentTrustList,
+  PdpContentTrustItem,
+  PdpContentSellerCard,
+  PdpContentMobileBar,
+} from './components/ecommerce/PdpContent';
+export type {
+  PdpContentProps,
+  PdpContentBreadcrumbProps,
+  PdpContentGalleryColumnProps,
+  PdpContentBuyBoxProps,
+  PdpContentBelowProps,
+  PdpContentDetailsProps,
+  PdpContentSuggestionsProps,
+  PdpContentStickyRegionProps,
+  PdpContentSectionProps,
+  PdpContentGalleryImage,
+  PdpContentGalleryProps,
+  PdpContentBuyPanelProps,
+  PdpContentTitleProps,
+  PdpContentAttributeProps,
+  PdpContentTrustItemProps,
+  PdpContentSellerCardProps,
+  PdpContentMobileBarProps,
+} from './components/ecommerce/PdpContent';
 
 export {
   Footer,

@@ -112,7 +112,7 @@ Rules for `src/imports/`:
 
 ## Don'ts
 
-- ❌ No hex colors, no `#fff`, no hardcoded `Inter` / `Sora`.
+- ❌ No hex colors, no `#fff`, no hardcoded `Inter` / `Stack Sans Headline`.
 - ❌ No raw Tailwind color scales in product code (`bg-yellow-300`, `text-gray-700`).
 - ❌ No inline `style={{ color, background, fontSize, fontFamily }}`.
 - ❌ No new `tailwind.config.js`.

@@ -16,7 +16,7 @@ const meta: Meta<typeof TokensPlaceholder> = {
     docs: {
       description: {
         component:
-          "Semantic colors, primitive palettes, elevation, and motion values exposed as Tailwind utilities after importing `@runswap/velocity/styles` (or the Storybook preview CSS). Prefer **semantic** tokens (`bg-surface-secondary`, `text-content-brand`) in components; use **primitive** scales for one-off needs.",
+          "Semantic colors, primitive palettes, elevation, and motion values exposed as Tailwind utilities after importing `velocity-ds/styles` (or the Storybook preview CSS). Prefer **semantic** tokens (`bg-surface-secondary`, `text-content-brand`) in components; use **primitive** scales for one-off needs.",
       },
     },
   },

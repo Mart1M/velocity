@@ -13,6 +13,7 @@ export type {
   ProductCardProps,
   ProductCardLayout,
   ProductCardSize,
+  ProductCardVariant,
   ProductCardImageProps,
   ProductCardBadgesProps,
   ProductCardFavoriteProps,

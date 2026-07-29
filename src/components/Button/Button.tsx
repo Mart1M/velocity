@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button as BaseButton } from "@base-ui-components/react/button";
-import { RiLoader4Line } from "react-icons/ri";
+import { LoaderIcon } from "../../icons";
 
 export type ButtonVariant = "solid" | "outline" | "ghost" | "link";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -34,25 +34,44 @@ export type ButtonProps = React.ComponentPropsWithoutRef<"button"> & {
     | ((props: React.ComponentProps<"button">) => React.ReactElement);
 };
 
-// Shared pseudo-element classes for the glass/gradient effect on solid buttons.
-// before: gradient border (white top highlight → transparent)
-// after:  inner white gloss overlay, brightens on hover
+// Shared interaction motion — transform + color only (Emil: no transition-all; press scale 0.97).
+const buttonInteractionClasses = [
+  "transition-[transform,background-color,border-color,color,box-shadow,filter] duration-fast ease-standard",
+  "motion-safe:active:scale-[0.97]",
+  "motion-reduce:active:scale-100",
+  "disabled:active:scale-100 data-[disabled]:active:scale-100",
+].join(" ");
+
+// Glass gradient effect for non-primary solid buttons.
 const solidGlassEffect = [
   "relative group",
-  // darken via overlay-like filter while preserving base brand color token mapping
-  "hover:brightness-95 active:brightness-90",
-  // border gradient via mask trick
+  "[@media(hover:hover)_and_(pointer:fine)]:hover:brightness-95 active:brightness-90",
   "before:pointer-events-none before:absolute before:inset-0 before:z-10 before:rounded-[inherit]",
   "before:bg-gradient-to-b before:p-px before:from-white/[.12] before:to-transparent",
   "before:[mask-clip:content-box,border-box] before:[mask-composite:exclude]",
   "before:[mask-image:linear-gradient(#fff_0_0),linear-gradient(#fff_0_0)]",
-  // gloss overlay
   "after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit]",
   "after:bg-gradient-to-b after:from-white after:to-transparent",
-  "after:opacity-[.16] after:transition after:duration-200 after:ease-out",
-  "hover:after:opacity-[.24]",
-  // hide pseudo-elements when disabled
+  "after:opacity-[.16] after:transition-opacity after:duration-normal after:ease-standard",
+  "[@media(hover:hover)_and_(pointer:fine)]:hover:after:opacity-[.24]",
   "disabled:before:hidden disabled:after:hidden data-[disabled]:before:hidden data-[disabled]:after:hidden",
+].join(" ");
+
+// Brand CTA — inset highlight, shine sweep on hover (fine pointer only).
+const primaryBrandSolidEffect = [
+  "relative overflow-hidden font-semibold",
+  "bg-accent-primary text-content-on-brand",
+  "border-2 border-black/5",
+  "shadow-[0_3px_2px_0_rgba(255,255,255,0.25)_inset]",
+  "transition-[transform,background-color,box-shadow] duration-fast ease-standard",
+  "[@media(hover:hover)_and_(pointer:fine)]:hover:bg-accent-primary/90",
+  "[@media(hover:hover)_and_(pointer:fine)]:hover:shadow-[0_3px_2px_0_rgba(255,255,255,0.3)_inset]",
+  "active:bg-accent-primary/80",
+  "before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit]",
+  "before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/30 before:to-transparent",
+  "before:transition-transform before:duration-slow before:ease-standard",
+  "[@media(hover:hover)_and_(pointer:fine)]:hover:before:translate-x-full",
+  "disabled:before:hidden data-[disabled]:before:hidden",
 ].join(" ");
 
 const variantColorClasses: Record<
@@ -60,15 +79,12 @@ const variantColorClasses: Record<
   Record<ButtonVariant, string>
 > = {
   primary: {
-    solid: [
-      solidGlassEffect,
-      "bg-accent-primary text-content-on-brand shadow-sm",
-    ].join(" "),
+    solid: primaryBrandSolidEffect,
     outline:
-      "bg-transparent text-content-primary hover:bg-accent-primary/20 active:bg-accent-primary/30 border border-border-brand",
+      "border-2 bg-transparent text-content-primary [@media(hover:hover)_and_(pointer:fine)]:hover:bg-accent-primary/20 active:bg-accent-primary/30 border border-border-brand",
     ghost:
-      "bg-transparent text-content-brand hover:bg-accent-primary/20 active:bg-accent-primary/30",
-    link: "bg-transparent text-content-brand hover:text-content-on-brand underline-offset-4 hover:underline",
+      "bg-transparent text-content-brand [@media(hover:hover)_and_(pointer:fine)]:hover:bg-accent-primary/20 active:bg-accent-primary/30",
+    link: "bg-transparent text-content-brand [@media(hover:hover)_and_(pointer:fine)]:hover:text-content-on-brand underline-offset-4 [@media(hover:hover)_and_(pointer:fine)]:hover:underline motion-safe:active:scale-100",
   },
   success: {
     solid: [
@@ -76,10 +92,10 @@ const variantColorClasses: Record<
       "bg-state-success text-content-inverse shadow-sm",
     ].join(" "),
     outline:
-      "bg-transparent text-feedback-positive hover:bg-green-100  active:bg-surface-active border border-state-success",
+      "border-2 bg-transparent text-feedback-positive [@media(hover:hover)_and_(pointer:fine)]:hover:bg-green-100 active:bg-surface-active border border-state-success",
     ghost:
-      "bg-transparent text-feedback-positive hover:bg-green-100  active:bg-surface-active",
-    link: "bg-transparent text-feedback-positive hover:text-green-400 underline-offset-4 hover:underline",
+      "bg-transparent text-feedback-positive [@media(hover:hover)_and_(pointer:fine)]:hover:bg-green-100 active:bg-surface-active",
+    link: "bg-transparent text-feedback-positive [@media(hover:hover)_and_(pointer:fine)]:hover:text-green-400 underline-offset-4 [@media(hover:hover)_and_(pointer:fine)]:hover:underline motion-safe:active:scale-100",
   },
   warning: {
     solid: [
@@ -87,10 +103,10 @@ const variantColorClasses: Record<
       "bg-state-warning text-content-inverse shadow-sm",
     ].join(" "),
     outline:
-      "bg-transparent text-feedback-caution hover:bg-orange-100 active:bg-surface-active border border-state-warning",
+      "border-2 bg-transparent text-feedback-caution [@media(hover:hover)_and_(pointer:fine)]:hover:bg-orange-100 active:bg-surface-active border border-state-warning",
     ghost:
-      "bg-transparent text-feedback-caution hover:bg-orange-100 active:bg-surface-active",
-    link: "bg-transparent text-feedback-caution hover:text-orange-400 underline-offset-4 hover:underline",
+      "bg-transparent text-feedback-caution [@media(hover:hover)_and_(pointer:fine)]:hover:bg-orange-100 active:bg-surface-active",
+    link: "bg-transparent text-feedback-caution [@media(hover:hover)_and_(pointer:fine)]:hover:text-orange-400 underline-offset-4 [@media(hover:hover)_and_(pointer:fine)]:hover:underline motion-safe:active:scale-100",
   },
   danger: {
     solid: [
@@ -98,10 +114,10 @@ const variantColorClasses: Record<
       "bg-state-error text-content-inverse shadow-sm",
     ].join(" "),
     outline:
-      "bg-transparent text-feedback-negative hover:bg-red-100 active:bg-surface-active border border-state-error",
+      "border-2 bg-transparent text-feedback-negative [@media(hover:hover)_and_(pointer:fine)]:hover:bg-red-100 active:bg-surface-active border border-state-error",
     ghost:
-      "bg-transparent text-feedback-negative hover:bg-red-100 active:bg-surface-active",
-    link: "bg-transparent text-feedback-negative hover:text-red-400 underline-offset-4 hover:underline",
+      "bg-transparent text-feedback-negative [@media(hover:hover)_and_(pointer:fine)]:hover:bg-red-100 active:bg-surface-active",
+    link: "bg-transparent text-feedback-negative [@media(hover:hover)_and_(pointer:fine)]:hover:text-red-400 underline-offset-4 [@media(hover:hover)_and_(pointer:fine)]:hover:underline motion-safe:active:scale-100",
   },
   neutral: {
     solid: [
@@ -109,18 +125,29 @@ const variantColorClasses: Record<
       "bg-surface-secondary text-content-primary shadow-sm border border-border-default",
     ].join(" "),
     outline:
-      "bg-transparent text-content-secondary hover:bg-surface-hover active:bg-surface-active border border-border-strong",
+      "border-2 bg-transparent text-content-secondary [@media(hover:hover)_and_(pointer:fine)]:hover:bg-surface-hover active:bg-surface-active border border-border-strong",
     ghost:
-      "bg-transparent text-content-secondary hover:bg-surface-hover active:bg-surface-active",
-    link: "bg-transparent text-content-secondary hover:text-content-primary underline-offset-4 hover:underline",
+      "bg-transparent text-content-secondary [@media(hover:hover)_and_(pointer:fine)]:hover:bg-surface-hover active:bg-surface-active",
+    link: "bg-transparent text-content-secondary [@media(hover:hover)_and_(pointer:fine)]:hover:text-content-primary underline-offset-4 [@media(hover:hover)_and_(pointer:fine)]:hover:underline motion-safe:active:scale-100",
   },
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
   sm: "h-8 px-3 text-sm gap-1.5 rounded-xl",
-  md: "h-10 px-4 text-sm gap-2 rounded-xl",
+  md: "h-10 px-5 text-sm gap-2 rounded-xl",
   lg: "h-12 px-6 text-base gap-2.5 rounded-2xl",
 };
+
+function pressFeedbackClass(variant: ButtonVariant): string {
+  return variant === "link" ? "" : buttonInteractionClasses;
+}
+
+function isPrimaryBrandSolid(
+  variant: ButtonVariant,
+  colorScheme: ButtonColorScheme,
+) {
+  return variant === "solid" && colorScheme === "primary";
+}
 
 const iconSizeClasses: Record<ButtonSize, string> = {
   sm: "h-4 w-4",
@@ -139,7 +166,7 @@ function iconSlotClass(size: ButtonSize): string {
 
 function LoadingSpinner({ className }: { className?: string }) {
   return (
-    <RiLoader4Line
+    <LoaderIcon
       className={["animate-spin", className].filter(Boolean).join(" ")}
       aria-hidden
     />
@@ -168,14 +195,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) {
     const isDisabled = disabled || loading;
+    const primaryBrandSolid = isPrimaryBrandSolid(variant, colorScheme);
 
     const classes = [
       // Base styles — leading-none keeps icon + label vertically centered vs text metrics
-      "inline-flex items-center justify-center font-medium leading-none",
-      "cursor-pointer transition-colors duration-150",
+      "inline-flex items-center justify-center leading-none font-stack",
+      primaryBrandSolid ? "font-semibold" : "font-medium",
+      "cursor-pointer",
+      pressFeedbackClass(variant),
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-background-primary",
-      "disabled:opacity-50 disabled:cursor-not-allowed",
-      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed",
+      "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none",
+      "data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed data-[disabled]:pointer-events-none",
       // Size
       sizeClasses[size],
       // Variant + Color
@@ -198,19 +228,52 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         render={render}
       >
         {loading ? (
-          <span className={iconSlotClass(size)} aria-hidden="true">
+          <span
+            className={[
+              iconSlotClass(size),
+              primaryBrandSolid ? "relative z-1" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            aria-hidden="true"
+          >
             <LoadingSpinner className="size-full" />
           </span>
         ) : startIcon ? (
-          <span className={iconSlotClass(size)} aria-hidden="true">
+          <span
+            className={[
+              iconSlotClass(size),
+              primaryBrandSolid ? "relative z-1" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            aria-hidden="true"
+          >
             {startIcon}
           </span>
         ) : null}
         {children ? (
-          <span className="min-w-0 leading-normal">{children}</span>
+          <span
+            className={[
+              "min-w-0 leading-normal",
+              primaryBrandSolid ? "relative z-1" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            {children}
+          </span>
         ) : null}
         {!loading && endIcon ? (
-          <span className={iconSlotClass(size)} aria-hidden="true">
+          <span
+            className={[
+              iconSlotClass(size),
+              primaryBrandSolid ? "relative z-1" : "",
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            aria-hidden="true"
+          >
             {endIcon}
           </span>
         ) : null}

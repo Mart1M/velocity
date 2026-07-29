@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { RiNotification3Line } from "react-icons/ri";
+import { NotificationIcon } from "../../icons";
 import { IconButton } from "../IconButton/IconButton";
 import { NotificationBadge } from "./NotificationBadge";
 
@@ -63,7 +63,7 @@ export const OnIconButton: Story = {
     <div className="flex items-center gap-8">
       <div className="relative inline-flex">
         <IconButton label="Notifications" variant="ghost" colorScheme="neutral">
-          <RiNotification3Line className="h-5 w-5" />
+          <NotificationIcon className="h-5 w-5" />
         </IconButton>
         <NotificationBadge
           count={5}
@@ -72,7 +72,7 @@ export const OnIconButton: Story = {
       </div>
       <div className="relative inline-flex">
         <IconButton label="Alerts" variant="ghost" colorScheme="neutral">
-          <RiNotification3Line className="h-5 w-5" />
+          <NotificationIcon className="h-5 w-5" />
         </IconButton>
         <NotificationBadge
           dot

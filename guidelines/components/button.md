@@ -109,7 +109,7 @@ Also accepts all native `<button>` HTML attributes.
 - DO NOT use variant names that don't exist (`"secondary"`, `"destructive"`, `"cta"`). Valid variants: `"solid"`, `"soft"`, `"ghost"`, `"outline"`, `"link"`.
 - DO NOT use `colorScheme="danger"` as a regular action color. Reserve it for destructive.
 - DO NOT stack a second `colorScheme="primary"` button next to a primary — use `neutral` for the secondary action.
-- ALWAYS pair icons (`leftIcon` / `rightIcon`) with imports from `react-icons/ri` (Remix Icon family).
+- ALWAYS pair icons (`startIcon` / `endIcon`) with imports from `velocity-ds/icons` or `@hugeicons/core-free-icons`.
 
 ---
 

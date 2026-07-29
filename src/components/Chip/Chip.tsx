@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Toggle } from "@base-ui-components/react/toggle";
-import { RiCloseLine } from "react-icons/ri";
+import { CloseIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -219,7 +219,7 @@ function ChipRemoveButton({
         .filter(Boolean)
         .join(" ")}
     >
-      <RiCloseLine className={sizeClasses[size].icon} aria-hidden />
+      <CloseIcon className={sizeClasses[size].icon} aria-hidden />
     </button>
   );
 }

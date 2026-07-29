@@ -8,7 +8,7 @@ Read this file before writing any headline, body text, caption, button label, or
 | Token | Family | Usage |
 | --- | --- | --- |
 | `--font-sans` | `Inter` | **All UI text** — body, labels, inputs, captions |
-| `--font-heading` | `Sora` | Headings (`text-heading-*` utilities) |
+| `--font-heading` | `Stack Sans Headline` | Headings (`text-heading-*` utilities) |
 | `--font-mono` | `JetBrains Mono` | Code, numeric tables |
 
 ## Composite text utilities (use these)
@@ -108,5 +108,5 @@ Only use these if you need a combination the composite utilities don't cover.
 - ALWAYS use composite `text-*` utilities (`text-heading-*`, `text-body*`, `text-caption`, `text-overline`) instead of stacking primitives.
 - Typography utilities do NOT replace semantic HTML. Use `<h1>` / `<h2>` / `<nav>` / `<main>` correctly and pair them with the right `text-heading-*` class.
 - NEVER hardcode pixel font-sizes (`text-[17px]`, inline `style={{ fontSize: 17 }}`).
-- NEVER override `font-family` inline. Stick to `Inter` / `Sora` / `JetBrains Mono` through the typography tokens.
+- NEVER override `font-family` inline. Stick to `Inter` / `Stack Sans Headline` / `JetBrains Mono` through the typography tokens.
 - Reduce importance by going **smaller or secondary color**, not by lowering opacity.

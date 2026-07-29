@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { RiSideBarLine } from "react-icons/ri";
+import { SidebarIcon } from "../../icons";
 import { IconButton } from "../IconButton";
 import { Input } from "../Input";
 import { Separator } from "../Separator";
@@ -427,7 +427,7 @@ export function SidebarTrigger({
       {...props}
     >
       {children ?? (
-        <RiSideBarLine className="size-4 rtl:rotate-180" aria-hidden />
+        <SidebarIcon className="size-4 rtl:rotate-180" aria-hidden />
       )}
     </IconButton>
   );

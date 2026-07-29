@@ -1,5 +1,9 @@
 import * as React from "react";
-import { RiCloseLine, RiFileLine, RiUploadCloud2Line } from "react-icons/ri";
+import { CloseIcon, FileIcon, UploadCloudIcon } from "../../icons";
+import {
+  fieldDropZoneTransition,
+  fieldFocusWithinDefault,
+} from "../fieldStyles";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -291,7 +295,8 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
     );
 
     const zoneClasses = [
-      "relative flex rounded-xl border border-dashed transition-[border-color,box-shadow,background-color] duration-200",
+      "relative flex rounded-xl border border-dashed",
+      fieldDropZoneTransition,
       horizontal
         ? "flex-row items-center justify-start text-left"
         : "flex-col items-center justify-center text-center",
@@ -299,8 +304,8 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
         ? "border-state-error bg-surface-primary focus-within:ring-2 focus-within:ring-state-error/30"
         : dragging
           ? "border-border-brand bg-surface-hover ring-2 ring-border-focus/40"
-          : "border-border-default bg-surface-primary hover:border-border-strong hover:bg-surface-secondary/60",
-      "focus-within:ring-2 focus-within:ring-border-focus focus-within:border-border-brand",
+          : "border-border-default bg-surface-primary [@media(hover:hover)_and_(pointer:fine)]:hover:border-border-strong [@media(hover:hover)_and_(pointer:fine)]:hover:bg-surface-secondary/60",
+      fieldFocusWithinDefault,
       disabled ? "pointer-events-none opacity-50" : "",
       horizontal ? scH.zone : sc.zone,
       className,
@@ -362,7 +367,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                 {children ??
                   (horizontal ? (
                     <>
-                      <RiUploadCloud2Line
+                      <UploadCloudIcon
                         className={[
                           sc.icon,
                           "shrink-0 text-content-tertiary",
@@ -396,7 +401,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                     </>
                   ) : (
                     <>
-                      <RiUploadCloud2Line
+                      <UploadCloudIcon
                         className={[
                           sc.icon,
                           "text-content-tertiary",
@@ -446,7 +451,7 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                 key={`${file.name}-${file.size}-${file.lastModified}-${index}`}
                 className="flex items-center gap-2 text-content-primary"
               >
-                <RiFileLine
+                <FileIcon
                   className="h-4 w-4 shrink-0 text-content-tertiary"
                   aria-hidden
                 />
@@ -460,13 +465,13 @@ export const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                     onClick={() => removeAt(index)}
                     className={[
                       "inline-flex shrink-0 rounded-lg p-1",
-                      "text-content-tertiary transition-colors duration-200",
-                      "hover:bg-surface-hover hover:text-content-primary",
+                      "text-content-tertiary transition-colors duration-fast ease-standard",
+                      "[@media(hover:hover)_and_(pointer:fine)]:hover:bg-surface-hover [@media(hover:hover)_and_(pointer:fine)]:hover:text-content-primary",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border-focus",
                     ].join(" ")}
                     aria-label={`Remove ${file.name}`}
                   >
-                    <RiCloseLine className="h-4 w-4" aria-hidden />
+                    <CloseIcon className="h-4 w-4" aria-hidden />
                   </button>
                 ) : null}
               </li>

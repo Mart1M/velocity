@@ -7,10 +7,17 @@ import {
   PopoverPopup,
 } from "../Popover/Popover";
 import {
-  RiArrowLeftSLine,
-  RiArrowRightSLine,
-  RiCalendarLine,
-} from "react-icons/ri";
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CalendarIcon,
+} from "../../icons";
+import {
+  fieldBorderClass,
+  fieldFocusVisibleDefault,
+  fieldFocusVisibleError,
+  fieldShellTransition,
+  fieldTriggerPressMotion,
+} from "../fieldStyles";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -302,7 +309,7 @@ function CalendarGrid({
           onClick={goPrev}
           aria-label="Previous month"
         >
-          <RiArrowLeftSLine className="size-4 shrink-0" aria-hidden />
+          <ArrowLeftIcon className="size-4 shrink-0" aria-hidden />
         </button>
         <div
           id={`${id}-month`}
@@ -320,7 +327,7 @@ function CalendarGrid({
           onClick={goNext}
           aria-label="Next month"
         >
-          <RiArrowRightSLine className="size-4 shrink-0" aria-hidden />
+          <ArrowRightIcon className="size-4 shrink-0" aria-hidden />
         </button>
       </div>
       <div
@@ -517,12 +524,12 @@ function DatePickerSingle({
     "flex w-full min-w-0 items-center justify-between gap-2 overflow-hidden",
     "bg-surface-primary",
     "border",
-    error ? "border-state-error" : "border-border-default",
+    fieldBorderClass(error),
     "rounded-xl",
-    "transition-[border-color,box-shadow] duration-[200ms]",
-    error
-      ? "focus-visible:ring-2 focus-visible:ring-state-error/40 focus-visible:border-state-error"
-      : `focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:border-border-brand ${focusRing}`,
+    fieldShellTransition,
+    fieldTriggerPressMotion,
+    error ? fieldFocusVisibleError : fieldFocusVisibleDefault,
+    focusRing,
     sc.wrapper,
     sc.paddingX,
     disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "",
@@ -584,7 +591,7 @@ function DatePickerSingle({
               >
                 {displayText}
               </span>
-              <RiCalendarLine
+              <CalendarIcon
                 className={[sc.icon, "shrink-0 text-content-tertiary"].join(
                   " ",
                 )}
@@ -730,12 +737,12 @@ function DatePickerRange({
     "flex w-full min-w-0 items-center justify-between gap-2 overflow-hidden",
     "bg-surface-primary",
     "border",
-    error ? "border-state-error" : "border-border-default",
+    fieldBorderClass(error),
     "rounded-xl",
-    "transition-[border-color,box-shadow] duration-[200ms]",
-    error
-      ? "focus-visible:ring-2 focus-visible:ring-state-error/40 focus-visible:border-state-error"
-      : `focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:border-border-brand ${focusRing}`,
+    fieldShellTransition,
+    fieldTriggerPressMotion,
+    error ? fieldFocusVisibleError : fieldFocusVisibleDefault,
+    focusRing,
     sc.wrapper,
     sc.paddingX,
     disabled ? "opacity-50 cursor-not-allowed pointer-events-none" : "",
@@ -816,7 +823,7 @@ function DatePickerRange({
               >
                 {displayText}
               </span>
-              <RiCalendarLine
+              <CalendarIcon
                 className={[sc.icon, "shrink-0 text-content-tertiary"].join(
                   " ",
                 )}

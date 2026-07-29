@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Accordion as BaseAccordion } from "@base-ui-components/react/accordion";
-import { RiArrowDownSLine } from "react-icons/ri";
+import { ArrowDownIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -119,8 +119,6 @@ export function AccordionTrigger({
           // interaction
           "cursor-pointer",
           "transition-colors duration-200",
-          // hover
-          "hover:text-content-brand",
           // focus
           "focus-visible:outline-none focus-visible:ring-2",
           "focus-visible:ring-border-focus focus-visible:ring-offset-2",
@@ -135,7 +133,7 @@ export function AccordionTrigger({
       >
         {children}
         {!hideIcon && (
-          <RiArrowDownSLine
+          <ArrowDownIcon
             className={[
               "shrink-0 h-4 w-4 text-content-secondary",
               "transition-transform duration-[200ms]",

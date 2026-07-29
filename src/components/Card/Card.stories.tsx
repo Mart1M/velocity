@@ -43,9 +43,7 @@ export const Default: Story = {
     <Card {...args} className="w-full max-w-md">
       <CardHeader>
         <CardTitle>Registration</CardTitle>
-        <CardDescription>
-          Enter your details to join the race.
-        </CardDescription>
+        <CardDescription>Enter your details to join the race.</CardDescription>
       </CardHeader>
       <CardContent>
         <p className="text-body-sm text-content-secondary">
@@ -56,7 +54,7 @@ export const Default: Story = {
         <Button variant="solid" colorScheme="primary" size="sm">
           Continue
         </Button>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" colorScheme="neutral" size="sm">
           Cancel
         </Button>
       </CardFooter>
@@ -74,7 +72,8 @@ export const Variants: Story = {
           </CardHeader>
           <CardContent>
             <p className="text-body-sm text-content-secondary">
-              <code className="text-caption">{variant}</code> variant on the card.
+              <code className="text-caption">{variant}</code> variant on the
+              card.
             </p>
           </CardContent>
         </Card>
@@ -89,7 +88,9 @@ export const Sizes: Story = {
     <div className="flex flex-col items-start gap-6">
       {(["sm", "md", "lg"] as const).map((size) => (
         <div key={size} className="w-full max-w-md">
-          <p className="mb-2 text-caption text-content-tertiary">size=&quot;{size}&quot;</p>
+          <p className="mb-2 text-caption text-content-tertiary">
+            size=&quot;{size}&quot;
+          </p>
           <Card size={size}>
             <CardHeader>
               <CardTitle>Title</CardTitle>

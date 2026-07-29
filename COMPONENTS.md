@@ -2,7 +2,7 @@
 
 E-commerce design system built on [Base UI](https://base-ui.com) + Tailwind CSS v4.
 
-E-commerce–specific UI lives under **`src/components/ecommerce/`** (e.g. `ProductCard/`, `EcommerceNavigation/`). Public imports stay **`@runswap/velocity`** — only internal paths changed.
+E-commerce–specific UI lives under **`src/components/ecommerce/`** (e.g. `ProductCard/`, `EcommerceNavigation/`). Public imports stay **`velocity-ds`** — only internal paths changed.
 
 ---
 
@@ -23,6 +23,7 @@ E-commerce–specific UI lives under **`src/components/ecommerce/`** (e.g. `Prod
 |---|---|---|
 | ~~`Checkbox`~~ ✅ | `@base-ui-components/react/checkbox` | Product filters, T&C acceptance, delivery options |
 | ~~`Switch`~~ ✅ | `@base-ui-components/react/switch` | Account preferences, notifications, dark mode |
+| ~~`Slider`~~ ✅ | `@base-ui-components/react/slider` | Price range filters, volume, numeric ranges |
 | ~~`Input`~~ ✅ | — (native) | Text field — quantity, promo code, search |
 | `Textarea` | — (native) | Customer reviews, order message |
 | `Select` | `@base-ui-components/react/select` | Size, color, country selection |
@@ -56,7 +57,7 @@ E-commerce–specific UI lives under **`src/components/ecommerce/`** (e.g. `Prod
 | Component | Base UI | E-commerce use |
 |---|---|---|
 | `ProductCard` | — | Product card — image, name, price, CTA |
-| `PriceDisplay` | — | Current price, strikethrough price, promo badge |
+| ~~`Price`~~ ✅ | — | Current price, strikethrough original, optional discount badge |
 | `RatingStars` | — | Product rating (read + review input) |
 | `QuantityInput` | — | Quantity selector with `+` / `−` |
 | `ColorSwatch` | — | Visual color/variant selector |

@@ -1,12 +1,12 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
-  RiArrowRightSLine,
-  RiPriceTag3Line,
-  RiSearchLine,
-  RiShoppingCart2Line,
-  RiUser3Line,
-} from "react-icons/ri";
+  ArrowRightIcon,
+  TagIcon,
+  SearchIcon,
+  ShoppingCartIcon,
+  UserIcon,
+} from "../../../icons";
 import { Button } from "../../Button/Button";
 import {
   Drawer,
@@ -19,13 +19,17 @@ import {
 } from "../../Drawer/Drawer";
 import { IconButton } from "../../IconButton/IconButton";
 import { Logo } from "../../Logo/Logo";
-import {
-  Popover,
-  PopoverPortal,
-  PopoverPositioner,
-  PopoverPopup,
-} from "../../Popover/Popover";
 import { EcommerceSearchInput } from "../EcommerceSearchInput/EcommerceSearchInput";
+import { EcommerceNavigationSearch } from "../EcommerceSearchInput/EcommerceNavigationSearch";
+import type { EcommerceSearchResultItem } from "../EcommerceSearchInput/EcommerceNavigationSearch";
+import {
+  ProductCard,
+  ProductCardBrand,
+  ProductCardContent,
+  ProductCardImage,
+  ProductCardPrice,
+  ProductCardTitle,
+} from "../ProductCard/ProductCard";
 import {
   EcommerceNavigation,
   EcommerceNavigationMegaViewport,
@@ -236,7 +240,7 @@ function SellProductCta({
       fullWidth={fullWidth}
       className={className}
       aria-label="Vendre un produit"
-      startIcon={<RiPriceTag3Line className="h-4 w-4" aria-hidden />}
+      startIcon={<TagIcon className="h-4 w-4" aria-hidden />}
     >
       {children}
     </Button>
@@ -303,7 +307,7 @@ function MobileNavPanel() {
                     }}
                   >
                     {s.label}
-                    <RiArrowRightSLine
+                    <ArrowRightIcon
                       className="h-4 w-4 shrink-0 text-content-tertiary"
                       aria-hidden
                     />
@@ -336,160 +340,146 @@ function MobileNavPanel() {
   );
 }
 
-/** Demo dataset for the navigation search suggestions popover (French marketplace). */
-const NAV_SEARCH_SUGGESTIONS = [
-  { label: "Nike Pegasus 40 — taille 42", hint: "Chaussures route" },
-  { label: "Saucony Endorphin Speed 3", hint: "Chaussures route" },
-  { label: "Garmin Forerunner 965", hint: "Montre GPS" },
-  { label: "Wahoo Elemnt Roam", hint: "GPS vélo" },
-  { label: "Polar H10 — ceinture cardio", hint: "Capteurs" },
-  { label: "Short trail Patagonia", hint: "Textile" },
-  { label: "Casquette On Running", hint: "Accessoires" },
-  { label: "Bidon isotherme 500 ml", hint: "Hydratation" },
-] as const;
+/** Demo products for navigation search (French marketplace). */
+const NAV_SEARCH_PRODUCTS: readonly EcommerceSearchResultItem[] = [
+  {
+    id: "nike-pegasus-40",
+    title: "Pegasus 40 — taille 42",
+    brand: "Nike",
+    price: "89,00 €",
+    originalPrice: "120,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop",
+    imageAlt: "Nike Pegasus 40",
+    category: "Chaussures route",
+    href: "#",
+  },
+  {
+    id: "saucony-endorphin-speed-3",
+    title: "Endorphin Speed 3",
+    brand: "Saucony",
+    price: "95,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1606107557195-0a74c4788f17?w=400&h=300&fit=crop",
+    imageAlt: "Saucony Endorphin Speed 3",
+    category: "Chaussures route",
+    href: "#",
+  },
+  {
+    id: "garmin-forerunner-965",
+    title: "Forerunner 965",
+    brand: "Garmin",
+    price: "449,00 €",
+    originalPrice: "599,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=400&h=300&fit=crop",
+    imageAlt: "Garmin Forerunner 965",
+    category: "Montre GPS",
+    href: "#",
+  },
+  {
+    id: "wahoo-elemnt-roam",
+    title: "Elemnt Roam",
+    brand: "Wahoo",
+    price: "279,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1508685098649-9aacd3260913?w=400&h=300&fit=crop",
+    imageAlt: "Wahoo Elemnt Roam",
+    category: "GPS vélo",
+    href: "#",
+  },
+  {
+    id: "polar-h10",
+    title: "H10 — ceinture cardio",
+    brand: "Polar",
+    price: "59,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop",
+    imageAlt: "Polar H10",
+    category: "Capteurs",
+    href: "#",
+  },
+  {
+    id: "patagonia-trail-short",
+    title: "Short trail",
+    brand: "Patagonia",
+    price: "32,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&h=300&fit=crop",
+    imageAlt: "Short trail Patagonia",
+    category: "Textile",
+    href: "#",
+  },
+  {
+    id: "on-cap",
+    title: "Casquette running",
+    brand: "On",
+    price: "18,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=300&fit=crop",
+    imageAlt: "Casquette On Running",
+    category: "Accessoires",
+    href: "#",
+  },
+  {
+    id: "hydration-bottle",
+    title: "Bidon isotherme 500 ml",
+    brand: "Elite",
+    price: "12,00 €",
+    imageSrc:
+      "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=400&h=300&fit=crop",
+    imageAlt: "Bidon isotherme 500 ml",
+    category: "Hydratation",
+    href: "#",
+  },
+];
 
-function filterNavSearchSuggestions(query: string) {
+function filterNavSearchProducts(query: string) {
   const q = query.trim().toLowerCase();
   if (!q) return [];
-  return NAV_SEARCH_SUGGESTIONS.filter(
-    (s) =>
-      s.label.toLowerCase().includes(q) || s.hint.toLowerCase().includes(q),
-  ).slice(0, 8);
+  return NAV_SEARCH_PRODUCTS.filter((item) => {
+    const haystack = [item.title, item.brand, item.category]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return haystack.includes(q);
+  }).slice(0, 8);
 }
 
-function NavSearchSuggestionList({
+function NavSearchProductList({
   id,
   items,
-  onPick,
   listClassName,
 }: {
   id: string;
-  items: readonly { label: string; hint: string }[];
-  onPick: (label: string) => void;
+  items: readonly EcommerceSearchResultItem[];
   listClassName?: string;
 }) {
   if (items.length === 0) return null;
-  const suggestionBtnClass = [
-    "flex w-full cursor-pointer flex-col gap-0.5 rounded-lg px-3 py-2.5 text-left",
-    "text-sm text-content-primary outline-none transition-colors",
-    "hover:bg-surface-hover focus-visible:bg-surface-hover focus-visible:ring-2",
-    "focus-visible:ring-border-focus focus-visible:ring-offset-2 focus-visible:ring-offset-surface-primary",
-  ].join(" ");
 
   return (
     <ul
       id={id}
-      role="listbox"
-      aria-label="Suggestions"
-      className={["m-0 list-none overflow-y-auto p-0", listClassName]
-        .filter(Boolean)
-        .join(" ")}
+      role="list"
+      aria-label="Résultats de recherche"
+      className={["m-0 list-none p-0", listClassName].filter(Boolean).join(" ")}
     >
-      {items.map((s) => (
-        <li key={s.label} role="presentation">
-          <button
-            type="button"
-            role="option"
-            aria-selected={false}
-            className={suggestionBtnClass}
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={() => onPick(s.label)}
-          >
-            <span className="font-medium">{s.label}</span>
-            <span className="text-xs text-content-tertiary">{s.hint}</span>
-          </button>
+      {items.map((item) => (
+        <li key={item.id ?? item.title} className="py-1.5">
+          <ProductCard layout="horizontal" size="sm" variant="ghost" href={item.href ?? "#"}>
+            <ProductCardImage src={item.imageSrc} alt={item.imageAlt} />
+            <ProductCardContent>
+              <ProductCardBrand>{item.brand}</ProductCardBrand>
+              <ProductCardTitle>{item.title}</ProductCardTitle>
+              <ProductCardPrice
+                price={item.price}
+                originalPrice={item.originalPrice}
+              />
+            </ProductCardContent>
+          </ProductCard>
         </li>
       ))}
     </ul>
-  );
-}
-
-/**
- * Desktop (`md+`): search + suggestions in a popover under the field.
- */
-function NavigationProductSearchWithSuggestions({
-  className,
-}: {
-  className?: string;
-}) {
-  const anchorRef = React.useRef<HTMLDivElement>(null);
-  const listId = React.useId();
-  const [query, setQuery] = React.useState("");
-  const [dismissed, setDismissed] = React.useState(false);
-  const [panelWidth, setPanelWidth] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    setDismissed(false);
-  }, [query]);
-
-  const filtered = React.useMemo(
-    () => filterNavSearchSuggestions(query),
-    [query],
-  );
-
-  const showPanel = filtered.length > 0 && query.trim().length > 0;
-  const open = showPanel && !dismissed;
-
-  React.useLayoutEffect(() => {
-    const el = anchorRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => {
-      setPanelWidth(el.getBoundingClientRect().width);
-    });
-    ro.observe(el);
-    setPanelWidth(el.getBoundingClientRect().width);
-    return () => ro.disconnect();
-  }, []);
-
-  const pick = React.useCallback((label: string) => {
-    setQuery(label);
-    setDismissed(true);
-  }, []);
-
-  return (
-    <Popover
-      open={open}
-      onOpenChange={(next) => {
-        if (!next) setDismissed(true);
-      }}
-      modal={false}
-    >
-      <div ref={anchorRef} className={className}>
-        <EcommerceSearchInput
-          size="md"
-          placeholder="Rechercher un produit…"
-          aria-label="Rechercher sur le site"
-          aria-autocomplete="list"
-          aria-controls={listId}
-          aria-expanded={open}
-          role="combobox"
-          className="min-w-0 w-full"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </div>
-      <PopoverPortal>
-        <PopoverPositioner
-          anchor={anchorRef}
-          side="bottom"
-          align="start"
-          sideOffset={6}
-          className="z-50"
-        >
-          <PopoverPopup
-            initialFocus={false}
-            style={panelWidth ? { width: panelWidth } : undefined}
-          >
-            <NavSearchSuggestionList
-              id={listId}
-              items={filtered}
-              onPick={pick}
-              listClassName="max-h-72"
-            />
-          </PopoverPopup>
-        </PopoverPositioner>
-      </PopoverPortal>
-    </Popover>
   );
 }
 
@@ -503,7 +493,7 @@ function NavigationMobileFullPageSearch() {
   const [query, setQuery] = React.useState("");
 
   const filtered = React.useMemo(
-    () => filterNavSearchSuggestions(query),
+    () => filterNavSearchProducts(query),
     [query],
   );
 
@@ -512,11 +502,6 @@ function NavigationMobileFullPageSearch() {
       inputRef.current?.focus();
     }
   }, [sheetOpen]);
-
-  const pick = React.useCallback((label: string) => {
-    setQuery(label);
-    setSheetOpen(false);
-  }, []);
 
   const trimmed = query.trim();
 
@@ -531,7 +516,7 @@ function NavigationMobileFullPageSearch() {
             colorScheme="neutral"
             size="md"
           >
-            <RiSearchLine className="h-6 w-6" />
+            <SearchIcon className="h-6 w-6" />
           </IconButton>
         }
       />
@@ -558,22 +543,24 @@ function NavigationMobileFullPageSearch() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            {filtered.length > 0 ? (
-              <NavSearchSuggestionList
-                id={listId}
-                items={filtered}
-                onPick={pick}
-                listClassName="min-h-0 flex-1"
-              />
-            ) : trimmed ? (
-              <p className="m-0 text-sm text-content-tertiary">
-                Aucun résultat pour « {trimmed} »
-              </p>
-            ) : (
-              <p className="m-0 text-sm text-content-secondary">
-                Saisissez un nom de produit, une marque ou une catégorie…
-              </p>
-            )}
+            {trimmed ? (
+              <div className="flex min-h-0 flex-1 flex-col gap-3">
+                <p className="m-0 text-sm font-medium text-content-primary">
+                  Résultats pour « {trimmed} »
+                </p>
+                {filtered.length > 0 ? (
+                  <NavSearchProductList
+                    id={listId}
+                    items={filtered}
+                    listClassName="min-h-0 flex-1"
+                  />
+                ) : (
+                  <p className="m-0 text-sm text-content-tertiary">
+                    Aucun résultat pour « {trimmed} »
+                  </p>
+                )}
+              </div>
+            ) : null}
           </div>
         </DrawerPopup>
       </DrawerPortal>
@@ -593,7 +580,7 @@ const meta: Meta = {
           "Compose `EcommerceNavigationMenu*` and place `EcommerceNavigationMegaViewport` once next to the list.",
           "Pass `mobileMenu` for a left drawer below `md` (demo uses breadcrumb drill-down).",
           'Set `navPlacement="below"` to put desktop nav links on a **second row** under the logo / search bar.',
-          "The **Default** story: desktop search uses a `Popover` of suggestions; **below `md`** the loupe opens a **full-viewport** search sheet (`Drawer`) with the same suggestions (illustrative data).",
+          "The **Default** story: desktop search focuses the field, blurs the page, and shows **horizontal `ProductCard`** results; **below `md`** the loupe opens a full-screen search sheet with the same product list.",
         ].join(" "),
       },
     },
@@ -682,7 +669,13 @@ export const Default: Story = {
         utilities={
           <>
             <div className="hidden min-w-0 max-w-full flex-1 basis-0 md:block">
-              <NavigationProductSearchWithSuggestions className="min-w-0 w-full" />
+              <EcommerceNavigationSearch
+                className="min-w-0 w-full"
+                size="md"
+                placeholder="Rechercher un produit…"
+                aria-label="Rechercher sur le site"
+                suggestions={NAV_SEARCH_PRODUCTS}
+              />
             </div>
             <NavigationMobileFullPageSearch />
             <IconButton
@@ -691,7 +684,7 @@ export const Default: Story = {
               colorScheme="neutral"
               size="md"
             >
-              <RiUser3Line className="h-6 w-6" />
+              <UserIcon className="h-6 w-6" />
             </IconButton>
             <span className="relative inline-flex">
               <IconButton
@@ -700,7 +693,7 @@ export const Default: Story = {
                 colorScheme="neutral"
                 size="md"
               >
-                <RiShoppingCart2Line className="h-6 w-6" />
+                <ShoppingCartIcon className="h-6 w-6" />
               </IconButton>
               <NotificationBadge
                 count={3}

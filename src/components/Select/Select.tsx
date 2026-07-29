@@ -1,6 +1,15 @@
 import * as React from 'react';
 import { Select as BaseSelect } from '@base-ui-components/react/select';
-import { RiArrowDownSLine, RiCheckLine } from 'react-icons/ri';
+import { ArrowDownIcon, CheckIcon } from '../../icons';
+import {
+  fieldBorderClass,
+  fieldFocusVisibleDefault,
+  fieldFocusVisibleError,
+  fieldListItemMotion,
+  fieldPopupMotion,
+  fieldShellTransition,
+  fieldTriggerPressMotion,
+} from '../fieldStyles';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -140,14 +149,13 @@ export function Select({
     'flex items-center w-full',
     'bg-surface-primary',
     'border',
-    error ? 'border-state-error' : 'border-border-default',
+    fieldBorderClass(error),
     'rounded-xl',
     'cursor-pointer',
-    'transition-[border-color,box-shadow] duration-[200ms]',
+    fieldShellTransition,
+    fieldTriggerPressMotion,
     'focus-visible:outline-none',
-    error
-      ? 'focus-visible:ring-2 focus-visible:ring-state-error/40 focus-visible:border-state-error'
-      : 'focus-visible:ring-2 focus-visible:ring-border-focus focus-visible:border-border-brand',
+    error ? fieldFocusVisibleError : fieldFocusVisibleDefault,
     !error &&
       'data-[popup-open]:border-border-brand data-[popup-open]:ring-2 data-[popup-open]:ring-border-focus',
     error &&
@@ -165,10 +173,7 @@ export function Select({
     'p-1',
     'overflow-y-auto overflow-x-hidden',
     'outline-none',
-    'origin-[var(--transform-origin)]',
-    'transition-[scale,opacity] duration-[200ms]',
-    'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
-    'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
+    fieldPopupMotion,
     /* Floating UI `size` middleware sets --anchor-width on the positioner (inherited here) */
     'w-[var(--anchor-width)] min-w-[var(--anchor-width)] max-w-[var(--anchor-width)]',
   ].join(' ');
@@ -202,7 +207,7 @@ export function Select({
             <BaseSelect.Value className="flex-1 text-left truncate text-content-primary" />
           )}
           <BaseSelect.Icon className="ml-2 text-content-tertiary shrink-0">
-            <RiArrowDownSLine className={sc.icon} aria-hidden />
+            <ArrowDownIcon className={sc.icon} aria-hidden />
           </BaseSelect.Icon>
         </BaseSelect.Trigger>
         <BaseSelect.Portal>
@@ -251,8 +256,7 @@ export function SelectOption({
         'flex min-w-0 items-center gap-2 rounded-lg py-2 px-2 text-sm',
         'cursor-pointer outline-none select-none',
         'text-content-primary',
-        'transition-colors duration-[200ms]',
-        'data-[highlighted]:bg-surface-hover',
+        fieldListItemMotion,
         'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
         className,
       ]
@@ -261,7 +265,7 @@ export function SelectOption({
     >
       <span className="flex items-center justify-center size-4 shrink-0 text-content-brand">
         <BaseSelect.ItemIndicator>
-          <RiCheckLine className="size-full" aria-hidden />
+          <CheckIcon className="size-full" aria-hidden />
         </BaseSelect.ItemIndicator>
       </span>
       <BaseSelect.ItemText className="min-w-0 flex-1 truncate">{children}</BaseSelect.ItemText>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { RiGiftLine } from "react-icons/ri";
+import { GiftIcon } from "../../icons";
 import { AlertBanner } from "./AlertBanner";
 
 const meta: Meta<typeof AlertBanner> = {
@@ -141,7 +141,7 @@ export const WithCustomIcon: Story = {
     variant: "brand",
     title: "Exclusive member deal",
     description: "Sign in to unlock your personalised discount.",
-    icon: <RiGiftLine className="h-5 w-5" aria-hidden />,
+    icon: <GiftIcon className="h-5 w-5" aria-hidden />,
   },
 };
 

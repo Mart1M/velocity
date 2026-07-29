@@ -13,7 +13,7 @@ import {
 import { Badge } from "../../Badge";
 import { Button } from "../../Button";
 import { IconButton } from "../../IconButton";
-import { RiHeartLine } from "react-icons/ri";
+import { HeartIcon } from "../../../icons";
 
 const meta: Meta<typeof ProductCard> = {
   title: "Ecommerce/ProductCard",
@@ -23,7 +23,7 @@ const meta: Meta<typeof ProductCard> = {
     docs: {
       description: {
         component:
-          'Product card for running-gear e-commerce. Composable slots: image, **ProductCardBadges** (top-left), **ProductCardFavorite** (top-right overlay for icon-only actions e.g. favorites), brand, title, price, and optional **ProductCardActions**. Use `layout="vertical"` (default) for grid tiles, or `layout="horizontal"` for dense rows. Use `href` to render the whole card as a link, or omit it for a non-clickable `<article>`. Set `disabled` for out-of-stock listings.',
+          'Product card for running-gear e-commerce. Composable slots: image, **ProductCardBadges** (top-left), **ProductCardFavorite** (top-right overlay for icon-only actions e.g. favorites), brand, title, price, and optional **ProductCardActions**. Use `layout="vertical"` (default) for grid tiles, or `layout="horizontal"` for dense rows. Use `variant="ghost"` for borderless rows with a light hover background (search results, lists). Use `href` to render the whole card as a link, or omit it for a non-clickable `<article>`. Set `disabled` for out-of-stock listings.',
       },
     },
   },
@@ -51,11 +51,18 @@ const meta: Meta<typeof ProductCard> = {
       description:
         "`vertical` = image on top; `horizontal` = square thumbnail left, details right",
     },
+    variant: {
+      control: "select",
+      options: ["default", "ghost"],
+      description:
+        "`default` = bordered with shadow on hover; `ghost` = borderless with light hover background",
+    },
   },
   args: {
     size: "md",
     disabled: false,
     layout: "vertical",
+    variant: "default",
   },
 };
 
@@ -75,7 +82,7 @@ function CardFavoriteButton() {
         variant="outline"
         colorScheme="neutral"
       >
-        <RiHeartLine className="h-4 w-4" aria-hidden />
+        <HeartIcon className="h-4 w-4" aria-hidden />
       </IconButton>
     </ProductCardFavorite>
   );
@@ -287,6 +294,37 @@ export const Horizontal: Story = {
             Ghost 16 — Men&apos;s cushioning daily trainer
           </ProductCardTitle>
           <ProductCardPrice price="139,99 €" originalPrice="159,99 €" />
+        </ProductCardContent>
+      </ProductCard>
+    </div>
+  ),
+};
+
+export const GhostHorizontal: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          '`variant="ghost"` — no border; `hover:bg-surface-hover` for dense lists (search results, suggestions).',
+      },
+    },
+  },
+  args: {
+    layout: "horizontal",
+    variant: "ghost",
+    size: "sm",
+  },
+  render: (args) => (
+    <div className="w-full max-w-xl rounded-xl border border-border-default p-2">
+      <ProductCard {...args} href="#">
+        <ProductCardImage
+          src={RUNNING_SHOE_IMG}
+          alt="Nike Pegasus running shoe"
+        />
+        <ProductCardContent>
+          <ProductCardBrand>Nike</ProductCardBrand>
+          <ProductCardTitle>Pegasus 40 — taille 42</ProductCardTitle>
+          <ProductCardPrice price="89,00 €" originalPrice="120,00 €" />
         </ProductCardContent>
       </ProductCard>
     </div>

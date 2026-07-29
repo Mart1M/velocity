@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RiLoader4Line } from "react-icons/ri";
+import { LoaderIcon } from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -49,7 +49,7 @@ export function Spinner({
         .filter(Boolean)
         .join(" ")}
     >
-      <RiLoader4Line
+      <LoaderIcon
         className={[
           "animate-spin",
           sizeClasses[size],

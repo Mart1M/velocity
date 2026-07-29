@@ -2,8 +2,10 @@
 
 Add links when you create entries under `decision/`, `preference/`, `context/`, and `pattern/`.
 
-Example:
+### Preferences
+
+- **2026-07-04** · Martin — [Keep npm package name `velocity-ds`](./preference/2026-07-04-velocity-ds-package-name.md)
 
 ### Decisions
 
-- **YYYY-MM-DD** · _user_ — [Short title](./decision/YYYY-MM-DD-slug.md)
+- **2026-07-04** · Martin — [Hugeicons replaces Remix Icon](./decision/2026-07-04-hugeicons-in-velocity.md)

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RiCloseLine } from "react-icons/ri";
+import { CloseIcon } from "../../icons";
 import { Dialog as BaseDialog } from "@base-ui-components/react/dialog";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -256,7 +256,7 @@ export function DrawerClose({ children, className }: DrawerCloseProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      {children ?? <RiCloseLine className="h-4 w-4" aria-hidden />}
+      {children ?? <CloseIcon className="h-4 w-4" aria-hidden />}
     </BaseDialog.Close>
   );
 }

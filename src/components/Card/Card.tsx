@@ -150,7 +150,7 @@ export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
       <h3
         ref={ref}
         className={[
-          "font-semibold leading-snug tracking-tight text-content-primary",
+          "font-semibold leading-snug tracking-tight text-content-primary font-heading",
           titleSize[size],
           className,
         ]

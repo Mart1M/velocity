@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { RiAddLine, RiArrowRightSLine } from 'react-icons/ri';
+import { AddIcon, ArrowRightIcon } from '../../icons';
 import { Button } from './Button';
 
 const meta: Meta<typeof Button> = {
@@ -9,7 +9,8 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A flexible button component built on BaseUI. Supports **4 variants** (solid, outline, ghost, link), 3 sizes, and 5 color schemes.',
+        component:
+          'A flexible button built on Base UI. **Press feedback** (`scale(0.97)` on `:active`, 100ms) and hover states are gated to fine pointers. Respects `prefers-reduced-motion`. Supports **4 variants** (solid, outline, ghost, link), 3 sizes, and 5 color schemes.',
       },
     },
   },
@@ -93,14 +94,14 @@ export const FullWidth: Story = {
 // With icons
 export const WithStartIcon: Story = {
   args: {
-    startIcon: <RiAddLine className="h-4 w-4" aria-hidden />,
+    startIcon: <AddIcon className="h-4 w-4" aria-hidden />,
     children: 'Add item',
   },
 };
 
 export const WithEndIcon: Story = {
   args: {
-    endIcon: <RiArrowRightSLine className="h-4 w-4" aria-hidden />,
+    endIcon: <ArrowRightIcon className="h-4 w-4" aria-hidden />,
     children: 'Next',
   },
 };

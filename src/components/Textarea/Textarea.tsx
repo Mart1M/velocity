@@ -1,4 +1,10 @@
 import * as React from 'react';
+import {
+  fieldBorderClass,
+  fieldFocusDefault,
+  fieldFocusError,
+  fieldShellTransition,
+} from '../fieldStyles';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -76,12 +82,10 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const textareaClasses = [
       'w-full bg-surface-primary',
       'border',
-      error ? 'border-state-error' : 'border-border-default',
+      fieldBorderClass(error),
       'rounded-xl',
-      'transition-[border-color,box-shadow] duration-[200ms]',
-      error
-        ? 'focus:ring-2 focus:ring-state-error/40 focus:border-state-error'
-        : 'focus:ring-2 focus:ring-border-focus focus:border-border-brand',
+      fieldShellTransition,
+      error ? fieldFocusError : fieldFocusDefault,
       'outline-none',
       'text-content-primary placeholder:text-content-tertiary',
       'disabled:opacity-50 disabled:cursor-not-allowed',

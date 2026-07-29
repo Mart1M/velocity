@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
-import { RiArrowDownSLine, RiCheckLine } from 'react-icons/ri';
+import { ArrowDownIcon, CheckIcon } from '../../icons';
+import {
+  fieldBorderClass,
+  fieldFocusWithinDefault,
+  fieldFocusWithinError,
+  fieldListItemMotion,
+  fieldPopupMotion,
+  fieldShellTransition,
+} from '../fieldStyles';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -160,12 +168,10 @@ export function Combobox({
     'flex items-center overflow-hidden',
     'bg-surface-primary',
     'border',
-    error ? 'border-state-error' : 'border-border-default',
+    fieldBorderClass(error),
     'rounded-xl',
-    'transition-[border-color,box-shadow] duration-[200ms]',
-    error
-      ? 'focus-within:ring-2 focus-within:ring-state-error/40 focus-within:border-state-error'
-      : 'focus-within:ring-2 focus-within:ring-border-focus focus-within:border-border-brand',
+    fieldShellTransition,
+    error ? fieldFocusWithinError : fieldFocusWithinDefault,
     sc.wrapper,
     disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : '',
     className,
@@ -184,16 +190,14 @@ export function Combobox({
     'flex items-center justify-center shrink-0 h-full pr-2.5 pl-1',
     'text-content-tertiary',
     'cursor-pointer outline-none',
+    'transition-transform duration-fast ease-standard motion-safe:active:scale-95',
   ].join(' ');
 
   const popupClasses = [
     'bg-surface-primary border border-border-default rounded-xl shadow-lg',
     'overflow-y-auto',
     'outline-none',
-    'origin-[var(--transform-origin)]',
-    'transition-[scale,opacity] duration-[200ms]',
-    'data-[starting-style]:scale-95 data-[starting-style]:opacity-0',
-    'data-[ending-style]:scale-95 data-[ending-style]:opacity-0',
+    fieldPopupMotion,
   ].join(' ');
 
   return (
@@ -223,7 +227,7 @@ export function Combobox({
             className={inputClasses}
           />
           <BaseCombobox.Trigger className={triggerClasses} aria-label="Toggle options">
-            <RiArrowDownSLine className={sc.icon} aria-hidden />
+            <ArrowDownIcon className={sc.icon} aria-hidden />
           </BaseCombobox.Trigger>
         </div>
         <BaseCombobox.Portal>
@@ -271,8 +275,7 @@ export function ComboboxOption({
         'flex items-center gap-2 rounded-lg py-2 px-2 text-sm',
         'cursor-pointer outline-none select-none',
         'text-content-primary',
-        'transition-colors duration-[200ms]',
-        'data-[highlighted]:bg-surface-hover',
+        fieldListItemMotion,
         'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
         className,
       ]
@@ -281,7 +284,7 @@ export function ComboboxOption({
     >
       <span className="flex items-center justify-center size-4 shrink-0 text-content-brand">
         <BaseCombobox.ItemIndicator>
-          <RiCheckLine className="size-full" aria-hidden />
+          <CheckIcon className="size-full" aria-hidden />
         </BaseCombobox.ItemIndicator>
       </span>
       {children}

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Price } from "../../Price";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -6,6 +7,12 @@ export type ProductCardSize = "sm" | "md" | "lg";
 
 /** `vertical` = image on top (default). `horizontal` = thumbnail left, details right — for cart rows, search results, etc. */
 export type ProductCardLayout = "vertical" | "horizontal";
+
+/**
+ * - `default`: bordered card with shadow on hover (catalog tiles).
+ * - `ghost`: borderless — light `surface-hover` background on hover (dense lists, search results).
+ */
+export type ProductCardVariant = "default" | "ghost";
 
 export interface ProductCardProps {
   /** When provided, the card renders as a link to the product page */
@@ -18,6 +25,11 @@ export interface ProductCardProps {
    * - `horizontal`: image and content side by side (dense lists).
    */
   layout?: ProductCardLayout;
+  /**
+   * Visual treatment of the card shell.
+   * @default "default"
+   */
+  variant?: ProductCardVariant;
   /** Whether the product is out of stock (adds visual treatment) */
   disabled?: boolean;
   /** Card content — order: `ProductCardImage` then `ProductCardContent` */
@@ -123,12 +135,21 @@ const imageHorizontalClasses: Record<ProductCardSize, string> = {
   lg: "w-48 shrink-0 self-stretch min-h-0 rounded-l-2xl",
 };
 
+const variantClasses: Record<ProductCardVariant, string> = {
+  default: [
+    "bg-surface-primary border border-border-default",
+    "hover:border-border-strong hover:shadow-md",
+  ].join(" "),
+  ghost: "border border-transparent hover:bg-surface-hover",
+};
+
 // ── ProductCard (root) ────────────────────────────────────────────────────
 
 export function ProductCard({
   href,
   size = "md",
   layout = "vertical",
+  variant = "default",
   disabled = false,
   children,
   className,
@@ -139,11 +160,10 @@ export function ProductCard({
   );
 
   const baseClasses = [
-    "group block w-full",
+    "group relative block w-full",
     layout === "horizontal" && "flex flex-row items-stretch",
-    "bg-surface-primary border border-border-default",
+    variantClasses[variant],
     "overflow-hidden transition-all duration-[200ms]",
-    "hover:border-border-strong hover:shadow-md",
     "focus-visible:outline-none focus-visible:ring-2",
     "focus-visible:ring-border-focus focus-visible:ring-offset-2",
     "focus-visible:ring-offset-background-primary",
@@ -248,7 +268,7 @@ export function ProductCardFavorite({
       className={[
         "absolute top-2 right-2 z-20 flex items-center justify-end",
         // Frosted pill + light border; icon uses currentColor → force white
-        "[&_button]:bg-white/40! [&_button]:hover:bg-white/50! [&_button]:backdrop-blur-md [&_button]:shadow-sm",
+        "[&_button]:bg-black/50! [&_button]:hover:bg-black/60! [&_button]:backdrop-blur-md [&_button]:shadow-sm",
         "[&_button]:border-white/45! [&_button]:text-white! [&_button]:hover:text-white! [&_button]:active:text-white!",
         className,
       ]
@@ -332,7 +352,7 @@ export function ProductCardTitle({
   return (
     <h3
       className={[
-        "font-medium text-content-primary line-clamp-2",
+        "font-medium text-content-primary line-clamp-2 font-stack",
         sizeClasses[size],
         className,
       ]
@@ -354,18 +374,12 @@ export function ProductCardPrice({
   className,
 }: ProductCardPriceProps) {
   return (
-    <div
-      className={["flex items-baseline gap-2 flex-wrap", className]
-        .filter(Boolean)
-        .join(" ")}
-    >
-      <span className="font-semibold text-content-primary">{price}</span>
-      {originalPrice && (
-        <span className="text-sm text-content-tertiary line-through">
-          {originalPrice}
-        </span>
-      )}
-    </div>
+    <Price
+      formattedValue={price}
+      formattedOriginalValue={originalPrice}
+      size="md"
+      className={className}
+    />
   );
 }
 

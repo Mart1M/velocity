@@ -1,11 +1,10 @@
 import * as React from "react";
 import {
-  RiCalendarLine,
-  RiFlagLine,
-  RiMapPin2Line,
-  RiRunLine,
-  RiRulerLine,
-} from "react-icons/ri";
+  CalendarIcon,
+  MapPinIcon,
+  RunIcon,
+  RulerIcon,
+} from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -266,7 +265,7 @@ export function RaceCardDate({ children, className }: RaceCardDateProps) {
     >
       {showIcons ? (
         <RaceCardIconSlot className="text-content-tertiary">
-          <RiCalendarLine />
+          <CalendarIcon />
         </RaceCardIconSlot>
       ) : null}
       <span className="min-w-0">{children}</span>
@@ -295,7 +294,7 @@ export function RaceCardRaceType({
     >
       {showIcons ? (
         <RaceCardIconSlot className="text-content-brand">
-          <RiRunLine />
+          <RunIcon />
         </RaceCardIconSlot>
       ) : null}
       <span className="min-w-0">{children}</span>
@@ -346,7 +345,7 @@ export function RaceCardLocation({
     >
       {showIcons ? (
         <RaceCardIconSlot className="text-content-secondary">
-          <RiMapPin2Line />
+          <MapPinIcon />
         </RaceCardIconSlot>
       ) : null}
       <span className="min-w-0">{children}</span>
@@ -385,7 +384,7 @@ export function RaceCardDistances({
     >
       {showIcons ? (
         <RaceCardIconSlot className="text-content-tertiary">
-          <RiRulerLine />
+          <RulerIcon />
         </RaceCardIconSlot>
       ) : null}
       {items.map((d) => (

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Toast as BaseToast } from "@base-ui-components/react/toast";
 import {
-  RiAlertLine,
-  RiCheckboxCircleLine,
-  RiCloseCircleLine,
-  RiCloseLine,
-  RiInformationLine,
-} from "react-icons/ri";
+  AlertIcon,
+  CheckCircleIcon,
+  CloseCircleIcon,
+  CloseIcon,
+  InformationIcon,
+} from "../../icons";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -56,10 +56,10 @@ const variantIcons: Record<
   React.ComponentType<{ className?: string }> | null
 > = {
   default: null,
-  success: RiCheckboxCircleLine,
-  warning: RiAlertLine,
-  error: RiCloseCircleLine,
-  info: RiInformationLine,
+  success: CheckCircleIcon,
+  warning: AlertIcon,
+  error: CloseCircleIcon,
+  info: InformationIcon,
 };
 
 // ── Toast Provider ─────────────────────────────────────────────────────────
@@ -306,7 +306,7 @@ export function ToastClose({ className }: ToastCloseProps) {
         .filter(Boolean)
         .join(" ")}
     >
-      <RiCloseLine className="size-4" aria-hidden />
+      <CloseIcon className="size-4" aria-hidden />
     </BaseToast.Close>
   );
 }

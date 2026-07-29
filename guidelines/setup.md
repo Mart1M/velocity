@@ -11,7 +11,7 @@ Velocity is built on top of:
 - React 19
 - Base UI (`@base-ui-components/react` ^1.0.0-alpha.8)
 - Tailwind CSS v4 (using `@theme` CSS variables, not `tailwind.config.js`)
-- `react-icons` (peer dependency for icon-based components)
+- Icons ship with `velocity-ds` via [Hugeicons](https://hugeicons.com/) (`velocity-ds/icons`)
 
 Your project must use React 19 and a Tailwind v4–compatible build (Vite, Next.js 15+, or the Tailwind v4 CLI).
 
@@ -20,7 +20,7 @@ Your project must use React 19 and a Tailwind v4–compatible build (Vite, Next.
 ## 2. Install
 
 ```bash
-npm install velocity-ds @base-ui-components/react react-icons
+npm install velocity-ds @base-ui-components/react
 ```
 
 Velocity is published to a private registry. Add this to your `.npmrc` (project root, **do not commit**):
