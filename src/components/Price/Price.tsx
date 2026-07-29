@@ -85,7 +85,7 @@ export function Price({
   const original = originalLabel ? (
     <s
       className={[
-        "text-content-tertiary line-through decoration-border-strong",
+        "text-content-tertiary line-through decoration-content-tertiary",
         originalSizeClasses[size],
       ].join(" ")}
       aria-label={`Prix initial ${originalLabel}`}
