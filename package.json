@@ -36,7 +36,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "type-check": "tsc --noEmit",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
   },
   "peerDependencies": {
     "@base-ui-components/react": "^1.0.0-alpha.8",
@@ -63,7 +66,8 @@
     "tailwindcss": "^4.2.2",
     "tsx": "^4.21.0",
     "typescript": "^5.8.2",
-    "vite": "^6.2.3"
+    "vite": "^6.2.3",
+    "@changesets/cli": "^2.31.1"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.2.2",

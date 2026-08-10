@@ -14,7 +14,7 @@
         "$type": "color"
       },
       "brand": {
-        "$value": "{color.yellow.300}",
+        "$value": "{color.mint.500}",
         "$type": "color"
       },
       "inverse": {
@@ -24,21 +24,21 @@
     },
     "accent": {
       "primary": {
-        "$value": "{color.yellow.300}",
+        "$value": "{color.mint.500}",
         "$type": "color"
       },
       "secondary": {
-        "$value": "{color.yellow.200}",
+        "$value": "{color.mint.400}",
         "$type": "color"
       },
       "tertiary": {
-        "$value": "{color.yellow.100}",
+        "$value": "{color.mint.200}",
         "$type": "color"
       }
     },
     "brand": {
       "primary": {
-        "$value": "{color.yellow.300}",
+        "$value": "{color.mint.500}",
         "$type": "color"
       }
     },
@@ -86,7 +86,7 @@
         "$type": "color"
       },
       "brand": {
-        "$value": "{color.yellow.800}",
+        "$value": "{color.mint.700}",
         "$type": "color"
       },
       "inverse": {
@@ -116,11 +116,11 @@
         "$type": "color"
       },
       "brand": {
-        "$value": "{color.yellow.300}",
+        "$value": "{color.mint.500}",
         "$type": "color"
       },
       "focus": {
-        "$value": "{color.yellow.300}",
+        "$value": "{color.mint.500}",
         "$type": "color"
       }
     },
