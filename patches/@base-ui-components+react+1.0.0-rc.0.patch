@@ -26,7 +26,7 @@ index e918651..53508f9 100644
 +++ b/node_modules/@base-ui-components/react/esm/tooltip/trigger/TooltipTrigger.js
 @@ -61,31 +61,32 @@ export const TooltipTrigger = /*#__PURE__*/React.forwardRef(function TooltipTrig
    const disabled = disabledProp ?? rootDisabled;
-   const trackCurStack Sans Headlinexis = store.useState('trackCurStack Sans Headlinexis');
+   const trackCursorAxis = store.useState('trackCursorAxis');
    const disableHoverablePopup = store.useState('disableHoverablePopup');
 +  // Velocity: same as Popover — restMs for “open” without delay.open caused mouseenter to bail
 +  // until the pointer moved (move:false). Use restMs:0 and put open delay on delay.open.
@@ -34,7 +34,7 @@ index e918651..53508f9 100644
      enabled: !disabled,
      mouseOnly: true,
      move: false,
-     handleClose: !disableHoverablePopup && trackCurStack Sans Headlinexis !== 'both' ? safePolygon() : null,
+     handleClose: !disableHoverablePopup && trackCursorAxis !== 'both' ? safePolygon() : null,
 -    restMs() {
 +    restMs: 0,
 +    delay() {
@@ -92,7 +92,7 @@ index 55ec6f9..86f9723 100644
 +++ b/node_modules/@base-ui-components/react/tooltip/trigger/TooltipTrigger.js
 @@ -67,31 +67,32 @@ const TooltipTrigger = exports.TooltipTrigger = /*#__PURE__*/React.forwardRef(fu
    const disabled = disabledProp ?? rootDisabled;
-   const trackCurStack Sans Headlinexis = store.useState('trackCurStack Sans Headlinexis');
+   const trackCursorAxis = store.useState('trackCursorAxis');
    const disableHoverablePopup = store.useState('disableHoverablePopup');
 +  // Velocity: same as Popover — restMs for “open” without delay.open caused mouseenter to bail
 +  // until the pointer moved (move:false). Use restMs:0 and put open delay on delay.open.
@@ -100,7 +100,7 @@ index 55ec6f9..86f9723 100644
      enabled: !disabled,
      mouseOnly: true,
      move: false,
-     handleClose: !disableHoverablePopup && trackCurStack Sans Headlinexis !== 'both' ? (0, _floatingUiReact.safePolygon)() : null,
+     handleClose: !disableHoverablePopup && trackCursorAxis !== 'both' ? (0, _floatingUiReact.safePolygon)() : null,
 -    restMs() {
 +    restMs: 0,
 +    delay() {
