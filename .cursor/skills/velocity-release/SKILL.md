@@ -10,15 +10,16 @@ description: >-
 
 Package: **`velocity-ds`**. Branch: **`master`**. CI: `.github/workflows/release.yml`.
 
-## Flow
+## Flow (automated)
 
 ```
 feature PR (+ .changeset/*.md) → merge to master
   → CI opens/updates "chore(release): version packages"
-  → merge that PR → build + npm publish + git tag
+  → CI auto-merges that PR
+  → CI publishes npm + GitHub Release
 ```
 
-Publishing only happens when that release PR is merged — **not** on every push to `master`.
+You only merge the feature PR. The Version Packages PR is merged by CI.
 
 ## Agent checklist
 
@@ -44,7 +45,7 @@ When the user asks for a release or a version bump after code changes:
    Bump types: `patch` (fix/tokens), `minor` (new component/API), `major` (breaking).
 
 3. **Commit the changeset file** with the feature (or a follow-up commit).
-4. Tell the user to **merge to `master`**, then **merge the Version Packages PR** CI creates.
+4. Tell the user to **merge to `master`** — publish follows automatically.
 5. Do **not** run `npm publish` / `pnpm release` locally unless they explicitly ask.
 
 ## Scripts
@@ -55,16 +56,20 @@ When the user asks for a release or a version bump after code changes:
 | `pnpm version-packages` | Apply changesets → bump version + CHANGELOG (CI) |
 | `pnpm release` | `pnpm build && changeset publish` (CI) |
 
-## Config facts
+## Secrets / repo settings
 
-- `.changeset/config.json`: `access: public`, `baseBranch: master`
-- Secret required: GitHub **`NPM_TOKEN`** (npm publish token)
-- Only `velocity-ds` is versioned; keep playground packages `private: true` if added later (or list them in `ignore` once they exist in the workspace)
+| Item | Role |
+|------|------|
+| `NPM_TOKEN` | Publish to npm |
+| `RELEASE_GITHUB_TOKEN` | PAT (repo) so auto-merge can re-trigger Release to publish. Without it, auto-merge may not start the publish job. |
+| Repo → Settings → General → **Allow auto-merge** | Required for `gh pr merge --auto` |
+
+Only `velocity-ds` is versioned; keep playground packages `private: true` if added later (or list them in `ignore` once they exist in the workspace).
 
 ## Do / don’t
 
 - **Do** add a changeset for any user-facing or API change that should ship.
 - **Do** keep the summary short and consumer-facing (goes into CHANGELOG).
 - **Don’t** bump `"version"` in `package.json` manually.
-- **Don’t** delete the Version Packages PR — merge it to publish.
+- **Don’t** close the Version Packages PR manually — CI auto-merges it.
 - **Don’t** publish without a changeset (CI will no-op or only refresh the empty release PR).

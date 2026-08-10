@@ -4,4 +4,5 @@ category: pattern
 tags: [ci, npm, changesets, release]
 ---
 
-Releases use Changesets: add a changeset with `pnpm changeset`, merge to `master`, then CI opens a Version Packages PR; merging that PR runs `pnpm release` (build + publish). Requires GitHub secret `NPM_TOKEN`. Playground `velocity-native` is ignored.
+Releases use Changesets with auto-merge: add a changeset (`pnpm changeset`), merge to `master`; CI opens the Version Packages PR, auto-merges it, then publishes npm + GitHub Release. Secrets: `NPM_TOKEN`, `RELEASE_GITHUB_TOKEN` (PAT so merge re-triggers publish). Enable repo “Allow auto-merge”.
+
