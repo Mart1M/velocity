@@ -57,9 +57,9 @@ When the user asks for a release or a version bump after code changes:
 
 ## Config facts
 
-- `.changeset/config.json`: `access: public`, `baseBranch: master`, ignore `velocity-native`
+- `.changeset/config.json`: `access: public`, `baseBranch: master`
 - Secret required: GitHub **`NPM_TOKEN`** (npm publish token)
-- Playground `velocity-native` is private and ignored — never version it via Changesets
+- Only `velocity-ds` is versioned; keep playground packages `private: true` if added later (or list them in `ignore` once they exist in the workspace)
 
 ## Do / don’t
 
