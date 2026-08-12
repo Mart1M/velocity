@@ -17,33 +17,16 @@ const preview: Preview = {
         dynamicTitle: true,
       },
     },
-    brand: {
-      description: 'Global brand for all stories',
-      toolbar: {
-        title: 'Brand',
-        icon: 'paintbrush',
-        items: [
-          { value: 'velocity', title: 'Runcycl (Velocity)' },
-          { value: 'runspot', title: 'Runspot' },
-        ],
-        dynamicTitle: true,
-      },
-    },
   },
   initialGlobals: {
     theme: 'light',
-    brand: 'velocity',
   },
   decorators: [
     (Story, context) => {
-      document.documentElement.setAttribute(
-        'data-theme',
-        String(context.globals.theme ?? 'light')
-      );
-      document.documentElement.setAttribute(
-        'data-brand',
-        String(context.globals.brand ?? 'velocity')
-      );
+      const theme = String(context.globals.theme ?? 'light');
+      if (document.documentElement.getAttribute('data-theme') !== theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
       return React.createElement(
         TooltipProvider,
         { delay: 200 },

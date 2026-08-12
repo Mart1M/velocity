@@ -9,7 +9,7 @@ const velocityLightTokens = {
   contentSecondary: '#4e4e4e',
   borderDefault: '#e5e5e5',
   borderStrong: '#242424',
-  brandPrimary: '#d0f400',
+  brandPrimary: '#0DEB9D',
 };
 
 const velocityManagerTheme = create({

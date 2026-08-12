@@ -8,6 +8,7 @@ Add links when you create entries under `decision/`, `preference/`, `context/`, 
 
 ### Decisions
 
+- **2026-08-12** · Martin — [Remove Runspot brand theme](./decision/2026-08-12-remove-runspot-brand.md)
 - **2026-08-10** · Martin — [Velocity brand uses mint (not yellow)](./decision/2026-08-10-velocity-brand-mint.md)
 - **2026-07-04** · Martin — [Hugeicons replaces Remix Icon](./decision/2026-07-04-hugeicons-in-velocity.md)
 

@@ -28,12 +28,34 @@ const config: StorybookConfig = {
       plugins: [tailwindcss()],
       // Patched Base UI (patch-package) must not be served from a stale Vite pre-bundle cache.
       optimizeDeps: {
-        include: ['use-sync-external-store/shim', 'use-sync-external-store/shim/with-selector'],
+        include: [
+          'react',
+          'react-dom',
+          'react/jsx-dev-runtime',
+          'react/jsx-runtime',
+          'use-sync-external-store',
+          'use-sync-external-store/shim',
+          'use-sync-external-store/shim/with-selector',
+        ],
         exclude: [
           '@base-ui-components/react',
           '@base-ui-components/react/popover',
           '@base-ui-components/react/tooltip',
         ],
+      },
+      resolve: {
+        dedupe: ['react', 'react-dom', 'use-sync-external-store'],
+      },
+      server: {
+        watch: {
+          ignored: [
+            '**/.memory/**',
+            '**/.git/**',
+            '**/playgrounds/**',
+            '**/dist/**',
+            '**/patches/**',
+          ],
+        },
       },
     });
   }

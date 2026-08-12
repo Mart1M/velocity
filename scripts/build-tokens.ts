@@ -122,7 +122,7 @@ const SEMANTIC_MAPPINGS: Mapping[] = [
 ];
 
 const DEFAULT_BRAND = 'velocity';
-const EXTRA_BRANDS = ['runspot'] as const;
+const EXTRA_BRANDS = [] as const;
 
 function buildSemanticMappings(brand: string): Mapping[] {
   return SEMANTIC_MAPPINGS.map(({ tokenPath, cssPrefix, label }) => ({
@@ -264,7 +264,7 @@ const css = `/* ================================================================
  * Do not edit manually. Run \`npm run build:tokens\` to regenerate.
  *
  * Themes: light (default), dark (via data-theme="dark" on html/body)
- * Brands: default velocity + per-brand overrides via data-brand="<brand>"
+ * Brands: default velocity (+ optional per-brand overrides via data-brand)
  * ============================================================================= */
 
 @import "tailwindcss";
@@ -286,13 +286,17 @@ ${buildTypographyUtilities({ ...coreTokens, ...sharedTokens, ...typoTokens, ...l
 [data-theme="dark"] {
 ${buildDarkOverrides(DEFAULT_BRAND)}
 }
-
+${
+  EXTRA_BRANDS.length === 0
+    ? ''
+    : `
 /* Brand overrides (light) */
 ${EXTRA_BRANDS.map((brand) => `[data-brand="${brand}"] {\n${buildBrandLightOverrides(brand)}\n}`).join('\n\n')}
 
 /* Brand overrides (dark) */
 ${EXTRA_BRANDS.map((brand) => `[data-brand="${brand}"][data-theme="dark"], [data-theme="dark"][data-brand="${brand}"] {\n${buildDarkOverrides(brand)}\n}`).join('\n\n')}
-`;
+`
+}`;
 
 // ── Write output ──────────────────────────────────────────────────────────────
 
