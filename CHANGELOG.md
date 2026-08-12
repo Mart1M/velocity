@@ -1,5 +1,11 @@
 # velocity-ds
 
+## 0.1.5
+
+### Patch Changes
+
+- 46c5a32: Remove the Runspot brand theme and fix Storybook preview hanging on use-sync-external-store ESM imports.
+
 ## 0.1.4
 
 ### Patch Changes
